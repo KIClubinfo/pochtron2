@@ -1,0 +1,29 @@
+{
+  "name": "ponchtron",
+  "version": "1.0.0",
+  "private": true,
+  "main": "gulpfile.js",
+  "author": "Albéric Trancart",
+  "devDependencies": {
+    "bower": "latest",
+    "gulp": "latest",
+    "gulp-autoprefixer": "latest",
+    "gulp-concat": "latest",
+    "gulp-filter": "latest",
+    "gulp-if": "latest",
+    "gulp-jshint": "latest",
+    "gulp-less": "latest",
+    "gulp-livereload": "latest",
+    "gulp-uglify": "latest",
+    "gulp-uglifycss": "latest",
+    "gulp-util": "latest",
+    "gulp-webserver": "latest",
+    "jshint-stylish": "latest",
+    "main-bower-files": "latest",
+    "semantic-ui": "latest"
+  },
+  "scripts": {
+    "postinstall": "cd semantic && ../node_modules/.bin/gulp build && cd .. && ./node_modules/.bin/bower install && ./node_modules/.bin/gulp build",
+    "start": "./node_modules/.bin/gulp start"
+  }
+}

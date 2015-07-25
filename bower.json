@@ -1,0 +1,9 @@
+{
+  "name": "pochtron",
+  "version": "1.0.0",
+  "author": "Albéric Trancart",
+  "dependencies": {
+    "angular": "latest",
+    "ui-router": "latest"
+  }
+}
