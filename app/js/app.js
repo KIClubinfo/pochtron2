@@ -1,4 +1,13 @@
-angular.module('foyer', ['ui.router', 'ngMaterial', 'ngMessages'])
+var apiPrefix = 'https://upont.enpc.fr/api/';
+
+angular
+    .module('foyer', [
+        'angular-jwt',
+        'ngAnimate',
+        'ngMaterial',
+        'ngMessages',
+        'ui.router',
+    ])
     // Setup theme
     .config(function($mdThemingProvider) {
         $mdThemingProvider.definePalette('foyerPalette', {
@@ -24,25 +33,10 @@ angular.module('foyer', ['ui.router', 'ngMaterial', 'ngMessages'])
     })
     // Setup routes
     .config(function($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
-        $urlMatcherFactoryProvider.strictMode(false);
-        $urlRouterProvider.otherwise('/404');
+        //$urlMatcherFactoryProvider.strictMode(false);
+        //$urlRouterProvider.otherwise('/404');
 
         $stateProvider
-            .state('login', {
-                url: '',
-                templateUrl: 'views/login.html',
-                controller: 'Login_Ctrl'
-            })
-            .state('root', {
-                url: '',
-                abstract: true,
-                template: '<div ui-view></div>'
-            })
-            .state('root.home', {
-                url: 'home',
-                templateUrl: 'views/home.html',
-                controller: 'Home_Ctrl'
-            })
             .state('root.404', {
                 url: '404',
                 templateUrl: 'views/404.html'
@@ -54,13 +48,13 @@ angular.module('foyer', ['ui.router', 'ngMaterial', 'ngMessages'])
         ;
     })
     // Setup interceptor
-    .factory('ErrorCodes_Interceptor', function($rootScope, $location, $q, StorageService) {
+    .factory('ErrorCodes_Interceptor', function($rootScope, $location, $q, Storage) {
         return {
             responseError: function(response) {
                 switch (response.status) {
                 case 401:
-                    StorageService.remove('token');
-                    StorageService.remove('roles');
+                    Storage.remove('token');
+                    Storage.remove('roles');
                     $rootScope.isLogged = false;
                     $location.path('/');
                     break;
@@ -75,9 +69,9 @@ angular.module('foyer', ['ui.router', 'ngMaterial', 'ngMessages'])
                     break;
                 case 503:
                     if (response.data.until)
-                        StorageService.set('maintenance', response.data.until);
+                        Storage.set('maintenance', response.data.until);
                     else
-                        StorageService.remove('maintenance');
+                        Storage.remove('maintenance');
                     $location.path('/maintenance');
                     $rootScope.maintenance = true;
                     break;
@@ -85,5 +79,21 @@ angular.module('foyer', ['ui.router', 'ngMaterial', 'ngMessages'])
                 return $q.reject(response);
             }
         };
+    })
+    .config(function($httpProvider, jwtInterceptorProvider) {
+        jwtInterceptorProvider.tokenGetter = function(Permissions, Storage, config, jwtHelper, $rootScope, $q) {
+            // On n'envoie pas le token pour les templates
+            if (config.url.substr(config.url.length - 5) == '.html')
+                return null;
+
+            if (Storage.get('token') && jwtHelper.isTokenExpired(Storage.get('token'))) {
+                Permissions.remove('token');
+                return $q.reject(config);
+            }
+            return Storage.get('token');
+        };
+
+        $httpProvider.interceptors.push('jwtInterceptor');
+        $httpProvider.interceptors.push('ErrorCodes_Interceptor');
     })
 ;
