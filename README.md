@@ -5,7 +5,7 @@ uPont version 2.0, the intranet of the _École nationale des ponts et chausées_
 
 Installation
 ------------
-
+Requirements: NPM, Ansible (`sudo apt-get install nodejs npm python python-dev && sudo pip install ansible`).
 ```
 npm install
 npm start

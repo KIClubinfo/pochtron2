@@ -4,6 +4,9 @@
   "author": "Albéric Trancart",
   "dependencies": {
     "angular": "latest",
+    "angular-material": "latest",
+    "angular-messages": "latest",
+    "font-awesome": "latest",
     "ui-router": "latest"
   }
 }

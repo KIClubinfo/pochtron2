@@ -26,7 +26,6 @@ gulp.task('jshint', function() {
 gulp.task('build-less', function() {
     var vendorsFiles = mainBowerFiles();
     var appFiles = [
-        'semantic/dist/semantic.css',
         'app/less/bootstrap.less'
     ];
     var files = vendorsFiles.concat(appFiles);
@@ -43,7 +42,6 @@ gulp.task('build-less', function() {
 gulp.task('build-js', function() {
     var vendorsFiles = mainBowerFiles();
     var appFiles = [
-        'semantic/dist/semantic.js',
         'app/js/app.js',
         'app/js/*.js',
         'app/js/**/*.js',
@@ -73,9 +71,7 @@ gulp.task('lint-js', function() {
 
 gulp.task('copy-fonts', function () {
     return gulp
-        .src([
-            'semantic/dist/themes/basic/assets/fonts/*'
-        ])
+        .src(mainBowerFiles())
         .pipe(filter(['***.eot', '***.svg', '***.ttf', '***.woff', '***.woff2', '***.otf']))
         .pipe(gulp.dest('www/fonts/'))
     ;

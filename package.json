@@ -5,6 +5,7 @@
   "main": "gulpfile.js",
   "author": "Albéric Trancart",
   "devDependencies": {
+    "angular-material": "latest",
     "bower": "latest",
     "gulp": "latest",
     "gulp-autoprefixer": "latest",
@@ -19,11 +20,10 @@
     "gulp-util": "latest",
     "gulp-webserver": "latest",
     "jshint-stylish": "latest",
-    "main-bower-files": "latest",
-    "semantic-ui": "latest"
+    "main-bower-files": "latest"
   },
   "scripts": {
-    "postinstall": "cd semantic && ../node_modules/.bin/gulp build && cd .. && ./node_modules/.bin/bower install && ./node_modules/.bin/gulp build",
+    "postinstall": "./node_modules/.bin/bower install && ./node_modules/.bin/gulp build",
     "start": "./node_modules/.bin/gulp start"
   }
 }

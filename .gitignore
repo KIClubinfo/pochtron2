@@ -1,6 +1,5 @@
 /bower_components/*
 /node_modules/*
-/semantic/*
 /www/fonts/*
 /www/app.min.js
 /www/style.min.css

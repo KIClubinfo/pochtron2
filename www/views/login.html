@@ -1,0 +1,36 @@
+<div layout="colum" layout-margin layout-align="center center" style="height:100%">
+    <md-content class="md-whiteframe-z3" flex="60" flex-sm="100" layout="column">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h1>
+                    <md-icon md-font-icon="fa-beer" class="fa"></md-icon> Foyer
+                </h1>
+            </div>
+        </md-toolbar>
+
+        <form name="loginForm" ng-submit="login(username, password)" layout="column" layout-align="space-around center">
+            <md-input-container>
+                <label>Identifiant uPont</label>
+                <input type="text" name="username" ng-model="username" required>
+                <div ng-messages="loginForm.username.$error" ng-show="loginForm.username.$dirty">
+                    <div ng-message="required">Champ obligatoire</div>
+                </div>
+            </md-input-container>
+            <md-input-container>
+                <label>Mot de passe</label>
+                <input type="password" name="password" ng-model="password" required>
+                <div ng-messages="loginForm.password.$error" ng-show="loginForm.password.$dirty">
+                    <div ng-message="required">Champ obligatoire</div>
+                </div>
+            </md-input-container>
+            <md-button class="md-raised">Connexion</md-button>
+        </form>
+        <md-divider></md-divider>
+        <md-list-item class="md-3-line">
+            <div class="md-list-item-text">
+                <p>Si tu ne sais pas à quoi sert ce site, c'est que tu ne devrais pas te trouver ici...</p>
+                <p><a href="http://www.theuselessweb.com/" title="Surfer sur l'intertoile">M'emmener voir quelque chose de plus intéressant.</a></p>
+            </div>
+        </md-list-item>
+    </md-content>
+</div>
