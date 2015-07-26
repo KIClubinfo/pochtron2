@@ -1,5 +1,5 @@
-angular.module('portfolio')
+angular.module('foyer')
     .controller('Home_Ctrl', function($scope) {
-        
+
     })
 ;

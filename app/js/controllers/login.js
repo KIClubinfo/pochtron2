@@ -1,4 +1,4 @@
-angular.module('portfolio')
+angular.module('foyer')
     .controller('Login_Ctrl', function($scope) {
 
     })

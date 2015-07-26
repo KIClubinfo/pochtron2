@@ -1,4 +1,4 @@
-angular.module('portfolio', ['ui.router', 'ngMaterial', 'ngMessages'])
+angular.module('foyer', ['ui.router', 'ngMaterial', 'ngMessages'])
     // Setup theme
     .config(function($mdThemingProvider) {
         $mdThemingProvider.definePalette('foyerPalette', {
