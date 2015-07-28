@@ -4,27 +4,27 @@
         <md-toolbar class="md-whiteframe-z3" md-scroll-shrink="true">
             <div class="md-toolbar-tools">
                 <md-menu>
-                    <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="$mdOpenMenu()">
+                    <md-button class="md-icon-button" ng-click="$mdOpenMenu()">
                         <md-icon md-menu-origin md-font-icon="fa-bars" class="fa md-headline"></md-icon>
                     </md-button>
                     <md-menu-content width="4">
                         <md-menu-item>
-                            <md-button ng-click="ctrl.redial($event)">
-                            <md-icon md-menu-align-target md-font-icon="fa-usd" class="fa"></md-icon>
-                            Consos
+                            <md-button>
+                                <md-icon md-menu-align-target md-font-icon="fa-usd" class="fa"></md-icon>
+                                Consos
                             </md-button>
                         </md-menu-item>
                         <md-menu-item>
-                            <md-button disabled="disabled" ng-click="ctrl.checkVoicemail()">
-                            <md-icon md-menu-align-target md-font-icon="fa-beer" class="fa"></md-icon>
-                            Bières
+                            <md-button disabled="disabled">
+                                <md-icon md-menu-align-target md-font-icon="fa-beer" class="fa"></md-icon>
+                                Bières
                             </md-button>
                         </md-menu-item>
                         <md-menu-divider></md-menu-divider>
                         <md-menu-item>
-                            <md-button disabled="disabled" ng-click="ctrl.toggleNotifications()">
-                            <md-icon md-menu-align-target md-font-icon="fa-dashboard" class="fa"></md-icon>
-                            Tableau de bord
+                            <md-button disabled="disabled">
+                                <md-icon md-menu-align-target md-font-icon="fa-dashboard" class="fa"></md-icon>
+                                Tableau de bord
                             </md-button>
                         </md-menu-item>
                     </md-menu-content>
@@ -32,16 +32,18 @@
 
                 <span flex hide-sm class="md-headline ng-binding">{{ pageTitle }}</span>
 
-                <button class="md-icon-button toolbar-button animated md-button" ng-click="toggleNotificationsTab(0)" tabindex="0">
-                    <md-icon md-font-icon="fa-users" class="fa md-headline">
-                    </md-icon>
-                    <span style="border-color: rgb(244, 67, 54); color: rgb(255, 255, 255); background-color: rgb(244, 67, 54);">5</span>
-                </button>
-
                 <md-menu>
-                    <button class="md-button" ng-click="$mdOpenMenu()" tabindex="0">
-                        <span>{{ me.first_name }}</span>
-                    </button>
+                    <md-button class="md-icon-button" ng-click="$mdOpenMenu()">
+                        <md-icon md-menu-align-target md-font-icon="fa-user" class="fa md-headline"></md-icon>
+                    </md-button>
+                    <md-menu-content width="4">
+                        <md-menu-item>
+                            <md-button ng-click="logout()">
+                                <md-icon md-menu-align-target md-font-icon="fa-usd" class="fa"></md-icon>
+                                Déconnexion
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
                 </md-menu>
             </div>
         </md-toolbar>

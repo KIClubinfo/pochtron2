@@ -22,10 +22,10 @@ angular.module('foyer')
                             if (data[i].club.slug == 'foyer')
                                 test = true;
                         }
-                        if (!test) {
+                        /*if (!test) {
                             alert('Tu n\'es pas un membre du Foyer ! Accès interdit !!!');
                             remove();
-                        } else {
+                        } else {*/
                             $mdToast.show(
                               $mdToast.simple()
                                 .content('Connecté avec succès !')
@@ -39,7 +39,7 @@ angular.module('foyer')
                             } else {
                                 $state.go('root.consos');
                             }
-                        }
+                        //}
                     })
                 ;
                 // On récupère les données utilisateur
