@@ -4,25 +4,25 @@
         <md-toolbar class="md-whiteframe-z3" md-scroll-shrink="true">
             <div class="md-toolbar-tools">
                 <md-menu>
-                    <md-button class="md-icon-button" ng-click="$mdOpenMenu()">
+                    <md-button aria-label="Menu" class="md-icon-button" ng-click="$mdOpenMenu()">
                         <md-icon md-menu-origin md-font-icon="fa-bars" class="fa md-headline"></md-icon>
                     </md-button>
                     <md-menu-content width="4">
                         <md-menu-item>
-                            <md-button>
+                            <md-button aria-label="Consos">
                                 <md-icon md-menu-align-target md-font-icon="fa-usd" class="fa"></md-icon>
                                 Consos
                             </md-button>
                         </md-menu-item>
                         <md-menu-item>
-                            <md-button disabled="disabled">
+                            <md-button aria-label="Bières" disabled="disabled">
                                 <md-icon md-menu-align-target md-font-icon="fa-beer" class="fa"></md-icon>
                                 Bières
                             </md-button>
                         </md-menu-item>
                         <md-menu-divider></md-menu-divider>
                         <md-menu-item>
-                            <md-button disabled="disabled">
+                            <md-button aria-label="Tableau de bord" disabled="disabled">
                                 <md-icon md-menu-align-target md-font-icon="fa-dashboard" class="fa"></md-icon>
                                 Tableau de bord
                             </md-button>
@@ -33,13 +33,13 @@
                 <span flex hide-sm class="md-headline ng-binding">{{ pageTitle }}</span>
 
                 <md-menu>
-                    <md-button class="md-icon-button" ng-click="$mdOpenMenu()">
+                    <md-button aria-label="Utilisateur" class="md-icon-button" ng-click="$mdOpenMenu()">
                         <md-icon md-menu-align-target md-font-icon="fa-user" class="fa md-headline"></md-icon>
                     </md-button>
                     <md-menu-content width="4">
                         <md-menu-item>
-                            <md-button ng-click="logout()">
-                                <md-icon md-menu-align-target md-font-icon="fa-usd" class="fa"></md-icon>
+                            <md-button aria-label="Déconnexion" ng-click="logout()">
+                                <md-icon md-menu-align-target md-font-icon="fa-sign-out" class="fa"></md-icon>
                                 Déconnexion
                             </md-button>
                         </md-menu-item>
