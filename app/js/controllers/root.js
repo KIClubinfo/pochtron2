@@ -1,6 +1,9 @@
 angular.module('foyer')
-    .run(function($rootScope) {
-
+    .run(function($rootScope, Permissions, $state) {
+        $rootScope.logout = function() {
+            Permissions.remove();
+            $state.go('login');
+        };
     })
     .config(function($stateProvider) {
         $stateProvider

@@ -1,5 +1,5 @@
 angular.module('foyer')
-    .factory('Permissions', function($rootScope, $http, Storage, jwtHelper) {
+    .factory('Permissions', function($rootScope, $http, Storage, jwtHelper, $state, $mdToast) {
         remove = function() {
             $rootScope.isLogged = false;
             Storage.remove('token');
@@ -12,19 +12,41 @@ angular.module('foyer')
                 $rootScope.isLogged = true;
 
                 var username = jwtHelper.decodeToken(Storage.get('token')).username;
+
+                // Checking if user is member of Foyer at this point is not a security breach because all used API routes are protected
+                $http
+                    .get(apiPrefix + 'users/' + username + '/clubs')
+                    .success(function(data){
+                        test = false;
+                        for (var i = 0; i < data.length; i++) {
+                            if (data[i].club.slug == 'foyer')
+                                test = true;
+                        }
+                        if (!test) {
+                            alert('Tu n\'es pas un membre du Foyer ! Accès interdit !!!');
+                            remove();
+                        } else {
+                            $mdToast.show(
+                              $mdToast.simple()
+                                .content('Connecté avec succès !')
+                                .position('bottom right')
+                                .hideDelay(3000)
+                            );
+
+                            if (typeof $rootScope.urlRef !== 'undefined' && $rootScope.urlRef !== null && $rootScope.urlRef != '/') {
+                                window.location.href = $rootScope.urlRef;
+                                $rootScope.urlRef = null;
+                            } else {
+                                $state.go('root.consos');
+                            }
+                        }
+                    })
+                ;
                 // On récupère les données utilisateur
                 $http
                     .get(apiPrefix + 'users/' + username)
                     .success(function(data){
                         $rootScope.me = data;
-                    })
-                ;
-
-                // On récupère les clubs de l'utilisateurs pour déterminer ses droits de publication
-                $http
-                    .get(apiPrefix + 'users/' + username + '/clubs')
-                    .success(function(data){
-                        $rootScope.clubs = data;
                     })
                 ;
             } else {
@@ -33,15 +55,6 @@ angular.module('foyer')
         };
 
         return {
-            // Vérifie si l'utilisateur a les droits sur un club
-            hasClub: function(slug) {
-                for (var i = 0; i < $rootScope.clubs.length; i++) {
-                    if ($rootScope.clubs[i].club.slug == slug)
-                        return true;
-                }
-                return false;
-            },
-
             load: function() {
                 load();
             },

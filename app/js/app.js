@@ -33,8 +33,8 @@ angular
     })
     // Setup routes
     .config(function($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
-        //$urlMatcherFactoryProvider.strictMode(false);
-        //$urlRouterProvider.otherwise('/404');
+        $urlMatcherFactoryProvider.strictMode(false);
+        $urlRouterProvider.otherwise('/404');
 
         $stateProvider
             .state('root.404', {
@@ -95,5 +95,9 @@ angular
 
         $httpProvider.interceptors.push('jwtInterceptor');
         $httpProvider.interceptors.push('ErrorCodes_Interceptor');
+    })
+    .config(function($httpProvider) {
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
     })
 ;

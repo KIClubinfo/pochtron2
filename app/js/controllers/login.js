@@ -8,19 +8,6 @@ angular.module('foyer')
                 })
                 .success(function(data, status, headers, config) {
                     Permissions.set(data.token, data.data.roles);
-                    $mdToast.show(
-                      $mdToast.simple()
-                        .content('Connecté avec succès !')
-                        .position('bottom right')
-                        .hideDelay(3000)
-                    );
-
-                    if (typeof $rootScope.urlRef !== 'undefined' && $rootScope.urlRef !== null && $rootScope.urlRef != '/') {
-                        window.location.href = $rootScope.urlRef;
-                        $rootScope.urlRef = null;
-                    } else {
-                        $state.go('root.consos');
-                    }
                 })
                 .error(function(data, status, headers, config) {
                     // Supprime tout token en cas de mauvaise identification
