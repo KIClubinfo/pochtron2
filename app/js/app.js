@@ -3,9 +3,11 @@ var apiPrefix = 'https://upont.enpc.fr/api/';
 angular
     .module('foyer', [
         'angular-jwt',
+        'naif.base64',
         'ngAnimate',
         'ngMaterial',
         'ngMessages',
+        'ngResource',
         'ui.router',
     ])
     // Setup theme

@@ -5,9 +5,11 @@
   "dependencies": {
     "angular": "latest",
     "angular-animate": "latest",
+    "angular-base64-upload": "latest",
     "angular-jwt": "latest",
     "angular-material": "latest",
     "angular-messages": "latest",
+    "angular-resource": "latest",
     "font-awesome": "latest",
     "ui-router": "latest"
   }
