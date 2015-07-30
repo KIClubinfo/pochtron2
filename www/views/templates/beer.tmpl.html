@@ -1,0 +1,54 @@
+<md-dialog aria-label="Mango (Fruit)">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+        <h2>Modifier une bière</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+            <md-icon md-font-icon="fa-times" class="fa md-headline"></md-icon>
+        </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <form name="beerForm" ng-submit="patch(beer)">
+            <div layout layout-sm="column">
+                <md-input-container flex>
+                    <label>Nom</label>
+                    <input required name="name" ng-model="beer.name">
+                    <div ng-messages="beerForm.name.$error" ng-show="beerForm.name.$dirty">
+                        <div ng-message="required">Champ obligatoire</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Prix</label>
+                    <input required type="number" step="0.01" name="price" ng-model="beer.price">
+                    <div ng-messages="beerForm.price.$error" ng-show="beerForm.price.$dirty">
+                        <div ng-message="required">Champ obligatoire</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Alcool (%)</label>
+                    <input required type="number" step="0.01" name="alcohol" ng-model="beer.alcohol">
+                    <div ng-messages="beerForm.alcohol.$error" ng-show="beerForm.alcohol.$dirty">
+                        <div ng-message="required">Champ obligatoire</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout layout-sm="column">
+                <md-input-container flex>
+                    <label>Volume (L)</label>
+                    <input required type="number" step="0.01" name="volume" ng-model="beer.volume">
+                    <div ng-messages="beerForm.volume.$error" ng-show="beerForm.volume.$dirty">
+                        <div ng-message="required">Champ obligatoire</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex>
+                    <input aria-label="Image de la bière" type="file" name="image" ng-model="beer.image" base-sixty-four-input>
+                    <div ng-messages="beerForm.image.$error" ng-show="beerForm.image.$dirty">
+                        <div ng-message="required">Image</div>
+                    </div>
+                </md-input-container>
+                <md-button class="md-raised md-primary" flex>Envoyer</md-button>
+            </div>
+        </form>
+    </md-dialog-content>
+</md-dialog>

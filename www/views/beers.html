@@ -48,8 +48,8 @@
 </md-content>
 
 <div layout="row" layout-wrap>
-    <md-card ng-repeat="beer in beers" flex="33" flex-sm="100">
-        <md-card-content layout="row">
+    <md-card ng-repeat="beer in beers" flex="25" flex-md="33" flex-sm="100">
+        <md-card-content layout="row" class="md-body-1">
             <img flex class="beer" ng-src="{{ beer.image_url | thumb | urlFile }}" class="md-card-image" alt="Image bière">
 
             <p>
@@ -59,9 +59,9 @@
             </p>
         </md-card-content>
         <div class="md-actions" layout="row" layout-wrap layout-padding layout-align="end center">
-            <h2 flex class="md-title">{{ beer.name }}</h2>
-            <md-button flex class="md-raised" disabled="disabled">Modifier</md-button>
-            <md-button flex class="md-raised md-warn" disabled="disabled">Supprimer</md-button>
+            <h2 flex class="md-body-2">{{ beer.name }}</h2>
+            <md-button flex class="md-raised" ng-click="patchBeer($event, beer)">Modifier</md-button>
+            <md-button flex class="md-raised md-warn" ng-click="deleteBeer($event, beer)">Supprimer</md-button>
         </div>
     </md-card>
 </div>

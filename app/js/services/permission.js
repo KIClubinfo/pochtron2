@@ -1,5 +1,5 @@
 angular.module('foyer')
-    .factory('Permissions', function($rootScope, $http, Storage, jwtHelper, $state, $mdToast) {
+    .factory('Permissions', function($rootScope, $http, Storage, jwtHelper, $state, Alert) {
         remove = function() {
             $rootScope.isLogged = false;
             Storage.remove('token');
@@ -26,12 +26,7 @@ angular.module('foyer')
                             alert('Tu n\'es pas un membre du Foyer ! Accès interdit !!!');
                             remove();
                         } else {*/
-                            $mdToast.show(
-                              $mdToast.simple()
-                                .content('Connecté avec succès !')
-                                .position('bottom right')
-                                .hideDelay(3000)
-                            );
+                            Alert.toast('Connecté avec succès !');
 
                             if (typeof $rootScope.urlRef !== 'undefined' && $rootScope.urlRef !== null && $rootScope.urlRef != '/') {
                                 window.location.href = $rootScope.urlRef;

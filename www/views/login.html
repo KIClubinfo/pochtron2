@@ -1,5 +1,5 @@
 <div layout="colum" layout-margin layout-align="center center" class="full-height">
-    <md-content class="md-whiteframe-z3" flex="60" flex-sm="100" layout="column">
+    <md-content class="md-whiteframe-z3" flex="40" flex-sm="100" layout="column">
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h1>
@@ -23,7 +23,12 @@
                     <div ng-message="required">Champ obligatoire</div>
                 </div>
             </md-input-container>
-            <md-button class="md-raised">Connexion</md-button>
+            <md-button class="md-raised">
+                <md-tooltip>
+                    Turn the swag on!
+                </md-tooltip>
+                Connexion
+            </md-button>
         </form>
         <md-divider></md-divider>
         <md-list-item class="md-3-line">
