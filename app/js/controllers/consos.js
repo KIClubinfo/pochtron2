@@ -36,7 +36,7 @@ angular.module('foyer')
         };
 
         $scope.selectedUserChange = function(item) {
-            $scope.selectuser(item);
+            $scope.selectUser(item);
         };
 
         $scope.searchBeer = function(query) {
@@ -78,7 +78,7 @@ angular.module('foyer')
                         return $resource(apiPrefix + 'beers').query().$promise;
                     },
                     users: function($resource) {
-                        return $resource(apiPrefix + 'users?limit=60').query().$promise;
+                        return $resource(apiPrefix + 'users?limit=48').query().$promise;
                     }
                 },
             })
