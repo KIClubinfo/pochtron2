@@ -41,7 +41,7 @@
         </md-content>
 
         <div layout="row" layout-wrap layout-padding>
-            <div flex="50" flex-sm="100">
+            <div flex="60" flex-sm="100" class="users-list">
                 <form ng-submit="$event.preventDefault()">
                     <md-autocomplete
                         md-search-text="searchText1"
@@ -59,8 +59,22 @@
                         </md-not-found>
                     </md-autocomplete>
                 </form>
+                <md-grid-list md-cols-sm="2" md-cols-md="2" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="4px" md-gutter-gt-sm="4px" style="padding-top:8px">
+                    <md-grid-tile ng-repeat="user in users" md-rowspan="1" md-colspan="1" md-colspan-sm="1" class="md-whiteframe-z3">
+                        <md-grid-tile-header>
+                        <md-checkbox class="md-primary"><h3>{{user.name}}</h3></md-checkbox>
+                        </md-grid-tile-header>
+                        <figure>
+                            <img ng-src="{{ user.image_url | thumb | urlFile }}" width="100%" height="100%">
+                        </figure>
+                        <md-grid-tile-footer>
+                            {{ user.first_name }}<br>
+                            {{ user.last_name }}
+                        </md-grid-tile-footer>
+                    </md-grid-tile>
+            </md-grid-list>
             </div>
-            <div flex="50" flex-sm="100">
+            <div flex="40" flex-sm="100">
                 <form ng-submit="$event.preventDefault()">
                     <md-autocomplete
                         md-search-text="searchText2"
@@ -79,7 +93,7 @@
                     </md-autocomplete>
                 </form>
                 <div layout="row" layout-wrap layout-align="center center">
-                    <md-card class="beer selectable" ng-repeat="beer in beers" flex="25" flex-sm="100" ng-click="selectBeer(beer)">
+                    <md-card class="beer selectable" ng-repeat="beer in beers" flex="29" flex-md="100" flex-sm="100" ng-click="selectBeer(beer)">
                         <md-card-content layout="column" layout-align="center center">
                             <img ng-if="beer.image_url"  class="md-card-image" alt="Image bière" ng-src="{{ beer.image_url | thumb | urlFile }}">
                             <img ng-if="!beer.image_url" class="md-card-image" alt="Image bière" src="imgs/interrogation.png">

@@ -9,8 +9,6 @@ body {
     box-shadow: 0 -2px 10px 0 rgba(0, 0, 0, 0.3);
 }
 
-
-
 .beer {
     img {
         max-width: 100px;
@@ -40,4 +38,25 @@ body {
             }
         }
     }
+}
+
+.users-list md-grid-tile {
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+        opacity: 1;
+    }
+
+    md-grid-tile-footer {
+        font-size: 0.7em;
+        font-weight: bold;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.5) !important;
+        height: 3em;
+    }
+    figcaption {
+        width: 100%;
+    }
+
 }
