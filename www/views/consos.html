@@ -1,46 +1,77 @@
 <section layout="row" flex>
-    <div layout="row" layout-wrap layout-padding>
-        <div flex="50">
-        </div>
-        <div flex="50">
-            <form ng-submit="$event.preventDefault()">
-                <md-autocomplete
-                    md-selected-item="ctrl.selectedItem"
-                    md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
-                    md-search-text="ctrl.searchText"
-                    md-selected-item-change="selectedItemChange(beer)"
-                    md-items="beer in searchBeer(ctrl.searchText)"
-                    md-item-text="beer.name"
-                    md-min-length="0"
-                    placeholder="Rechercher une bière...">
-                    <md-item-template>
-                        <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{ beer.name }}</span>
-                    </md-item-template>
-                    <md-not-found>
-                        Pas de bières trouvées pour "{{ ctrl.searchText }}".
-                    </md-not-found>
-                </md-autocomplete>
-            </form>
-            <div layout="row" layout-wrap>
-                <md-card class="beer selectable" ng-repeat="beer in beers" flex="25">
+    <div layout="column" layout-padding flex>
+        <md-toolbar class="md-primary">
+            <div class="md-toolbar-tools">
+                <h1 class="md-toolbar-tools">
+                    Panier
+                </h1>
+                <span flex></span>
+                <md-button class="md-icon-button" aria-label="Annuler">
+                    <md-tooltip>
+                        Vider le panier
+                    </md-tooltip>
+                    <md-icon md-font-icon="fa-times" class="fa md-headline"></md-icon>
+                </md-button>
+                <md-button class="md-icon-button" aria-label="Confirmer">
+                    <md-tooltip>
+                        Confirmer le panier
+                    </md-tooltip>
+                    <md-icon md-font-icon="fa-check" class="fa md-headline"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-content layout="row" layout-padding class="md-whiteframe-z3">
+            <div layout="row" layout-wrap flex="80" flex-sm="50">
+                <md-card class="beer selectable" flex="20" flex-sm="100">
                     <md-card-content layout="column" layout-align="center center">
-                        <img ng-src="{{ beer.image_url | thumb | urlFile }}" class="md-card-image" alt="Image bière">
-                        <div class="details">{{ beer.name }} ({{ beer.price }}€)</div>
+                        <img ng-if="beer.image_url" ng-src="{{ beer.image_url | thumb | urlFile }}" class="md-card-image" alt="Image bière">
+                        <img ng-if="!beer.image_url" src="imgs/interrogation.png" class="md-card-image" alt="Image bière">
+                        <div class="details">Choisis un élève</div>
                     </md-card-content>
                 </md-card>
             </div>
-        </div>
-        <div flex="50">
-            L'extrait standard de Lorem Ipsum utilisé depuis le XVIè siècle est reproduit ci-dessous pour les curieux. Les sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" de Cicéron sont aussi reproduites dans leur version originale, accompagnée de la traduction anglaise de H. Rackham (1914). Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un peintre anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker.<br>
-            <br>
-            <br>
-            <br>
-        </div>
-        <div flex="50">
-            L'extrait standard de Lorem Ipsum utilisé depuis le XVIè siècle est reproduit ci-dessous pour les curieux. Les sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" de Cicéron sont aussi reproduites dans leur version originale, accompagnée de la traduction anglaise de H. Rackham (1914). Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un peintre anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker.<br>
-            <br>
-            <br>
-            <br>
+            <div flex="20" flex-sm="50">
+                <md-card class="beer selectable" flex="25">
+                    <md-card-content layout="column" layout-align="center center">
+                        <img ng-if="beer.image_url" ng-src="{{ beer.image_url | thumb | urlFile }}" class="md-card-image" alt="Image bière">
+                        <img ng-if="!beer.image_url" src="imgs/interrogation.png" class="md-card-image" alt="Image bière">
+                        <div class="details">{{ beer.name }} {{ beer.price ? '(' + beer.price + '€)' : '' }}</div>
+                    </md-card-content>
+                </md-card>
+            </div>
+        </md-content>
+
+        <div layout="row" layout-wrap layout-padding>
+            <div flex="50" flex-sm="100">
+            </div>
+            <div flex="50" flex-sm="100">
+                <form ng-submit="$event.preventDefault()">
+                    <md-autocomplete
+                        md-selected-item="ctrl.selectedItem"
+                        md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                        md-search-text="ctrl.searchText"
+                        md-selected-item-change="selectedItemChange(beer)"
+                        md-items="beer in searchBeer(ctrl.searchText)"
+                        md-item-text="beer.name"
+                        md-min-length="0"
+                        placeholder="Rechercher une bière...">
+                        <md-item-template>
+                            <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{ beer.name }}</span>
+                        </md-item-template>
+                        <md-not-found>
+                            Pas de bières trouvées pour "{{ ctrl.searchText }}".
+                        </md-not-found>
+                    </md-autocomplete>
+                </form>
+                <div layout="row" layout-wrap layout-align="center center">
+                    <md-card class="beer selectable" ng-repeat="beer in beers" flex="25" flex-sm="100">
+                        <md-card-content layout="column" layout-align="center center">
+                            <img ng-src="{{ beer.image_url | thumb | urlFile }}" class="md-card-image" alt="Image bière">
+                            <div class="details">{{ beer.name }} ({{ beer.price }}€)</div>
+                        </md-card-content>
+                    </md-card>
+                </div>
+            </div>
         </div>
     </div>
 
