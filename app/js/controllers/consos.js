@@ -61,6 +61,11 @@ angular.module('foyer')
         $scope.emptyBeer = function() {
             $scope.beer = beer;
         };
+
+        $scope.emptyBasket = function() {
+            $scope.beer = beer;
+            $scope.clients = [];
+        };
     })
     .config(function($stateProvider) {
         $stateProvider
