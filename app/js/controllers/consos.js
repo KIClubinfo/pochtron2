@@ -1,16 +1,21 @@
 angular.module('foyer')
     .controller('Consos_Ctrl', function($scope, beers) {
         $scope.beers = beers;
-        $scope.selectedItemChange = function(item) {
-            alert(item.name);
+        $scope.beerNames = [];
+
+        $scope.searchBeer = function(query) {
+            return results = query ? $scope.beers.filter(createFilterFor(query)) : $scope.beers;
         };
-        $scope.searchBeer = function(item) {
-            $http
-                .post(apiPrefix + 'search', {search: '/' + string})
-                .success(function(data){
-                    $scope.beers = data;
-                })
-            ;
+
+        function createFilterFor(query) {
+            var lowercaseQuery = angular.lowercase(query);
+            return function filterFn(state) {
+                return angular.lowercase(state.name).indexOf(lowercaseQuery) === 0;
+            };
+        }
+
+        $scope.selectedItemChange = function(item) {
+            
         };
     })
     .config(function($stateProvider) {
