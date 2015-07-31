@@ -25,15 +25,15 @@
                 <md-card class="beer selectable" flex="20" flex-sm="100">
                     <md-card-content layout="column" layout-align="center center">
                         <img src="imgs/interrogation.png" class="md-card-image" alt="Image bière">
-                        <div class="details">Choisis un élève</div>
+                        <div class="details">Choisis des élèves</div>
                     </md-card-content>
                 </md-card>
             </div>
             <div flex="20" flex-sm="50">
-                <md-card class="beer selectable" flex="25">
+                <md-card class="beer selectable" flex="25" ng-click="emptyBeer()">
                     <md-card-content layout="column" layout-align="center center">
-                        <img ng-if="beer.image_url"  class="md-card-image" alt="Image bière" ng-click="emptyBeer()" ng-src="{{ beer.image_url | thumb | urlFile }}">
-                        <img ng-if="!beer.image_url" class="md-card-image" alt="Image bière" ng-click="emptyBeer()" src="imgs/interrogation.png">
+                        <img ng-if="beer.image_url"  class="md-card-image" alt="Image bière" ng-src="{{ beer.image_url | thumb | urlFile }}">
+                        <img ng-if="!beer.image_url" class="md-card-image" alt="Image bière" src="imgs/interrogation.png">
                         <div class="details">{{ beer.name }} {{ beer.price ? '(' + beer.price + '€)' : '' }}</div>
                     </md-card-content>
                 </md-card>
@@ -42,22 +42,39 @@
 
         <div layout="row" layout-wrap layout-padding>
             <div flex="50" flex-sm="100">
+                <form ng-submit="$event.preventDefault()">
+                    <md-autocomplete
+                        md-search-text="searchText1"
+                        md-search-text-change="searchTextChange(searchText1)"
+                        md-selected-item-change="selectedUserChange(user)"
+                        md-items="user in searchUser(searchText1)"
+                        md-item-text="user.name"
+                        md-min-length="1"
+                        placeholder="Rechercher un élève...">
+                        <md-item-template>
+                            <span md-highlight-text="searchText1" md-highlight-flags="^i">{{ user.name }}</span>
+                        </md-item-template>
+                        <md-not-found>
+                            Pas d'élève trouvé pour "{{ searchText1 }}".
+                        </md-not-found>
+                    </md-autocomplete>
+                </form>
             </div>
             <div flex="50" flex-sm="100">
                 <form ng-submit="$event.preventDefault()">
                     <md-autocomplete
-                        md-search-text-change="searchTextChange(searchText)"
-                        md-search-text="searchText"
-                        md-selected-item-change="selectedItemChange(beer)"
-                        md-items="beer in searchBeer(searchText)"
+                        md-search-text="searchText2"
+                        md-search-text-change="searchTextChange(searchText2)"
+                        md-selected-item-change="selectedBeerChange(beer)"
+                        md-items="beer in searchBeer(searchText2)"
                         md-item-text="beer.name"
                         md-min-length="1"
                         placeholder="Rechercher une bière...">
                         <md-item-template>
-                            <span md-highlight-text="searchText" md-highlight-flags="^i">{{ beer.name }}</span>
+                            <span md-highlight-text="searchText2" md-highlight-flags="^i">{{ beer.name }}</span>
                         </md-item-template>
                         <md-not-found>
-                            Pas de bières trouvées pour "{{ ctrl.searchText }}".
+                            Pas de bières trouvées pour "{{ searchText2 }}".
                         </md-not-found>
                     </md-autocomplete>
                 </form>
