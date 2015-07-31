@@ -1,12 +1,13 @@
 angular.module('foyer')
     .controller('Consos_Ctrl', function($scope, beers) {
         $scope.beers = beers;
-        $scope.beer = {
+        var beer = {
             image_url: '',
             name: 'Choisis une bière',
             price: ''
         };
-        $scope.beerNames = [];
+        $scope.beer = beer;
+        $scope.searchText = '';
 
         $scope.searchBeer = function(query) {
             return query ? $scope.beers.filter(createFilterFor(query)) : $scope.beers;
@@ -20,7 +21,13 @@ angular.module('foyer')
         }
 
         $scope.selectedItemChange = function(item) {
-
+            $scope.selectBeer(item);
+        };
+        $scope.selectBeer = function(item) {
+            $scope.beer = item;
+        };
+        $scope.emptyBeer = function() {
+            $scope.beer = beer;
         };
     })
     .config(function($stateProvider) {
