@@ -25,6 +25,20 @@ angular.module('foyer')
             return deferred.promise;
         };
 
+        $scope.selectUser = function(user) {
+            // Add user only if not present
+            if ($scope.clients.indexOf(user) === -1)
+                $scope.clients.push(user);
+        };
+
+        $scope.emptyUser = function(user) {
+            $scope.clients.splice($scope.clients.indexOf(user), 1);
+        };
+
+        $scope.selectedUserChange = function(item) {
+            $scope.selectuser(item);
+        };
+
         $scope.searchBeer = function(query) {
             return query ? $scope.beers.filter(createFilterFor(query)) : $scope.beers;
         };
@@ -59,7 +73,7 @@ angular.module('foyer')
                         return $resource(apiPrefix + 'beers').query().$promise;
                     },
                     users: function($resource) {
-                        return $resource(apiPrefix + 'users').query().$promise;
+                        return $resource(apiPrefix + 'users?limit=60').query().$promise;
                     }
                 },
             })
