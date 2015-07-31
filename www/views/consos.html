@@ -33,8 +33,8 @@
             <div flex="20" flex-sm="50">
                 <md-card class="beer selectable" flex="25">
                     <md-card-content layout="column" layout-align="center center">
-                        <img ng-if="beer.image_url" ng-src="{{ beer.image_url | thumb | urlFile }}" class="md-card-image" alt="Image bière">
-                        <img ng-if="!beer.image_url" src="imgs/interrogation.png" class="md-card-image" alt="Image bière">
+                        <img ng-if="beer.image_url"  class="md-card-image" alt="Image bière" ng-src="{{ beer.image_url | thumb | urlFile }}">
+                        <img ng-if="!beer.image_url" class="md-card-image" alt="Image bière" src="imgs/interrogation.png">
                         <div class="details">{{ beer.name }} {{ beer.price ? '(' + beer.price + '€)' : '' }}</div>
                     </md-card-content>
                 </md-card>
@@ -66,7 +66,8 @@
                 <div layout="row" layout-wrap layout-align="center center">
                     <md-card class="beer selectable" ng-repeat="beer in beers" flex="25" flex-sm="100">
                         <md-card-content layout="column" layout-align="center center">
-                            <img ng-src="{{ beer.image_url | thumb | urlFile }}" class="md-card-image" alt="Image bière">
+                            <img ng-if="beer.image_url"  class="md-card-image" alt="Image bière" ng-src="{{ beer.image_url | thumb | urlFile }}">
+                            <img ng-if="!beer.image_url" class="md-card-image" alt="Image bière" src="imgs/interrogation.png">
                             <div class="details">{{ beer.name }} ({{ beer.price }}€)</div>
                         </md-card-content>
                     </md-card>

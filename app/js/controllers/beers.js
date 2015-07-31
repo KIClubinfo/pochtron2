@@ -8,8 +8,10 @@ angular.module('foyer')
                 price: price,
                 alcohol: alcohol,
                 volume: volume,
-                image: image.base64
             };
+            if (image) {
+                params.image = image.base64;
+            }
 
             $http
                 .post(apiPrefix + 'beers', params)
