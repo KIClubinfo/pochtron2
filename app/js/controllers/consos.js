@@ -1,5 +1,5 @@
 angular.module('foyer')
-    .controller('Consos_Ctrl', function($scope, $http, $timeout, $q, Alert, beers, users, consos) {
+    .controller('Consos_Ctrl', function($scope, $http, $timeout, $interval, $q, Alert, beers, users, consos) {
         var beer = {
             image_url: '',
             name: 'Choisis une bière',
@@ -92,8 +92,8 @@ angular.module('foyer')
                     .get(apiPrefix + 'users/' + slug)
                     .success(function(data){
                         $scope.consos.unshift({beer: chosenBeer, user: data, date: new Date().getTime()});
-                    })
-                , 1000);
+                    }),
+                1000);
             }
             $scope.isLoading = false;
             Alert.toast('Consos encaissées !');
@@ -115,6 +115,28 @@ angular.module('foyer')
                 })
             ;
         };
+
+        // Toutes les 5 minutes, on recharge tout pour bien trier/afficher
+        $interval(function() {
+            $http
+                .get(apiPrefix + 'beers')
+                .success(function(data){
+                    $scope.beers = data;
+                })
+            ;
+            $http
+                .get(apiPrefix + 'userbeers')
+                .success(function(data){
+                    $scope.users = data;
+                })
+            ;
+            $http
+                .get(apiPrefix + 'beerusers?limit=50&sort=-date')
+                .success(function(data){
+                    $scope.consos = data;
+                })
+            ;
+        }, 300000);
     })
     .config(function($stateProvider) {
         $stateProvider
@@ -127,7 +149,7 @@ angular.module('foyer')
                         return $resource(apiPrefix + 'beers').query().$promise;
                     },
                     users: function($resource) {
-                        return $resource(apiPrefix + 'users?limit=48').query().$promise;
+                        return $resource(apiPrefix + 'userbeers').query().$promise;
                     },
                     consos: function($resource) {
                         return $resource(apiPrefix + 'beerusers?limit=50&sort=-date').query().$promise;
