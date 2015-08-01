@@ -119,7 +119,11 @@
                     <div class="md-list-item-text">
                         <h3>{{ conso.beer.name }}</h3>
                         <h4>{{ conso.user.first_name }} {{ conso.user.last_name }}</h4>
-                        <p>État du compte : -XX€</p>
+                        <p>
+                            <md-icon ng-if="conso.user.balance < 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>
+                            Compte : {{ conso.user.balance }} €
+                            <md-icon ng-if="conso.user.balance < 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>
+                        </p>
                     </div>
                     <md-button class="md-fab" aria-label="Supprimer la conso" ng-click="deleteConso(conso)">
                         <md-tooltip>

@@ -1,5 +1,5 @@
 angular.module('foyer')
-    .controller('Consos_Ctrl', function($scope, $http, $q, Alert, beers, users, consos) {
+    .controller('Consos_Ctrl', function($scope, $http, $timeout, $q, Alert, beers, users, consos) {
         var beer = {
             image_url: '',
             name: 'Choisis une bière',
@@ -78,15 +78,22 @@ angular.module('foyer')
                 return;
             }
             $scope.isLoading = true;
+            var slug;
 
             for (var key in $scope.clients) {
-                $http.post(apiPrefix + 'beers/' + $scope.beer.slug + '/users/' + $scope.clients[key].username);
-                $http
-                    .get(apiPrefix + 'users/' + $scope.clients[key].username)
+                if ($scope.clients[key].username) {
+                    slug = $scope.clients[key].username;
+                } else {
+                    slug = $scope.clients[key].slug;
+                }
+
+                $http.post(apiPrefix + 'beers/' + $scope.beer.slug + '/users/' + slug);
+                $timeout($http
+                    .get(apiPrefix + 'users/' + slug)
                     .success(function(data){
                         $scope.consos.unshift({beer: chosenBeer, user: data, date: new Date().getTime()});
                     })
-                ;
+                , 1000);
             }
             $scope.isLoading = false;
             Alert.toast('Consos encaissées !');
