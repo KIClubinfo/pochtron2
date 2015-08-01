@@ -74,6 +74,10 @@ angular.module('foyer')
                 return Alert.toast('Le panier est vide');
             }
             chosenBeer = $scope.beer;
+            if ($scope.isLoading) {
+                return;
+            }
+            $scope.isLoading = true;
 
             for (var key in $scope.clients) {
                 $http.post(apiPrefix + 'beers/' + $scope.beer.slug + '/users/' + $scope.clients[key].username);
@@ -84,9 +88,25 @@ angular.module('foyer')
                     })
                 ;
             }
+            $scope.isLoading = false;
             Alert.toast('Consos encaissées !');
             $scope.beer = beer;
             $scope.clients = [];
+        };
+
+        $scope.deleteConso = function(conso) {
+            if ($scope.isLoading) {
+                return;
+            }
+            $scope.isLoading = true;
+            $http
+                .delete(apiPrefix + 'beers/' + conso.beer.slug + '/users/' + conso.user.username + '/' + conso.id)
+                .success(function(){
+                    $scope.consos.splice($scope.consos.indexOf(conso), 1);
+                    Alert.toast('Conso supprimée !');
+                    $scope.isLoading = false;
+                })
+            ;
         };
     })
     .config(function($stateProvider) {

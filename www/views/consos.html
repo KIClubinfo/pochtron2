@@ -121,6 +121,12 @@
                         <h4>{{ conso.user.first_name }} {{ conso.user.last_name }}</h4>
                         <p>État du compte : -XX€</p>
                     </div>
+                    <md-button class="md-fab" aria-label="Supprimer la conso" ng-click="deleteConso(conso)">
+                        <md-tooltip>
+                            Supprimer la conso
+                        </md-tooltip>
+                        <md-icon md-font-icon="fa-trash" class="fa md-headline"></md-icon>
+                    </md-button>
                 </md-list-item>
             </md-list>
         </md-content>
