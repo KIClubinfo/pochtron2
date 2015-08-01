@@ -106,6 +106,9 @@ angular.module('foyer')
                         return $resource(apiPrefix + 'beerusers?limit=50&sort=-date').query().$promise;
                     }
                 },
+                data: {
+                    title: 'Consos'
+                }
             })
         ;
     })

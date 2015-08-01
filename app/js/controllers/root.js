@@ -1,5 +1,7 @@
 angular.module('foyer')
-    .run(function($rootScope, Permissions, $state) {
+    .run(function($rootScope, $state, $location, Permissions) {
+        Permissions.load();
+
         $rootScope.go = function(route) {
             $state.go(route);
         };
@@ -8,6 +10,14 @@ angular.module('foyer')
             Permissions.remove();
             $state.go('login');
         };
+
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+            if(toState.data) {
+                if (toState.data.title) {
+                    $rootScope.pageTitle = toState.data.title;
+                }
+            }
+        });
     })
     .config(function($stateProvider) {
         $stateProvider

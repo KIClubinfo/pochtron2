@@ -110,6 +110,9 @@ angular.module('foyer')
                         return $resource(apiPrefix + 'beers').query().$promise;
                     }
                 },
+                data: {
+                    title: 'Bières'
+                }
             })
         ;
     })

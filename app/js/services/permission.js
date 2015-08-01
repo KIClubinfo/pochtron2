@@ -26,8 +26,6 @@ angular.module('foyer')
                             alert('Tu n\'es pas un membre du Foyer ! Accès interdit !!!');
                             remove();
                         } else {*/
-                            Alert.toast('Connecté avec succès !');
-
                             if (typeof $rootScope.urlRef !== 'undefined' && $rootScope.urlRef !== null && $rootScope.urlRef != '/') {
                                 window.location.href = $rootScope.urlRef;
                                 $rootScope.urlRef = null;
@@ -58,6 +56,7 @@ angular.module('foyer')
                 Storage.set('token', token);
                 Storage.set('roles', roles);
                 load();
+                Alert.toast('Connecté avec succès !');
             },
 
             remove: function() {
