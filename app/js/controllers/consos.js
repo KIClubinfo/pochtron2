@@ -1,5 +1,5 @@
 angular.module('foyer')
-    .controller('Consos_Ctrl', function($scope, $http, $q, beers, users) {
+    .controller('Consos_Ctrl', function($scope, $http, $q, Alert, beers, users, consos) {
         var beer = {
             image_url: '',
             name: 'Choisis une bière',
@@ -11,6 +11,8 @@ angular.module('foyer')
         $scope.beer = beer;
         $scope.searchText1 = '';
         $scope.searchText2 = '';
+        $scope.consos = consos;
+        var chosenBeer;
 
         $scope.searchUser = function(query) {
             deferred = $q.defer();
@@ -66,6 +68,26 @@ angular.module('foyer')
             $scope.beer = beer;
             $scope.clients = [];
         };
+
+        $scope.confirmBasket = function() {
+            if ($scope.clients.length === 0 || $scope.beer == beer) {
+                return Alert.toast('Le panier est vide');
+            }
+            chosenBeer = $scope.beer;
+
+            for (var key in $scope.clients) {
+                $http.post(apiPrefix + 'beers/' + $scope.beer.slug + '/users/' + $scope.clients[key].username);
+                $http
+                    .get(apiPrefix + 'users/' + $scope.clients[key].username)
+                    .success(function(data){
+                        $scope.consos.unshift({beer: chosenBeer, user: data, date: new Date().getTime()});
+                    })
+                ;
+            }
+            Alert.toast('Consos encaissées !');
+            $scope.beer = beer;
+            $scope.clients = [];
+        };
     })
     .config(function($stateProvider) {
         $stateProvider
@@ -79,6 +101,9 @@ angular.module('foyer')
                     },
                     users: function($resource) {
                         return $resource(apiPrefix + 'users?limit=48').query().$promise;
+                    },
+                    consos: function($resource) {
+                        return $resource(apiPrefix + 'beerusers?limit=50&sort=-date').query().$promise;
                     }
                 },
             })

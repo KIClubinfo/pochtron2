@@ -12,7 +12,7 @@
                     </md-tooltip>
                     <md-icon md-font-icon="fa-times" class="fa md-headline"></md-icon>
                 </md-button>
-                <md-button class="md-icon-button" aria-label="Confirmer">
+                <md-button class="md-icon-button" aria-label="Confirmer" ng-click="confirmBasket()">
                     <md-tooltip>
                         Confirmer le panier
                     </md-tooltip>
@@ -112,8 +112,17 @@
         <md-toolbar class="md-theme-light">
             <h1 class="md-toolbar-tools">Historique des consos</h1>
         </md-toolbar>
-        <md-content layout-padding>
-            LOWOWL
+        <md-content layout-padding style="max-height: 160vh;">
+            <md-list>
+                <md-list-item class="md-3-line" ng-repeat="conso in consos">
+                    <img ng-src="{{ conso.user.image_url | thumb | urlFile }}" class="md-avatar" alt="Image de l'utilisateur" />
+                    <div class="md-list-item-text">
+                        <h3>{{ conso.beer.name }}</h3>
+                        <h4>{{ conso.user.first_name }} {{ conso.user.last_name }}</h4>
+                        <p>État du compte : -XX€</p>
+                    </div>
+                </md-list-item>
+            </md-list>
         </md-content>
     </md-sidenav>
 </section>
