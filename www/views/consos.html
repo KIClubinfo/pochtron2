@@ -125,7 +125,7 @@
                 <md-list-item class="md-3-line" ng-repeat="conso in consos">
                     <img ng-src="{{ conso.user.image_url | thumb | urlFile }}" class="md-avatar" alt="Image de l'utilisateur" />
                     <div class="md-list-item-text">
-                        <h3>{{ conso.beer.name }}</h3>
+                        <h3>{{ conso.beer ? conso.beer.name : 'Compte crédité' }}</h3>
                         <h4>{{ conso.user.first_name }} {{ conso.user.last_name }}</h4>
                         <p ng-if="conso.user.username == 'externe-foyer'">&nbsp;</p>
                         <p ng-if="conso.user.username != 'externe-foyer'">
