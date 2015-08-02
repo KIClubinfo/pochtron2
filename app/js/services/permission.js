@@ -10,7 +10,20 @@ angular.module('foyer')
         load = function() {
             if (Storage.get('token') && !jwtHelper.isTokenExpired(Storage.get('token'))) {
                 $rootScope.isLogged = true;
+            } else {
+                remove();
+            }
+        };
 
+        return {
+            load: function() {
+                load();
+            },
+
+            set: function(token, roles) {
+                Storage.set('token', token);
+                Storage.set('roles', roles);
+                load();
                 var username = jwtHelper.decodeToken(Storage.get('token')).username;
 
                 // Checking if user is member of Foyer at this point is not a security breach because all used API routes are protected
@@ -42,20 +55,6 @@ angular.module('foyer')
                         $rootScope.me = data;
                     })
                 ;
-            } else {
-                remove();
-            }
-        };
-
-        return {
-            load: function() {
-                load();
-            },
-
-            set: function(token, roles) {
-                Storage.set('token', token);
-                Storage.set('roles', roles);
-                load();
                 Alert.toast('Connecté avec succès !');
             },
 
