@@ -18,9 +18,5 @@ Deployment
 ----------
 
 ```
-ssh -A claude@vps.enpc.org
-cd /var/www/foyer.enpc.org
-git pull
-npm install
-exit
+./deploy.sh
 ```
