@@ -93,7 +93,7 @@ angular.module('foyer')
                     .success(function(data){
                         $scope.consos.unshift({beer: chosenBeer, user: data, date: new Date().getTime()});
                     }),
-                1000);
+                3000);
             }
             $scope.isLoading = false;
             Alert.toast('Consos encaissées !');
