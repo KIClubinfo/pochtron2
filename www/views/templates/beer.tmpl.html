@@ -1,11 +1,14 @@
-<md-dialog aria-label="Mango (Fruit)">
+<md-dialog aria-label="Modifier une bière">
     <md-toolbar>
         <div class="md-toolbar-tools">
-        <h2>Modifier une bière</h2>
-        <span flex></span>
-        <md-button class="md-icon-button" ng-click="cancel()">
-            <md-icon md-font-icon="fa-times" class="fa md-headline"></md-icon>
-        </md-button>
+            <h2>Modifier une bière</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="Annuler" ng-click="cancel()">
+                <md-tooltip>
+                    Je veux sortir !!!
+                </md-tooltip>
+                <md-icon md-font-icon="fa-times" class="fa md-headline"></md-icon>
+            </md-button>
         </div>
     </md-toolbar>
     <md-dialog-content>
@@ -47,7 +50,12 @@
                         <div ng-message="required">Image</div>
                     </div>
                 </md-input-container>
-                <md-button class="md-raised md-primary" flex>Envoyer</md-button>
+                <md-button class="md-raised md-default md-raised" flex>
+                    <md-tooltip>
+                        C'est mon dernier mot
+                    </md-tooltip>
+                    Envoyer
+                </md-button>
             </div>
         </form>
     </md-dialog-content>

@@ -110,7 +110,15 @@
 
     <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" md-is-locked-open="$mdMedia('gt-lg')">
         <md-toolbar class="md-theme-light">
-            <h1 class="md-toolbar-tools">Historique des consos</h1>
+            <div class="md-toolbar-tools">
+                <h1 class="md-toolbar-tools">Historique des consos</h1>
+                <md-button class="md-fab md-mini" aria-label="Créditer un compte" ng-click="addBalance($event)">
+                    <md-tooltip>
+                        Créditer un compte
+                    </md-tooltip>
+                    <md-icon md-font-icon="fa-usd" class="fa md-headline"></md-icon>
+                </md-button>
+            </div>
         </md-toolbar>
         <md-content layout-padding style="max-height: 160vh;">
             <md-list>
@@ -119,7 +127,8 @@
                     <div class="md-list-item-text">
                         <h3>{{ conso.beer.name }}</h3>
                         <h4>{{ conso.user.first_name }} {{ conso.user.last_name }}</h4>
-                        <p>
+                        <p ng-if="conso.user.username == 'externe-foyer'">&nbsp;</p>
+                        <p ng-if="conso.user.username != 'externe-foyer'">
                             <md-icon ng-if="conso.user.balance < 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>
                             Compte : {{ conso.user.balance }} €
                             <md-icon ng-if="conso.user.balance < 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>

@@ -1,5 +1,5 @@
 angular.module('foyer')
-    .controller('Consos_Ctrl', function($scope, $http, $timeout, $interval, $q, Alert, beers, users, consos) {
+    .controller('Consos_Ctrl', function($scope, $http, $timeout, $interval, $q, $mdDialog, Alert, beers, users, consos) {
         var beer = {
             image_url: '',
             name: 'Choisis une bière',
@@ -137,6 +137,53 @@ angular.module('foyer')
                 })
             ;
         }, 300000);
+
+        $scope.selectedCredit = null;
+        $scope.addBalance = function($event) {
+            $scope.selectedCredit = null;
+            $mdDialog
+                .show({
+                    templateUrl: 'views/templates/credit.tmpl.html',
+                    parent: angular.element(document.body),
+                    scope: $scope,
+                    preserveScope: true,
+                    targetEvent: $event,
+                })
+                .then(function() {}, function() {
+                    Alert.toast('Tant pis...');
+                })
+            ;
+        };
+
+        $scope.cancel = function() {
+            $mdDialog.cancel();
+        };
+
+        $scope.selectedCreditChange = function(user) {
+            $scope.selectedCredit = user;
+        };
+
+        $scope.creditBalance = function(balance) {
+            if ($scope.selectedCredit === null) {
+                return Alert.toast('Il faut séléctionner quelqu\'un !');
+            }
+
+            $http
+                .patch(apiPrefix + 'users/' + $scope.selectedCredit.slug + '/balance', {balance: balance})
+                .success(function(){
+                    $http
+                        .get(apiPrefix + 'beerusers?limit=50&sort=-date')
+                        .success(function(data){
+                            $scope.consos = data;
+                            Alert.toast('Compte mis à jour.');
+                            $mdDialog.hide();
+                            $scope.selectedCredit = null;
+                            $scope.balance = 0;
+                        })
+                    ;
+                })
+            ;
+        };
     })
     .config(function($stateProvider) {
         $stateProvider
