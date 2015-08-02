@@ -1,0 +1,48 @@
+<md-dialog aria-label="Créditer un compte">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Créditer un compte</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="Annuler" ng-click="cancel()">
+                <md-tooltip>
+                    Quitter ce modal tout pourri
+                </md-tooltip>
+                <md-icon md-font-icon="fa-times" class="fa md-headline"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <form name="creditForm" ng-submit="creditBalance(balance)">
+            <div layout="column">
+                <md-autocomplete
+                    md-search-text="searchText3"
+                    md-search-text-change="searchTextChange(searchText3)"
+                    md-selected-item-change="selectedCreditChange(user)"
+                    md-items="user in searchUser(searchText3)"
+                    md-item-text="user.name"
+                    md-min-length="1"
+                    placeholder="Rechercher un élève...">
+                    <md-item-template>
+                        <span md-highlight-text="searchText3" md-highlight-flags="^i">{{ user.name }}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        Pas d'élève "{{ searchText3 }}".
+                    </md-not-found>
+                </md-autocomplete>
+                <md-input-container>
+                    <label>Montant</label>
+                    <input required type="number" step="0.01" name="balance" ng-model="balance">
+                    <div ng-messages="creditForm.balance.$error" ng-show="creditForm.balance.$dirty">
+                        <div ng-message="required">Champ obligatoire</div>
+                    </div>
+                </md-input-container>
+                <md-button class="md-raised md-default md-raised">
+                    <md-tooltip>
+                        Et avec ça te paye pas de la kro...
+                    </md-tooltip>
+                    Valider
+                </md-button>
+            </div>
+        </form>
+    </md-dialog-content>
+</md-dialog>
