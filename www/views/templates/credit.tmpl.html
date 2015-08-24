@@ -12,7 +12,7 @@
         </div>
     </md-toolbar>
     <md-dialog-content>
-        <form name="creditForm" ng-submit="creditBalance(balance)">
+        <form name="creditForm" ng-submit="creditBalance(balance, pin)">
             <div layout="column">
                 <md-autocomplete
                     md-search-text="searchText3"
@@ -33,6 +33,13 @@
                     <label>Montant</label>
                     <input required type="number" step="0.01" name="balance" ng-model="balance">
                     <div ng-messages="creditForm.balance.$error" ng-show="creditForm.balance.$dirty">
+                        <div ng-message="required">Champ obligatoire</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Code PIN</label>
+                    <input required type="number" name="pin" ng-model="pin">
+                    <div ng-messages="creditForm.pin.$error" ng-show="creditForm.pin.$dirty">
                         <div ng-message="required">Champ obligatoire</div>
                     </div>
                 </md-input-container>

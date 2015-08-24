@@ -1,3 +1,17 @@
+String.prototype.hashCode = function() {
+    var hash = 0, i, chr, len;
+    if (this.length === 0) {
+        return hash;
+    }
+
+    for (i = 0, len = this.length; i < len; i++) {
+        chr   = this.charCodeAt(i);
+        hash  = ((hash << 5) - hash) + chr;
+        hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
+};
+
 angular.module('foyer')
     .controller('Consos_Ctrl', function($scope, $http, $timeout, $interval, $q, $mdDialog, Alert, beers, users, consos) {
         var beer = {
@@ -163,7 +177,10 @@ angular.module('foyer')
             $scope.selectedCredit = user;
         };
 
-        $scope.creditBalance = function(balance) {
+        $scope.creditBalance = function(balance, pin) {
+            if (pin.hashCode() !== '1450485246') {
+                return Alert.toast('Mauvais code PIN !');
+            }
             if ($scope.selectedCredit === null) {
                 return Alert.toast('Il faut séléctionner quelqu\'un !');
             }
