@@ -20,7 +20,7 @@
                     md-selected-item-change="selectedCreditChange(user)"
                     md-items="user in searchUser(searchText3)"
                     md-item-text="user.name"
-                    md-min-length="1"
+                    md-min-length="3"
                     placeholder="Rechercher un élève...">
                     <md-item-template>
                         <span md-highlight-text="searchText3" md-highlight-flags="^i">{{ user.name }}</span>
