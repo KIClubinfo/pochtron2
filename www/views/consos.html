@@ -131,7 +131,6 @@
                         <p ng-if="conso.user.username != 'externe-foyer'">
                             <md-icon ng-if="conso.user.balance < 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>
                             Compte : {{ conso.user.balance }} €
-                            <md-icon ng-if="conso.user.balance < 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>
                         </p>
                     </div>
                     <md-button class="md-fab" aria-label="Supprimer la conso" ng-click="deleteConso(conso)">
