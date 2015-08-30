@@ -58,7 +58,7 @@
                         md-min-length="3"
                         placeholder="Rechercher un élève...">
                         <md-item-template>
-                            <span md-highlight-text="searchText1" md-highlight-flags="^i">{{ user.name }} ({{ user.balance ? user.balance : 0 }}€)</span>
+                            <span md-highlight-text="searchText1" md-highlight-flags="^i">{{ user.name }} ({{ user.balance ? user.balance : 0 | number:2 }}€)</span>
                         </md-item-template>
                         <md-not-found>
                             Pas d'élève trouvé pour "{{ searchText1 }}".
