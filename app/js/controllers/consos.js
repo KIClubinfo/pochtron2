@@ -12,6 +12,9 @@ String.prototype.hashCode = function() {
     return hash;
 };
 
+var consoSent = 0;
+var consoOk = 0;
+
 angular.module('foyer')
     .controller('Consos_Ctrl', function($scope, $http, $timeout, $interval, $q, $mdDialog, Alert, beers, users, consos) {
         var beer = {
@@ -83,7 +86,30 @@ angular.module('foyer')
             $scope.clients = [];
         };
 
+        var reloadConsos = function() {
+            console.log('in timeout');
+            $http
+                .get(apiPrefix + 'beerusers?limit=50&sort=-date')
+                .success(function(data){
+                    $scope.consos = data;
+                })
+            ;
+        };
+
+        var consoAdded = function() {
+            consoOk++;
+            if (consoOk >= consoSent) {
+                consoSent = consoOk = 0;
+                $scope.isLoading = false;
+                Alert.toast('Consos encaissées !');
+                $scope.beer = beer;
+                $scope.clients = [];
+                reloadConsos();
+            }
+        };
+
         $scope.confirmBasket = function() {
+            consoSent = consoOk = 0;
             if ($scope.clients.length === 0 || $scope.beer == beer) {
                 return Alert.toast('Le panier est vide');
             }
@@ -100,19 +126,9 @@ angular.module('foyer')
                 } else {
                     slug = $scope.clients[key].slug;
                 }
-
-                $http.post(apiPrefix + 'beers/' + $scope.beer.slug + '/users/' + slug);
-                $timeout($http
-                    .get(apiPrefix + 'users/' + slug)
-                    .success(function(data){
-                        $scope.consos.unshift({beer: chosenBeer, user: data, date: new Date().getTime()});
-                    }),
-                3000);
+                consoSent++;
+                $http.post(apiPrefix + 'beers/' + $scope.beer.slug + '/users/' + slug).success(consoAdded);
             }
-            $scope.isLoading = false;
-            Alert.toast('Consos encaissées !');
-            $scope.beer = beer;
-            $scope.clients = [];
         };
 
         $scope.deleteConso = function(conso) {
@@ -144,12 +160,7 @@ angular.module('foyer')
                     $scope.users = data;
                 })
             ;
-            $http
-                .get(apiPrefix + 'beerusers?limit=50&sort=-date')
-                .success(function(data){
-                    $scope.consos = data;
-                })
-            ;
+            reloadConsos();
         }, 300000);
 
         $scope.selectedCredit = null;

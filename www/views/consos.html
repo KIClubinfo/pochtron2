@@ -58,7 +58,7 @@
                         md-min-length="3"
                         placeholder="Rechercher un élève...">
                         <md-item-template>
-                            <span md-highlight-text="searchText1" md-highlight-flags="^i">{{ user.name }}</span>
+                            <span md-highlight-text="searchText1" md-highlight-flags="^i">{{ user.name }} ({{ user.balance ? user.balance : 0 }}€)</span>
                         </md-item-template>
                         <md-not-found>
                             Pas d'élève trouvé pour "{{ searchText1 }}".
@@ -130,7 +130,7 @@
                         <p ng-if="conso.user.username == 'externe-foyer'">&nbsp;</p>
                         <p ng-if="conso.user.username != 'externe-foyer'">
                             <md-icon ng-if="conso.user.balance < 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>
-                            Compte : {{ conso.user.balance }} €
+                            Compte : {{ conso.user.balance | number:2 }} €
                         </p>
                     </div>
                     <md-button class="md-fab" aria-label="Supprimer la conso" ng-click="deleteConso(conso)">
