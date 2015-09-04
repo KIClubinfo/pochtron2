@@ -189,7 +189,7 @@ angular.module('foyer')
         };
 
         $scope.creditBalance = function(balance, pin) {
-            if (pin.hashCode() !== '1450485246') {
+            if ((pin+'').hashCode() !== '1450485246') {
                 return Alert.toast('Mauvais code PIN !');
             }
             if ($scope.selectedCredit === null) {
