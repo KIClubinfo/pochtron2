@@ -45,9 +45,31 @@ angular.module('foyer')
         };
 
         $scope.selectUser = function(user) {
+            // PIN access for external account
+            if ((user.slug !== undefined && user.slug == 'externe-foyer') || (user.username !== undefined && user.username == 'externe-foyer')) {
+                $scope.toValidate = user;
+                $mdDialog
+                    .show({
+                        templateUrl: 'views/templates/pin.tmpl.html',
+                        parent: angular.element(document.body),
+                        scope: $scope,
+                        preserveScope: true,
+                    })
+                    .then(function() {}, function() {
+                        Alert.toast('Tant pis...');
+                    })
+                ;
+                return;
+            }
+
+            $scope.addUser(user);
+        };
+
+        $scope.addUser = function(user) {
             // Add user only if not present
-            if ($scope.clients.indexOf(user) === -1)
+            if ($scope.clients.indexOf(user) === -1) {
                 $scope.clients.push(user);
+            }
         };
 
         $scope.emptyUser = function(user) {
@@ -174,9 +196,6 @@ angular.module('foyer')
                     preserveScope: true,
                     targetEvent: $event,
                 })
-                .then(function() {}, function() {
-                    Alert.toast('Tant pis...');
-                })
             ;
         };
 
@@ -189,7 +208,7 @@ angular.module('foyer')
         };
 
         $scope.creditBalance = function(balance, pin) {
-            if ((pin+'').hashCode() !== '1450485246') {
+            if ((pin+'').hashCode() != '1450485246') {
                 return Alert.toast('Mauvais code PIN !');
             }
             if ($scope.selectedCredit === null) {
@@ -211,6 +230,14 @@ angular.module('foyer')
                     ;
                 })
             ;
+        };
+
+        $scope.pinConfirm = function(pin) {
+            if ((pin+'').hashCode() != '1450485246') {
+                return Alert.toast('Mauvais code PIN !');
+            }
+            $scope.addUser($scope.toValidate);
+            $mdDialog.cancel();
         };
     })
     .config(function($stateProvider) {

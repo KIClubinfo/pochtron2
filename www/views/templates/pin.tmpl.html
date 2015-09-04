@@ -1,0 +1,33 @@
+<md-dialog aria-label="Dévérouiller le compte externe">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Dévérouiller le compte externe</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="Annuler" ng-click="cancel()">
+                <md-tooltip>
+                    Nope nope nope je connais pas le mot de passe en fait
+                </md-tooltip>
+                <md-icon md-font-icon="fa-times" class="fa md-headline"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <form name="pinForm" ng-submit="pinConfirm(pin)">
+            <div layout="column">
+                <md-input-container>
+                    <label>Code PIN</label>
+                    <input required type="password" name="pin" ng-model="pin">
+                    <div ng-messages="pinForm.pin.$error" ng-show="pinForm.pin.$dirty">
+                        <div ng-message="required">Champ obligatoire</div>
+                    </div>
+                </md-input-container>
+                <md-button class="md-raised md-default md-raised">
+                    <md-tooltip>
+                        Ok, ça passe pour cette fois...
+                    </md-tooltip>
+                    Valider
+                </md-button>
+            </div>
+        </form>
+    </md-dialog-content>
+</md-dialog>
