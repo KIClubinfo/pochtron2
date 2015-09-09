@@ -135,7 +135,7 @@
                 <md-list-item class="md-3-line" ng-repeat="conso in consos">
                     <img ng-src="{{ conso.user.image_url | thumb | urlFile }}" class="md-avatar" alt="Image de l'utilisateur" />
                     <div class="md-list-item-text">
-                        <h3>{{ conso.beer ? conso.beer.name : 'Compte crédité' }}</h3>
+                        <h3>{{ conso.beer ? conso.beer.name : 'Compte crédité (' + conso.amount + '€)' }}</h3>
                         <h4>{{ conso.user.first_name }} {{ conso.user.last_name }}</h4>
                         <p ng-if="conso.user.username == 'externe-foyer'">&nbsp;</p>
                         <p ng-if="conso.user.username != 'externe-foyer'">
@@ -143,7 +143,7 @@
                             Compte : {{ conso.user.balance | number:2 }} €
                         </p>
                     </div>
-                    <md-button class="md-fab" aria-label="Supprimer la conso" ng-click="deleteConso(conso)">
+                    <md-button ng-if="conso.beer" class="md-fab" aria-label="Supprimer la conso" ng-click="deleteConso(conso)">
                         <md-tooltip>
                             Supprimer la conso
                         </md-tooltip>

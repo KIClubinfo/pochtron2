@@ -46,6 +46,10 @@ angular.module('foyer')
 
         $scope.selectUser = function(user) {
             // PIN access for external account
+            if (user.slug === undefined && user.username === undefined) {
+                return;
+            }
+
             if ((user.slug !== undefined && user.slug == 'externe-foyer') || (user.username !== undefined && user.username == 'externe-foyer')) {
                 $scope.toValidate = user;
                 $mdDialog
@@ -218,16 +222,11 @@ angular.module('foyer')
             $http
                 .patch(apiPrefix + 'users/' + $scope.selectedCredit.slug + '/balance', {balance: balance})
                 .success(function(){
-                    $http
-                        .get(apiPrefix + 'beerusers?limit=50&sort=-date')
-                        .success(function(data){
-                            $scope.consos = data;
-                            Alert.toast('Compte mis à jour.');
-                            $mdDialog.hide();
-                            $scope.selectedCredit = null;
-                            $scope.balance = 0;
-                        })
-                    ;
+                    reloadConsos();
+                    Alert.toast('Compte mis à jour.');
+                    $mdDialog.hide();
+                    $scope.selectedCredit = null;
+                    $scope.balance = 0;
                 })
             ;
         };
