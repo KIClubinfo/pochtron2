@@ -7,15 +7,9 @@
                 </h1>
                 <span flex></span>
                 <md-button class="md-icon-button" aria-label="Annuler" ng-click="emptyBasket()">
-                    <md-tooltip>
-                        Vider le panier
-                    </md-tooltip>
                     <md-icon md-font-icon="fa-times" class="fa md-headline"></md-icon>
                 </md-button>
                 <md-button class="md-icon-button" aria-label="Confirmer" ng-click="confirmBasket()">
-                    <md-tooltip>
-                        Confirmer le panier
-                    </md-tooltip>
                     <md-icon md-font-icon="fa-check" class="fa md-headline"></md-icon>
                 </md-button>
             </div>
@@ -123,9 +117,6 @@
             <div class="md-toolbar-tools">
                 <h1 class="md-toolbar-tools">Historique des consos</h1>
                 <md-button class="md-fab md-mini" aria-label="Créditer un compte" ng-click="addBalance($event)">
-                    <md-tooltip>
-                        Créditer un compte
-                    </md-tooltip>
                     <md-icon md-font-icon="fa-usd" class="fa md-headline"></md-icon>
                 </md-button>
             </div>
@@ -144,9 +135,6 @@
                         </p>
                     </div>
                     <md-button ng-if="conso.beer" class="md-fab" aria-label="Supprimer la conso" ng-click="deleteConso(conso)">
-                        <md-tooltip>
-                            Supprimer la conso
-                        </md-tooltip>
                         <md-icon md-font-icon="fa-trash" class="fa md-headline"></md-icon>
                     </md-button>
                 </md-list-item>
