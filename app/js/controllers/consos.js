@@ -239,6 +239,7 @@ angular.module('foyer')
             }
             $scope.addUser($scope.toValidate);
             $mdDialog.cancel();
+            $scope.pin = '';
         };
     })
     .config(function($stateProvider) {
