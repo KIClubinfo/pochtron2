@@ -227,6 +227,8 @@ angular.module('foyer')
                     $mdDialog.hide();
                     $scope.selectedCredit = null;
                     $scope.balance = 0;
+                    $scope.pin = '';
+                    $scope.searchText3 = '';
                 })
             ;
         };
