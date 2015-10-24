@@ -20,7 +20,6 @@ angular
     .config(function($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, $locationProvider) {
         $urlMatcherFactoryProvider.strictMode(false);
         $urlRouterProvider.otherwise('/404');
-        $locationProvider.html5Mode(true);
 
         $stateProvider
             .state('root.404', {

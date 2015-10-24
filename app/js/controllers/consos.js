@@ -391,7 +391,7 @@ angular.module('foyer')
     .config(function($stateProvider) {
         $stateProvider
             .state('root.consos', {
-                url: 'consos',
+                url: '/consos',
                 templateUrl: 'views/consos.html',
                 controller: 'Consos_Ctrl',
                 resolve: {

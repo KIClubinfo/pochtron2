@@ -26,7 +26,7 @@ angular.module('foyer')
     .config(function($stateProvider) {
         $stateProvider
             .state('login', {
-                url: '/',
+                url: '',
                 templateUrl: 'views/login.html',
                 controller: 'Login_Ctrl'
             })

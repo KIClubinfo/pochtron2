@@ -22,7 +22,7 @@ angular.module('foyer')
     .config(function($stateProvider) {
         $stateProvider
             .state('root', {
-                url: '/',
+                url: '',
                 abstract: true,
                 templateUrl: 'views/home.html',
             })

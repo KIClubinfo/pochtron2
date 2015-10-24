@@ -102,7 +102,7 @@ angular.module('foyer')
     .config(function($stateProvider) {
         $stateProvider
             .state('root.beers', {
-                url: 'bieres',
+                url: '/bieres',
                 templateUrl: 'views/beers.html',
                 controller: 'Beers_Ctrl',
                 resolve: {
