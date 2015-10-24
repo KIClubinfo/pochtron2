@@ -198,7 +198,7 @@ angular.module('foyer')
                 consoSent += $scope.basket[key].beers.length;
             }
 
-            for (var key in $scope.basket) {
+            for (key in $scope.basket) {
                 $scope.confirmBasketEntry($scope.basket[key], true);
             }
         };
