@@ -4,9 +4,6 @@
             <h2>Créditer un compte</h2>
             <span flex></span>
             <md-button class="md-icon-button" aria-label="Annuler" ng-click="cancel()">
-                <md-tooltip>
-                    Quitter ce modal tout pourri
-                </md-tooltip>
                 <md-icon md-font-icon="fa-times" class="fa md-headline"></md-icon>
             </md-button>
         </div>
@@ -38,15 +35,12 @@
                 </md-input-container>
                 <md-input-container>
                     <label>Code PIN</label>
-                    <input required type="number" name="pin" ng-model="pin">
+                    <input required type="password" name="pin" ng-model="pin">
                     <div ng-messages="creditForm.pin.$error" ng-show="creditForm.pin.$dirty">
                         <div ng-message="required">Champ obligatoire</div>
                     </div>
                 </md-input-container>
                 <md-button class="md-raised md-default md-raised">
-                    <md-tooltip>
-                        Et avec ça te paye pas de la kro...
-                    </md-tooltip>
                     Valider
                 </md-button>
             </div>

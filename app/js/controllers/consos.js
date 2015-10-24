@@ -12,22 +12,32 @@ String.prototype.hashCode = function() {
     return hash;
 };
 
+var consoSent = 0;
+var consoOk = 0;
+var sentBasketEntry = null;
+
 angular.module('foyer')
     .controller('Consos_Ctrl', function($scope, $http, $timeout, $interval, $q, $mdDialog, Alert, beers, users, consos) {
-        var beer = {
-            image_url: '',
-            name: 'Choisis une bière',
-            price: ''
-        };
         $scope.users = users;
         $scope.beers = beers;
-        $scope.clients = [];
-        $scope.beer = beer;
+        $scope.consos = consos;
+        $scope.basket = [];
         $scope.searchText1 = '';
         $scope.searchText2 = '';
-        $scope.consos = consos;
-        var chosenBeer;
 
+
+
+
+
+        /**
+         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+         *                              SEARCH
+         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+         */
+
+        /**
+         * Recherche un utilisateur
+         */
         $scope.searchUser = function(query) {
             deferred = $q.defer();
             var results = query ? $scope.users : $scope.users,
@@ -41,20 +51,9 @@ angular.module('foyer')
             return deferred.promise;
         };
 
-        $scope.selectUser = function(user) {
-            // Add user only if not present
-            if ($scope.clients.indexOf(user) === -1)
-                $scope.clients.push(user);
-        };
-
-        $scope.emptyUser = function(user) {
-            $scope.clients.splice($scope.clients.indexOf(user), 1);
-        };
-
-        $scope.selectedUserChange = function(item) {
-            $scope.selectUser(item);
-        };
-
+        /**
+         * Recherche d'une bière
+         */
         $scope.searchBeer = function(query) {
             return query ? $scope.beers.filter(createFilterFor(query)) : $scope.beers;
         };
@@ -66,62 +65,195 @@ angular.module('foyer')
             };
         }
 
+
+
+
+
+
+
+
+
+
+
+        /**
+         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+         *                        BASKET FILLING
+         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+         */
+
+        /**
+         * Ajout d'un user au panier avec confirmation PIN
+         */
+        $scope.selectedUserChange = function(item) {
+            $scope.selectUser(item);
+        };
+        $scope.selectUser = function(user) {
+            // PIN access for external account
+            if (user.slug === undefined && user.username === undefined) {
+                return;
+            }
+
+            if ((user.slug !== undefined && user.slug == 'externe-foyer') || (user.username !== undefined && user.username == 'externe-foyer')) {
+                $scope.toValidate = user;
+                $mdDialog
+                    .show({
+                        templateUrl: 'views/templates/pin.tmpl.html',
+                        parent: angular.element(document.body),
+                        scope: $scope,
+                        preserveScope: true,
+                    })
+                    .then(function() {}, function() {
+                        Alert.toast('Tant pis...');
+                    })
+                ;
+                return;
+            }
+
+            $scope.addUser(user);
+        };
+
+        /**
+         * Ajout effectif d'un user au panier
+         */
+        $scope.addUser = function(user) {
+            // Add user only if not present
+            for (var key in $scope.basket) {
+                if ($scope.basket[key].user == user) {
+                    return;
+                }
+            }
+
+            $scope.basket.push({user: user, beers: []});
+        };
+
+        /**
+         * Retire un user d'un panier
+         */
+        $scope.emptyUser = function(basketEntry) {
+            $scope.basket.splice($scope.basket.indexOf(basketEntry), 1);
+        };
+
         $scope.selectedBeerChange = function(item) {
             $scope.selectBeer(item);
         };
 
-        $scope.selectBeer = function(item) {
-            $scope.beer = item;
+        /**
+         * Ajout effectif d'une bière au panier
+         */
+        $scope.selectBeer = function(beer) {
+            for (var key in $scope.basket) {
+                $scope.basket[key].beers.push(beer);
+            }
         };
 
-        $scope.emptyBeer = function() {
-            $scope.beer = beer;
+        /**
+         * Retrait d'une bière (dépend de la ligne dans le panier)
+         */
+        $scope.emptyBeer = function(basketEntry, beer) {
+            var entryIndex = $scope.basket.indexOf(basketEntry);
+            $scope.basket[entryIndex].beers.splice($scope.basket[entryIndex].beers.indexOf(beer), 1);
         };
 
         $scope.emptyBasket = function() {
-            $scope.beer = beer;
-            $scope.clients = [];
+            $scope.basket = [];
         };
 
-        $scope.confirmBasket = function() {
-            if ($scope.clients.length === 0 || $scope.beer == beer) {
-                return Alert.toast('Le panier est vide');
+
+
+
+
+
+
+        /**
+         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+         *                        BASKET CONFIRMATION
+         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+         */
+
+        var consoAdded = function() {
+            consoOk++;
+            if (consoOk >= consoSent) {
+                consoSent = consoOk = 0;
+                $scope.isLoading = false;
+                Alert.toast('Consos encaissées !');
+
+                $scope.emptyUser(sentBasketEntry);
+                sentBasketEntry = null;
+                reloadConsos();
             }
-            chosenBeer = $scope.beer;
+        };
+
+        /**
+         * Confirme le panier
+         */
+        $scope.confirmBasket = function() {
             if ($scope.isLoading) {
                 return;
             }
             $scope.isLoading = true;
-            var slug;
 
-            for (var key in $scope.clients) {
-                if ($scope.clients[key].username) {
-                    slug = $scope.clients[key].username;
-                } else {
-                    slug = $scope.clients[key].slug;
-                }
-
-                $http.post(apiPrefix + 'beers/' + $scope.beer.slug + '/users/' + slug);
-                $timeout($http
-                    .get(apiPrefix + 'users/' + slug)
-                    .success(function(data){
-                        $scope.consos.unshift({beer: chosenBeer, user: data, date: new Date().getTime()});
-                    }),
-                3000);
+            // Count consos
+            consoSent = 0;
+            for (var key in $scope.basket) {
+                consoSent += $scope.basket[key].beers.length;
             }
-            $scope.isLoading = false;
-            Alert.toast('Consos encaissées !');
-            $scope.beer = beer;
-            $scope.clients = [];
+
+            for (var key in $scope.basket) {
+                $scope.confirmBasketEntry($scope.basket[key], true);
+            }
         };
 
+        $scope.confirmBasketEntry = function(basketEntry, ignoreLoadingCheck) {
+            consoSent = consoOk = 0;
+            if (basketEntry.beers.length === 0) {
+                return Alert.toast('Le panier est vide');
+            }
+            if ($scope.isLoading && ignoreLoadingCheck === undefined) {
+                return;
+            }
+            $scope.isLoading = true;
+
+            var slug;
+            if (basketEntry.user.username) {
+                slug = basketEntry.user.username;
+            } else {
+                slug = basketEntry.user.slug;
+            }
+
+            if (ignoreLoadingCheck === undefined) {
+                consoSent = basketEntry.beers.length;
+            }
+            for (var key in basketEntry.beers) {
+                $http.post(apiPrefix + 'transactions', {user: slug, beer: basketEntry.beers[key].slug}).success(consoAdded);
+            }
+        };
+
+
+
+
+
+
+
+
+
+
+
+        /**
+         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+         *                        TRANSACTIONS EDITION
+         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+         */
+
+        /**
+         * Supprime une conso
+         */
         $scope.deleteConso = function(conso) {
             if ($scope.isLoading) {
                 return;
             }
             $scope.isLoading = true;
             $http
-                .delete(apiPrefix + 'beers/' + conso.beer.slug + '/users/' + conso.user.username + '/' + conso.id)
+                .delete(apiPrefix + 'transactions/' + conso.id)
                 .success(function(){
                     $scope.consos.splice($scope.consos.indexOf(conso), 1);
                     Alert.toast('Conso supprimée !');
@@ -130,7 +262,114 @@ angular.module('foyer')
             ;
         };
 
-        // Toutes les 5 minutes, on recharge tout pour bien trier/afficher
+
+
+
+
+
+
+
+
+
+        /**
+         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+         *                              CREDIT
+         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+         */
+
+        /**
+         * Crédite un compte (fait apparaitre le modal)
+         */
+        $scope.addBalance = function($event) {
+            $scope.selectedCredit = null;
+            $mdDialog
+                .show({
+                    templateUrl: 'views/templates/credit.tmpl.html',
+                    parent: angular.element(document.body),
+                    scope: $scope,
+                    preserveScope: true,
+                    targetEvent: $event,
+                })
+            ;
+        };
+
+        /**
+         * Choisis un utilisateur dans la fonction de crédit
+         */
+        $scope.selectedCreditChange = function(user) {
+            $scope.selectedCredit = user;
+        };
+
+        /**
+         * Crédite un compte (action réelle)
+         */
+        $scope.creditBalance = function(balance, pin) {
+            if ((pin+'').hashCode() != '1450485246') {
+                return Alert.toast('Mauvais code PIN !');
+            }
+            if ($scope.selectedCredit === null) {
+                return Alert.toast('Il faut séléctionner quelqu\'un !');
+            }
+
+            $http
+                .post(apiPrefix + 'transactions/', {user: $scope.selectedCredit.slug, credit: balance})
+                .success(function(){
+                    reloadConsos();
+                    Alert.toast('Compte mis à jour.');
+                    $mdDialog.hide();
+                    $scope.selectedCredit = null;
+                    $scope.balance = 0;
+                    $scope.pin = '';
+                    $scope.searchText3 = '';
+                })
+            ;
+        };
+
+
+
+
+
+
+        /**
+         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+         *                              UTILS
+         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+         */
+
+         /**
+          * Annule un dialogue
+          */
+         $scope.cancel = function() {
+             $mdDialog.cancel();
+         };
+
+        /**
+         * Confirmation code pin appelée par le modal
+         */
+        $scope.pinConfirm = function(pin) {
+            if ((pin+'').hashCode() != '1450485246') {
+                return Alert.toast('Mauvais code PIN !');
+            }
+            $scope.addUser($scope.toValidate);
+            $mdDialog.cancel();
+            $scope.pin = '';
+        };
+
+        /**
+         * Recharge l'historique des consos
+         */
+        var reloadConsos = function() {
+            $http
+                .get(apiPrefix + 'transactions?limit=50&sort=-date')
+                .success(function(data){
+                    $scope.consos = data;
+                })
+            ;
+        };
+
+        /**
+         * Toutes les 5 minutes, on recharge tout pour bien trier/afficher
+         */
         $interval(function() {
             $http
                 .get(apiPrefix + 'beers')
@@ -144,63 +383,10 @@ angular.module('foyer')
                     $scope.users = data;
                 })
             ;
-            $http
-                .get(apiPrefix + 'beerusers?limit=50&sort=-date')
-                .success(function(data){
-                    $scope.consos = data;
-                })
-            ;
+            reloadConsos();
         }, 300000);
 
         $scope.selectedCredit = null;
-        $scope.addBalance = function($event) {
-            $scope.selectedCredit = null;
-            $mdDialog
-                .show({
-                    templateUrl: 'views/templates/credit.tmpl.html',
-                    parent: angular.element(document.body),
-                    scope: $scope,
-                    preserveScope: true,
-                    targetEvent: $event,
-                })
-                .then(function() {}, function() {
-                    Alert.toast('Tant pis...');
-                })
-            ;
-        };
-
-        $scope.cancel = function() {
-            $mdDialog.cancel();
-        };
-
-        $scope.selectedCreditChange = function(user) {
-            $scope.selectedCredit = user;
-        };
-
-        $scope.creditBalance = function(balance, pin) {
-            if (pin.hashCode() !== '1450485246') {
-                return Alert.toast('Mauvais code PIN !');
-            }
-            if ($scope.selectedCredit === null) {
-                return Alert.toast('Il faut séléctionner quelqu\'un !');
-            }
-
-            $http
-                .patch(apiPrefix + 'users/' + $scope.selectedCredit.slug + '/balance', {balance: balance})
-                .success(function(){
-                    $http
-                        .get(apiPrefix + 'beerusers?limit=50&sort=-date')
-                        .success(function(data){
-                            $scope.consos = data;
-                            Alert.toast('Compte mis à jour.');
-                            $mdDialog.hide();
-                            $scope.selectedCredit = null;
-                            $scope.balance = 0;
-                        })
-                    ;
-                })
-            ;
-        };
     })
     .config(function($stateProvider) {
         $stateProvider
@@ -216,7 +402,7 @@ angular.module('foyer')
                         return $resource(apiPrefix + 'userbeers').query().$promise;
                     },
                     consos: function($resource) {
-                        return $resource(apiPrefix + 'beerusers?limit=50&sort=-date').query().$promise;
+                        return $resource(apiPrefix + 'transactions?limit=50&sort=-date').query().$promise;
                     }
                 },
                 data: {
