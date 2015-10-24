@@ -14,29 +14,38 @@
                 </md-button>
             </div>
         </md-toolbar>
-        <md-content layout="row" layout-padding class="md-whiteframe-z3">
-            <div layout="row" layout-wrap flex="80" flex-sm="50">
-                <md-card class="beer selectable" flex="20" flex-sm="100" ng-if="!clients.length">
+        <md-content layout="row" layout-padding layout-wrap class="md-whiteframe-z3">
+            <div layout="row" layout-wrap flex="90" ng-if="!basket.length">
+                <md-card class="beer selectable" flex="20" flex-sm="100">
                     <md-card-content layout="column" layout-align="center center">
                         <img src="imgs/interrogation.png" class="md-card-image" alt="Image utilisateur">
                         <div class="details">Choisis des élèves</div>
                     </md-card-content>
                 </md-card>
-                <md-card class="beer selectable" flex="20" flex-sm="100" ng-repeat="user in clients" ng-click="emptyUser(user)">
-                    <md-card-content layout="column" layout-align="end center">
-                        <img ng-src="{{ user.image_url | thumb | urlFile }}" class="md-card-image" alt="Image utilisateur">
-                        <div class="details">{{ user.name ? user.name : user.first_name + ' ' + user.last_name }}</div>
-                    </md-card-content>
-                </md-card>
             </div>
-            <div flex="20" flex-sm="50">
-                <md-card class="beer selectable" flex="25" ng-click="emptyBeer()">
-                    <md-card-content layout="column" layout-align="center center">
-                        <img ng-if="beer.image_url"  class="md-card-image" alt="Image bière" ng-src="{{ beer.image_url | thumb | urlFile }}">
-                        <img ng-if="!beer.image_url" class="md-card-image" alt="Image bière" src="imgs/interrogation.png">
-                        <div class="details">{{ beer.name }} {{ beer.price ? '(' + beer.price + '€)' : '' }}</div>
-                    </md-card-content>
-                </md-card>
+            <div layout="row" flex="100" layout-align="space-between start" ng-repeat="basketEntry in basket">
+                <div layout="row" flex="90" layout-wrap layout-align="start start">
+                    <md-card class="beer selectable" flex="20" flex-sm="100" ng-click="emptyUser(basketEntry)">
+                        <md-card-content layout="column" layout-align="end center">
+                            <img ng-src="{{ basketEntry.user.image_url | thumb | urlFile }}" class="md-card-image" alt="Image utilisateur">
+                            <div class="details">{{ basketEntry.user.name ? basketEntry.user.name : basketEntry.user.first_name + ' ' + basketEntry.user.last_name }}</div>
+                        </md-card-content>
+                    </md-card>
+                    <div layout="row" flex="75" layout-wrap>
+                        <md-card class="beer selectable" flex="20" ng-repeat="beer in basketEntry.beers track by $index" ng-click="emptyBeer(basketEntry, beer)">
+                            <md-card-content layout="column" layout-align="center center">
+                                <img ng-if="beer.image_url"  class="md-card-image" alt="Image bière" ng-src="{{ beer.image_url | thumb | urlFile }}">
+                                <img ng-if="!beer.image_url" class="md-card-image" alt="Image bière" src="imgs/interrogation.png">
+                                <div class="details">{{ beer.name }} {{ beer.price ? '(' + beer.price + '€)' : '' }}</div>
+                            </md-card-content>
+                        </md-card>
+                    </div>
+                </div>
+                <div flex="10">
+                    <md-button class="md-fab" aria-label="Valider cet élève" ng-click="confirmBasketEntry(basketEntry)">
+                        <md-icon md-font-icon="fa-check" class="fa md-headline"></md-icon>
+                    </md-button>
+                </div>
             </div>
         </md-content>
 
@@ -134,7 +143,7 @@
                             Compte : {{ conso.user.balance | number:2 }} €
                         </p>
                     </div>
-                    <md-button ng-if="conso.beer" class="md-fab" aria-label="Supprimer la conso" ng-click="deleteConso(conso)">
+                    <md-button class="md-fab" aria-label="Supprimer la conso" ng-click="deleteConso(conso)">
                         <md-icon md-font-icon="fa-trash" class="fa md-headline"></md-icon>
                     </md-button>
                 </md-list-item>
