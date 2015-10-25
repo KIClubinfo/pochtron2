@@ -12,9 +12,7 @@ String.prototype.hashCode = function() {
     return hash;
 };
 
-var consoSent = 0;
-var consoOk = 0;
-var sentBasketEntry = null;
+var consosToSend = [];
 
 angular.module('foyer')
     .controller('Consos_Ctrl', function($scope, $http, $timeout, $interval, $q, $mdDialog, Alert, beers, users, consos) {
@@ -170,45 +168,61 @@ angular.module('foyer')
          * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
          */
 
-        var consoAdded = function() {
-            consoOk++;
-            if (consoOk >= consoSent) {
-                consoSent = consoOk = 0;
+        /**
+         * Envoie toutes les consos jusqu'à ce qu'il n'y en ait plus
+         */
+        var sendConsos = function() {
+            if (consosToSend.length === 0) {
                 $scope.isLoading = false;
                 Alert.toast('Consos encaissées !');
-
-                $scope.emptyUser(sentBasketEntry);
-                sentBasketEntry = null;
+                consosToSend = [];
                 reloadConsos();
+                return;
             }
+
+            var conso = consosToSend.pop();
+            $http.post(apiPrefix + 'transactions', {user: conso.user, beer: conso.beer}).success(sendConsos);
         };
 
         /**
          * Confirme le panier
          */
         $scope.confirmBasket = function() {
+            consosToSend = [];
+
+            if ($scope.basket.length === 0) {
+                return Alert.toast('Le panier est vide');
+            }
             if ($scope.isLoading) {
                 return;
             }
             $scope.isLoading = true;
 
-            // Count consos
-            consoSent = 0;
             for (var key in $scope.basket) {
-                consoSent += $scope.basket[key].beers.length;
-            }
+                var basketEntry = $scope.basket[key];
 
-            for (key in $scope.basket) {
-                $scope.confirmBasketEntry($scope.basket[key], true);
+                var slug;
+                if (basketEntry.user.username) {
+                    slug = basketEntry.user.username;
+                } else {
+                    slug = basketEntry.user.slug;
+                }
+
+                for (var key2 in basketEntry.beers) {
+                    consosToSend.push({user: slug, beer: basketEntry.beers[key2].slug});
+                }
             }
+            $scope.basket = [];
+            sendConsos();
         };
 
-        $scope.confirmBasketEntry = function(basketEntry, ignoreLoadingCheck) {
-            consoSent = consoOk = 0;
+        $scope.confirmBasketEntry = function(basketEntry) {
+            consosToSend = [];
+
             if (basketEntry.beers.length === 0) {
                 return Alert.toast('Le panier est vide');
             }
-            if ($scope.isLoading && ignoreLoadingCheck === undefined) {
+            if ($scope.isLoading) {
                 return;
             }
             $scope.isLoading = true;
@@ -220,12 +234,11 @@ angular.module('foyer')
                 slug = basketEntry.user.slug;
             }
 
-            if (ignoreLoadingCheck === undefined) {
-                consoSent = basketEntry.beers.length;
-            }
             for (var key in basketEntry.beers) {
-                $http.post(apiPrefix + 'transactions', {user: slug, beer: basketEntry.beers[key].slug}).success(consoAdded);
+                consosToSend.push({user: slug, beer: basketEntry.beers[key].slug});
             }
+            $scope.emptyUser(basketEntry);
+            sendConsos();
         };
 
 

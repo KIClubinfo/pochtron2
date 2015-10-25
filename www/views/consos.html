@@ -25,14 +25,14 @@
             </div>
             <div layout="row" flex="100" layout-align="space-between start" ng-repeat="basketEntry in basket">
                 <div layout="row" flex="90" layout-wrap layout-align="start start">
-                    <md-card class="beer selectable" flex="20" flex-sm="100" ng-click="emptyUser(basketEntry)">
+                    <md-card class="beer selectable" flex="15" flex-sm="100" ng-click="emptyUser(basketEntry)">
                         <md-card-content layout="column" layout-align="end center">
                             <img ng-src="{{ basketEntry.user.image_url | thumb | urlFile }}" class="md-card-image" alt="Image utilisateur">
                             <div class="details">{{ basketEntry.user.name ? basketEntry.user.name : basketEntry.user.first_name + ' ' + basketEntry.user.last_name }}</div>
                         </md-card-content>
                     </md-card>
-                    <div layout="row" flex="75" layout-wrap>
-                        <md-card class="beer selectable" flex="20" ng-repeat="beer in basketEntry.beers track by $index" ng-click="emptyBeer(basketEntry, beer)">
+                    <div layout="row" flex="80" layout-wrap>
+                        <md-card class="beer selectable" flex="15" ng-repeat="beer in basketEntry.beers track by $index" ng-click="emptyBeer(basketEntry, beer)">
                             <md-card-content layout="column" layout-align="center center">
                                 <img ng-if="beer.image_url"  class="md-card-image" alt="Image bière" ng-src="{{ beer.image_url | thumb | urlFile }}">
                                 <img ng-if="!beer.image_url" class="md-card-image" alt="Image bière" src="imgs/interrogation.png">
@@ -137,6 +137,7 @@
                     <div class="md-list-item-text">
                         <h3>{{ conso.beer ? conso.beer.name : 'Compte crédité (' + conso.amount + '€)' }}</h3>
                         <h4>{{ conso.user.first_name }} {{ conso.user.last_name }}</h4>
+                        <h4>{{ conso.date*1000 | date:"'Le' dd/MM 'à' HH'h'mm" }}</h4>
                         <p ng-if="conso.user.username == 'externe-foyer'">&nbsp;</p>
                         <p ng-if="conso.user.username != 'externe-foyer'">
                             <md-icon ng-if="conso.user.balance < 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>
