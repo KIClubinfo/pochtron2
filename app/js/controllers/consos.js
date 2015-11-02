@@ -325,7 +325,7 @@ angular.module('foyer')
             }
 
             $http
-                .post(apiPrefix + 'transactions/', {user: $scope.selectedCredit.slug, credit: balance})
+                .post(apiPrefix + 'transactions', {user: $scope.selectedCredit.slug, credit: balance})
                 .success(function(){
                     reloadConsos();
                     Alert.toast('Compte mis à jour.');
