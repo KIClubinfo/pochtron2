@@ -7,7 +7,7 @@
     "angular-animate": "latest",
     "angular-base64-upload": "latest",
     "angular-jwt": "latest",
-    "angular-material": "latest",
+    "angular-material": "v1.0.0-rc7",
     "angular-messages": "latest",
     "angular-resource": "latest",
     "font-awesome": "latest",
