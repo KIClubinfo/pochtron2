@@ -15,7 +15,7 @@ String.prototype.hashCode = function() {
 var consosToSend = [];
 
 angular.module('foyer')
-    .controller('Consos_Ctrl', function($scope, $http, $timeout, $interval, $q, $mdDialog, Alert, beers, users, consos) {
+    .controller('Basket_Ctrl', function($scope, $http, $timeout, $interval, $q, $mdDialog, Alert, beers, users, consos) {
         $scope.users = users;
         $scope.beers = beers;
         $scope.consos = consos;
@@ -317,7 +317,7 @@ angular.module('foyer')
          * Crédite un compte (action réelle)
          */
         $scope.creditBalance = function(balance, pin) {
-            if ((pin+'').hashCode() != '1450485246') {
+            if ((pin+'').hashCode() != '3039') {
                 return Alert.toast('Mauvais code PIN !');
             }
             if ($scope.selectedCredit === null) {
@@ -403,10 +403,10 @@ angular.module('foyer')
     })
     .config(function($stateProvider) {
         $stateProvider
-            .state('root.consos', {
-                url: '/consos',
-                templateUrl: 'views/consos.html',
-                controller: 'Consos_Ctrl',
+            .state('root.basket', {
+                url: '/basket',
+                templateUrl: 'views/basket.html',
+                controller: 'Basket_Ctrl',
                 resolve: {
                     beers: function($resource) {
                         return $resource(apiPrefix + 'beers').query().$promise;
@@ -419,7 +419,7 @@ angular.module('foyer')
                     }
                 },
                 data: {
-                    title: 'Consos'
+                    title: 'Encaissement'
                 }
             })
         ;

@@ -3,6 +3,7 @@ var apiPrefix = 'https://upont.enpc.fr/api/';
 angular
     .module('foyer', [
         'angular-jwt',
+        'infinite-scroll',
         'naif.base64',
         'ngAnimate',
         'ngMaterial',

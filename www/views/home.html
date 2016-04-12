@@ -9,15 +9,22 @@
                     </md-button>
                     <md-menu-content width="4">
                         <md-menu-item>
-                            <md-button aria-label="Consos" ng-click="go('root.consos')">
-                                <md-icon md-menu-align-target md-font-icon="fa-usd" class="fa"></md-icon>
-                                Consos
+                            <md-button aria-label="Encaissement" ng-click="go('root.basket')">
+                                <md-icon md-menu-align-target md-font-icon="fa-shopping-cart" class="fa"></md-icon>
+                                Encaissement
                             </md-button>
                         </md-menu-item>
+                        <md-menu-divider></md-menu-divider>
                         <md-menu-item>
                             <md-button aria-label="Bières" ng-click="go('root.beers')">
                                 <md-icon md-menu-align-target md-font-icon="fa-beer" class="fa"></md-icon>
                                 Bières
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button aria-label="Transactions" ng-click="go('root.transactions')">
+                                <md-icon md-menu-align-target md-font-icon="fa-usd" class="fa"></md-icon>
+                                Transactions
                             </md-button>
                         </md-menu-item>
                         <md-menu-divider></md-menu-divider>
@@ -25,6 +32,12 @@
                             <md-button aria-label="Tableau de bord" disabled="disabled">
                                 <md-icon md-menu-align-target md-font-icon="fa-dashboard" class="fa"></md-icon>
                                 Tableau de bord
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button aria-label="Statistiques" disabled="disabled">
+                                <md-icon md-menu-align-target md-font-icon="fa-pie-chart" class="fa"></md-icon>
+                                Statistiques
                             </md-button>
                         </md-menu-item>
                     </md-menu-content>

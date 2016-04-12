@@ -43,7 +43,7 @@ angular.module('foyer')
                                 window.location.href = $rootScope.urlRef;
                                 $rootScope.urlRef = null;
                             } else {
-                                $state.go('root.consos');
+                                $state.go('root.basket');
                             }
                         //}
                     })
