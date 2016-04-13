@@ -8,7 +8,8 @@
             </md-button>
         </div>
     </md-toolbar>
-    <md-content layout-padding infinite-scroll="next()" infinite-scroll-distance="3" >
+    <md-content layout-padding layout="column">
+        <!-- infinite-scroll="next()" infinite-scroll-distance="5" -->
         <md-list>
             <md-list-item class="md-3-line" ng-repeat="transaction in transactions.data">
                 <img ng-src="{{ transaction.user.image_url | thumb | urlFile }}" class="md-avatar"
@@ -28,5 +29,8 @@
                 </md-button>
             </md-list-item>
         </md-list>
+        <md-button class="md-raised" aria-label="Charger plus de transactions" ng-click="next()" flex>
+            Plus
+        </md-button>
     </md-content>
 </section>
