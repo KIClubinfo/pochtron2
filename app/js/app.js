@@ -7,6 +7,7 @@ angular
         'naif.base64',
         'ngAnimate',
         'ngMaterial',
+        'ngMaterialCss',
         'ngMessages',
         'ngResource',
         'ui.router',

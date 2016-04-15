@@ -1,0 +1,49 @@
+<md-toolbar class="md-">
+    <div class="md-toolbar-tools">
+        <h2 class="md-padding">
+            <span>Crédit</span>
+        </h2>
+        <md-radio-group ng-model="sortBalance" layout="row" ng-change="reload()">
+            <md-radio-button value="balance" > Croissant </md-radio-button>
+            <md-radio-button value="-balance"> Décroissant </md-radio-button>
+        </md-radio-group>
+    </div>
+</md-toolbar>
+
+<md-content layout ="column">
+    <div  layout="row" layout-wrap flex>
+        <div flex-sm="100" flex-md="50" flex="33" ng-repeat="user in users.data" >
+            <!-- ng-class="{'md-bg-accent': user.balance < 10 && user.balance >=0, 'md-bg-warn':user.balance < 0}" -->
+            <md-card flex="100" class="md-padding">
+                <md-card-header>
+                    <md-card-avatar>
+                        <img ng-src="{{user.image_url | urlFile | thumb }}" class="md-user-avatar" alt="{{user.name}}"/>
+                    </md-card-avatar>
+                    <md-card-header-text>
+                        <span class="md-headline">{{ user.first_name }} {{ user.last_name }}</span>
+                        <span class="md-subhead">
+                            <span ng-class="{'md-bg-accent': user.balance < 10 && user.balance >=0, 'md-bg-warn':user.balance < 0}">
+                                Crédit {{ user.balance ? user.balance : 0 | number : 2 }}€
+                            </span>
+                        </span>
+                    </md-card-header-text>
+                </md-card-header>
+
+<!--                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">{{ user.first_name }} {{ user.last_name }}</span>
+                        <span class="md-subhead">Crédit {{ user.balance ? user.balance : 0 | number : 2 }}€</span>
+                    </md-card-title-text>
+                    <md-card-title-media>
+                        <div class="md-media-sm card-media">
+                            <img ng-src="{{user.image_url | urlFile | thumb }}" class="md-avatar" alt="{{user.name}}"/>
+                        </div>
+                    </md-card-title-media>
+                </md-card-title>-->
+            </md-card>
+        </div>
+    </div>
+    <md-button class="md-raised" aria-label="Charger plus de transactions" ng-click="next()" flex>
+            Plus
+        </md-button>
+</md-content>
