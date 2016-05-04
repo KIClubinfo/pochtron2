@@ -7,6 +7,10 @@
             <md-radio-button value="balance" > Croissant </md-radio-button>
             <md-radio-button value="-balance"> Décroissant </md-radio-button>
         </md-radio-group>
+        <span flex></span>
+        <md-button class="md-raised" aria-label="Exporter les dettes" ng-click="exportDebts()">
+            Exporter les dettes
+        </md-button>
     </div>
 </md-toolbar>
 
@@ -45,5 +49,5 @@
     </div>
     <md-button class="md-raised" aria-label="Charger plus de transactions" ng-click="next()" flex>
             Plus
-        </md-button>
+    </md-button>
 </md-content>

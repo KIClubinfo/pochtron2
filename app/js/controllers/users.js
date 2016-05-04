@@ -15,6 +15,22 @@ angular.module('foyer')
         };
 
         $scope.reload();
+
+        $scope.exportDebts = function () {
+            $http.get(apiPrefix + 'foyer/debts')
+                .success(function(result){
+                    fileData = new Blob([result], { type: 'text/csv' });
+                    fileUrl = URL.createObjectURL(fileData);
+
+                    var hiddenElement = document.createElement('a');
+                    hiddenElement.type = 'hidden';
+                    hiddenElement.href = fileUrl;
+                    hiddenElement.target = '_blank';
+                    hiddenElement.download = 'dettes.csv';
+                    document.body.appendChild(hiddenElement); // FF compatibility
+                    hiddenElement.click();
+            });
+        };
     })
     .config(function($stateProvider) {
         $stateProvider
