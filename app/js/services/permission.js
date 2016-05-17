@@ -20,32 +20,37 @@ angular.module('foyer')
                 load();
             },
 
-            set: function(token, roles) {
-                Storage.set('token', token);
-                Storage.set('roles', roles);
+            set: function(loginData) {
+                Storage.set('token', loginData.token);
+                Storage.set('roles', loginData.data.roles);
                 load();
-                var username = jwtHelper.decodeToken(Storage.get('token')).username;
+                var username = loginData.data.username;
 
                 // Checking if user is member of Foyer at this point is not a security breach because all used API routes are protected
                 $http
                     .get(apiPrefix + 'users/' + username + '/clubs')
                     .success(function(data){
-                        test = false;
+                        membreFoyer = false;
+                        for (var i = 0; i < loginData.data.roles.length; i++) {
+                            if (loginData.data.roles[i] == 'ROLE_ADMIN')
+                                membreFoyer = true;
+                        }
                         for (var i = 0; i < data.length; i++) {
                             if (data[i].club.slug == 'foyer')
-                                test = true;
+                                membreFoyer = true;
                         }
-                        /*if (!test) {
-                            alert('Tu n\'es pas un membre du Foyer ! Accès interdit !!!');
+                        if (!membreFoyer) {
+                            Alert.toast('Tu n\'es pas un membre du Foyer ! Accès interdit !');
                             remove();
-                        } else {*/
+                        } else {
                             if (typeof $rootScope.urlRef !== 'undefined' && $rootScope.urlRef !== null && $rootScope.urlRef != '/') {
                                 window.location.href = $rootScope.urlRef;
                                 $rootScope.urlRef = null;
                             } else {
                                 $state.go('root.basket');
                             }
-                        //}
+                            Alert.toast('Connecté avec succès !');
+                        }
                     })
                 ;
                 // On récupère les données utilisateur
@@ -55,7 +60,6 @@ angular.module('foyer')
                         $rootScope.me = data;
                     })
                 ;
-                Alert.toast('Connecté avec succès !');
             },
 
             remove: function() {

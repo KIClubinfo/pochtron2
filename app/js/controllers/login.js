@@ -7,7 +7,7 @@ angular.module('foyer')
                     password: password
                 })
                 .success(function(data, status, headers, config) {
-                    Permissions.set(data.token, data.data.roles);
+                    Permissions.set(data);
                 })
                 .error(function(data, status, headers, config) {
                     // Supprime tout token en cas de mauvaise identification
