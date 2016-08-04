@@ -16,16 +16,14 @@ var consosToSend = [];
 
 angular.module('foyer')
     .controller('Basket_Ctrl', function($scope, $http, $timeout, $interval, $q, $mdDialog, Alert, beers, users, consos) {
+        'ngInject';
+
         $scope.users = users;
         $scope.beers = beers;
         $scope.consos = consos;
         $scope.basket = [];
         $scope.searchText1 = '';
         $scope.searchText2 = '';
-
-
-
-
 
         /**
          * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -402,6 +400,8 @@ angular.module('foyer')
         $scope.selectedCredit = null;
     })
     .config(function($stateProvider) {
+        'ngInject';
+
         $stateProvider
             .state('root.basket', {
                 url: '/basket',
@@ -409,12 +409,18 @@ angular.module('foyer')
                 controller: 'Basket_Ctrl',
                 resolve: {
                     beers: function($resource) {
+                        'ngInject';
+
                         return $resource(apiPrefix + 'beers').query().$promise;
                     },
                     users: function($resource) {
+                        'ngInject';
+
                         return $resource(apiPrefix + 'userbeers').query().$promise;
                     },
                     consos: function($resource) {
+                        'ngInject';
+
                         return $resource(apiPrefix + 'transactions?limit=50&sort=-date').query().$promise;
                     }
                 },

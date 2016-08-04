@@ -1,5 +1,7 @@
 angular.module('foyer')
     .factory('Alert', function($mdToast) {
+        'ngInject';
+        
         return {
             toast: function(content) {
                 $mdToast.show(

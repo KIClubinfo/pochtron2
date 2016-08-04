@@ -2,15 +2,16 @@ var gulp = require('gulp');
 var autoprefixer = require('gulp-autoprefixer');
 var concat = require('gulp-concat');
 var filter = require('gulp-filter');
-var gulpif = require('gulp-if');
-var gutil = require('gulp-util');
 var jshint = require('gulp-jshint');
 var less = require('gulp-less');
 var mainBowerFiles = require('main-bower-files');
 var uglify = require('gulp-uglify');
 var uglifycss = require('gulp-uglifycss');
 var webserver = require('gulp-webserver');
-var env = process.env.GULP_ENV;
+var util = require('gulp-util');
+var ngAnnotate = require('gulp-ng-annotate');
+
+var production = !!util.env.production;
 
 gulp.task('jshint', function() {
     return gulp
@@ -34,7 +35,7 @@ gulp.task('build-less', function() {
         .pipe(filter(['**/*.css', '**/*.less']))
         .pipe(less())
         .pipe(concat('style.min.css'))
-        .pipe(gulpif(env === 'prod', uglifycss()))
+        .pipe(production ? uglifycss() : util.noop())
         .pipe(gulp.dest('www/'))
     ;
 });
@@ -51,7 +52,8 @@ gulp.task('build-js', function() {
         .src(files)
         .pipe(filter(['**/*.js']))
         .pipe(concat('app.min.js'))
-        .pipe(gulpif(env === 'prod', uglify()))
+        .pipe(ngAnnotate())
+        .pipe(production ? uglify() : util.noop())
         .pipe(gulp.dest('www/'))
     ;
 });

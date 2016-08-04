@@ -25,5 +25,8 @@
   "scripts": {
     "postinstall": "bower install && gulp build",
     "start": "gulp start"
+  },
+  "devDependencies": {
+    "gulp-ng-annotate": "^2.0.0"
   }
 }

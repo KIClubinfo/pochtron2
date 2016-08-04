@@ -1,5 +1,7 @@
 angular.module('foyer')
     .controller('Transactions_Ctrl', function($scope, $http, $q, $mdDialog, Alert, transactions, Paginate) {
+        'ngInject';
+
         $scope.transactions = transactions;
 
         $scope.next = function() {
@@ -31,15 +33,19 @@ angular.module('foyer')
         };
     })
     .config(function($stateProvider) {
+        'ngInject';
+
         $stateProvider
             .state('root.transactions', {
                 url: '/transactions',
                 templateUrl: 'views/transactions.html',
                 controller: 'Transactions_Ctrl',
                 resolve: {
-                    transactions: ['Paginate', function(Paginate) {
+                    transactions: function(Paginate) {
+                        'ngInject';
+
                         return Paginate.get('transactions?sort=-date', 30);
-                    }]
+                    }
                 },
                 data: {
                     title: 'Transactions'

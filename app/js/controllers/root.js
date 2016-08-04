@@ -1,5 +1,7 @@
 angular.module('foyer')
     .run(function($rootScope, $state, $location, Permissions) {
+        'ngInject';
+        
         Permissions.load();
 
         $rootScope.go = function(route) {
@@ -20,6 +22,8 @@ angular.module('foyer')
         });
     })
     .config(function($stateProvider) {
+        'ngInject';
+
         $stateProvider
             .state('root', {
                 url: '',

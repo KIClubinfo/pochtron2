@@ -1,4 +1,6 @@
-angular.module('foyer').factory('Paginate', ['$resource', '$q', '$rootScope', function($resource, $q, $rootScope) {
+angular.module('foyer').factory('Paginate', function($resource, $q, $rootScope) {
+    'ngInject';
+    
     loadData = function(load, url, append) {
         // On indique qu'on est en train de charger de nouvelles données
         $rootScope.infiniteLoading = true;
@@ -55,4 +57,4 @@ angular.module('foyer').factory('Paginate', ['$resource', '$q', '$rootScope', fu
             return loadData(load, load.headers.links.match(/<\/(.*?)>;rel=first/));
         }
     };
-}]);
+});

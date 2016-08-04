@@ -1,5 +1,7 @@
 angular.module('foyer')
     .controller('Debts_Ctrl', function($scope, $http, $mdDialog, Alert, Paginate, users) {
+        'ngInject';
+
         $scope.users = users;
         $scope.sortBalance = 'balance';
 
@@ -32,6 +34,8 @@ angular.module('foyer')
         };
     })
     .config(function ($stateProvider) {
+        'ngInject';
+
         $stateProvider
             .state('root.debts', {
                 url: '/dettes',
@@ -41,9 +45,11 @@ angular.module('foyer')
                     title: 'Dettes'
                 },
                 resolve:{
-                    users: ['Paginate', function (Paginate) {
+                    users: function (Paginate) {
+                        'ngInject';
+
                         return Paginate.get('users?sort=balance,firstName,lastName', 30)
-                    }]
+                    }
                 }
             })
         ;

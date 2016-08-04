@@ -1,5 +1,7 @@
 angular.module('foyer')
     .factory('Permissions', function($rootScope, $http, Storage, jwtHelper, $state, Alert) {
+        'ngInject';
+        
         remove = function() {
             $rootScope.isLogged = false;
             Storage.remove('token');

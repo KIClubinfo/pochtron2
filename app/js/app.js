@@ -14,6 +14,8 @@ angular
     ])
     // Setup theme
     .config(function($mdThemingProvider) {
+        'ngInject';
+
         $mdThemingProvider.definePalette('mcgpalette0', {
             '50': '#e4e7ea',
             '100': '#b8c1c9',
@@ -116,7 +118,9 @@ angular
             });
     })
     // Setup routes
-    .config(function($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, $locationProvider) {
+    .config(function($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
+        'ngInject';
+
         $urlMatcherFactoryProvider.strictMode(false);
         $urlRouterProvider.otherwise('/404');
 
@@ -133,6 +137,8 @@ angular
     })
     // Setup interceptor
     .factory('ErrorCodes_Interceptor', function($rootScope, $location, $q, Storage) {
+        'ngInject';
+
         return {
             responseError: function(response) {
                 switch (response.status) {
@@ -165,7 +171,11 @@ angular
         };
     })
     .config(function($httpProvider, jwtInterceptorProvider) {
+        'ngInject';
+
         jwtInterceptorProvider.tokenGetter = function(Permissions, Storage, config, jwtHelper, $rootScope, $q) {
+            'ngInject';
+
             // On n'envoie pas le token pour les templates
             if (config.url.substr(config.url.length - 5) == '.html')
                 return null;
@@ -181,6 +191,8 @@ angular
         $httpProvider.interceptors.push('ErrorCodes_Interceptor');
     })
     .config(function($httpProvider) {
+        'ngInject';
+
         $httpProvider.defaults.useXDomain = true;
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
     })

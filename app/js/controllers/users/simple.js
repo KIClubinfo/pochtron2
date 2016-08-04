@@ -1,5 +1,7 @@
 angular.module('foyer')
     .controller('Users_Simple_Ctrl', function($scope, user, statistics, transactions, Paginate) {
+        'ngInject';
+        
         $scope.user = user;
         $scope.transactions = transactions;
 

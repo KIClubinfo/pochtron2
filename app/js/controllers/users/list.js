@@ -1,5 +1,7 @@
 angular.module('foyer')
     .controller('Users_List_Ctrl', function($scope, $http, $q, $state) {
+        'ngInject';
+        
         /**
          * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
          *                              SEARCH

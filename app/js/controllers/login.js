@@ -1,5 +1,7 @@
 angular.module('foyer')
     .controller('Login_Ctrl', function($scope, $rootScope, $state, $http, $mdToast, $animate, Permissions) {
+        'ngInject';
+        
         $scope.login = function(username, password) {
             $http
                 .post(apiPrefix + 'login', {
@@ -24,6 +26,8 @@ angular.module('foyer')
         };
     })
     .config(function($stateProvider) {
+        'ngInject';
+
         $stateProvider
             .state('login', {
                 url: '',

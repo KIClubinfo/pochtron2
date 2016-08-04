@@ -1,5 +1,7 @@
 angular.module('foyer')
     .controller('Beers_Ctrl', function($scope, $http, $mdDialog, Alert, beers) {
+        'ngInject';
+
         $scope.beers = beers;
 
         $scope.postBeer = function(name, price, alcohol, volume, image) {
@@ -100,6 +102,8 @@ angular.module('foyer')
         };
     })
     .config(function($stateProvider) {
+        'ngInject';
+
         $stateProvider
             .state('root.beers', {
                 url: '/bieres',
@@ -107,6 +111,8 @@ angular.module('foyer')
                 controller: 'Beers_Ctrl',
                 resolve: {
                     beers: function($resource) {
+                        'ngInject';
+
                         return $resource(apiPrefix + 'beers').query().$promise;
                     }
                 },
