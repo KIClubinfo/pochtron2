@@ -1,0 +1,20 @@
+<div class="users-list">
+    <form ng-submit="$event.preventDefault()">
+        <md-autocomplete
+                md-search-text="searchText"
+                md-search-text-change="searchTextChange(searchText)"
+                md-selected-item-change="selectedUserChange(user)"
+                md-items="user in searchUser(searchText)"
+                md-item-text="user.name"
+                md-min-length="3"
+                placeholder="Rechercher un élève..."
+                tabindex="1">
+            <md-item-template>
+                <span md-highlight-text="searchText" md-highlight-flags="^i">{{ user.name }} ({{ user.balance ? user.balance : 0 | number:2 }}€)</span>
+            </md-item-template>
+            <md-not-found>
+                Pas d'élève trouvé pour "{{ searchText }}".
+            </md-not-found>
+        </md-autocomplete>
+    </form>
+</div>

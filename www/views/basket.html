@@ -1,8 +1,8 @@
 <section layout="row" flex>
     <div layout="column" layout-padding flex>
-        <md-toolbar class="md-primary">
+        <md-toolbar class="md-accent">
             <div class="md-toolbar-tools">
-                <h1 class="md-toolbar-tools">
+                <h1>
                     Panier
                 </h1>
                 <span flex></span>
@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div flex="10">
-                    <md-button class="md-fab" aria-label="Valider cet élève" ng-click="confirmBasketEntry(basketEntry)">
+                    <md-button class="md-fab md-primary" aria-label="Valider cet élève" ng-click="confirmBasketEntry(basketEntry)">
                         <md-icon md-font-icon="fa-check" class="fa md-headline"></md-icon>
                     </md-button>
                 </div>
@@ -122,10 +122,10 @@
     </div>
 
     <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" md-is-locked-open="$mdMedia('gt-sm')">
-        <md-toolbar class="md-theme-light">
-            <div class="md-toolbar-tools">
-                <h1 class="md-toolbar-tools">Historique des consos</h1>
-                <md-button class="md-fab md-mini" aria-label="Créditer un compte" ng-click="addBalance($event)">
+        <md-toolbar class="md-accent">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-around center">
+                <h1>Historique des consos</h1>
+                <md-button class="md-fab md-primary md-mini" aria-label="Créditer un compte" ng-click="addBalance($event)">
                     <md-icon md-font-icon="fa-usd" class="fa md-headline"></md-icon>
                 </md-button>
             </div>
@@ -144,7 +144,7 @@
                             Compte : {{ conso.user.balance | number:2 }} €
                         </p>
                     </div>
-                    <md-button class="md-fab" aria-label="Supprimer la conso" ng-click="deleteConso(conso)">
+                    <md-button class="md-fab md-primary" aria-label="Supprimer la conso" ng-click="deleteConso(conso)">
                         <md-icon md-font-icon="fa-trash" class="fa md-headline"></md-icon>
                     </md-button>
                 </md-list-item>

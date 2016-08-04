@@ -1,5 +1,6 @@
 angular.module('foyer')
-    .controller('Users_Ctrl', function($scope, $http, $mdDialog, Alert, Paginate) {
+    .controller('Debts_Ctrl', function($scope, $http, $mdDialog, Alert, Paginate, users) {
+        $scope.users = users;
         $scope.sortBalance = 'balance';
 
         $scope.next = function() {
@@ -13,8 +14,6 @@ angular.module('foyer')
                 $scope.users = data;
             });
         };
-
-        $scope.reload();
 
         $scope.exportDebts = function () {
             $http.get(apiPrefix + 'foyer/debts')
@@ -32,16 +31,23 @@ angular.module('foyer')
             });
         };
     })
-    .config(function($stateProvider) {
+    .config(function ($stateProvider) {
         $stateProvider
-            .state('root.users', {
-                url: '/utilisateurs',
-                templateUrl: 'views/users.html',
-                controller: 'Users_Ctrl',
+            .state('root.debts', {
+                url: '/dettes',
+                templateUrl: 'views/debts.html',
+                controller: 'Debts_Ctrl',
                 data: {
-                    title: 'Utilisateurs'
+                    title: 'Dettes'
+                },
+                resolve:{
+                    users: ['Paginate', function (Paginate) {
+                        return Paginate.get('users?sort=balance,firstName,lastName', 30)
+                    }]
                 }
             })
         ;
     })
+;
+
 ;

@@ -1,7 +1,7 @@
 <div layout="column" class="full-height">
     <md-content flex layout="column" style="overflow:hidden">
         <!-- Top toolbar -->
-        <md-toolbar class="md-whiteframe-z3" md-scroll-shrink="true">
+        <md-toolbar class="md-whiteframe-z3">
             <div class="md-toolbar-tools">
                 <md-menu>
                     <md-button aria-label="Menu" class="md-icon-button" ng-click="$mdOpenMenu()">
@@ -22,15 +22,22 @@
                             </md-button>
                         </md-menu-item>
                         <md-menu-item>
-                            <md-button aria-label="Utilisateurs" ng-click="go('root.users')">
-                                <md-icon md-menu-align-target md-font-icon="fa-users" class="fa"></md-icon>
-                                Utilisateurs
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
                             <md-button aria-label="Transactions" ng-click="go('root.transactions')">
                                 <md-icon md-menu-align-target md-font-icon="fa-usd" class="fa"></md-icon>
                                 Transactions
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button aria-label="Dettes" ng-click="go('root.debts')">
+                                <md-icon md-menu-align-target md-font-icon="fa-money" class="fa"></md-icon>
+                                Dettes
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-divider></md-menu-divider>
+                        <md-menu-item>
+                            <md-button aria-label="Profils utilisateurs" ng-click="go('root.users.list')">
+                                <md-icon md-menu-align-target md-font-icon="fa-users" class="fa"></md-icon>
+                                Profils utilisateurs
                             </md-button>
                         </md-menu-item>
                         <md-menu-divider></md-menu-divider>
@@ -67,21 +74,9 @@
             </div>
         </md-toolbar>
 
-        <md-content>
+        <md-content style="z-index:0;">
             <!-- Main content -->
-            <div layout="column" ui-view style="min-height:107vh"></div>
-
-            <!-- Footer -->
-            <md-content id="footer">
-                <md-toolbar>
-                    <div class="md-toolbar-tools md-body-1" layout="row" layout-align="space-between center">
-                        <p>Foyer</p>
-                        <p >Made with ♥, AngularJS and other hipster technologies</p>
-                        <p>By AT'016</p>
-                    </div>
-                </md-toolbar>
-            </md-content>
+            <div ui-view></div>
         </md-content>
     </md-content>
-
 </div>

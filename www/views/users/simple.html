@@ -1,0 +1,59 @@
+<section>
+    <div layout="row" layout-wrap>
+        <div flex="70" flex-md="100">
+            <md-toolbar class="md-accent">
+                <div class="md-toolbar-tools">
+                    <h1>Profil</h1>
+                </div>
+            </md-toolbar>
+            <md-content layout-padding layout="row">
+                <img ng-src="{{ user.image_url | thumb | urlFile }}" class="md-avatar" alt="Image de l'utilisateur"/>
+                <div>
+                    <p>{{ user.first_name }} {{ user.last_name }}</p>
+                    <p>Promo {{ user.promo }}</p>
+                    <span flex="30">
+                        <p ng-if="transaction.user.username == 'externe-foyer'">&nbsp;</p>
+                        <p ng-if="transaction.user.username != 'externe-foyer'">
+                            <md-icon ng-if="transaction.user.balance < 0"
+                                     md-font-icon="fa-warning"
+                                     class="fa md-title">
+                            </md-icon>
+                            Compte : {{ user.balance | number:2 }} €
+                        </p>
+                    </span>
+                </div>
+            </md-content>
+
+            <md-toolbar class="md-accent">
+                <div class="md-toolbar-tools">
+                    <h1>Statistiques</h1>
+                </div>
+            </md-toolbar>
+        </div>
+        <div flex="30" flex-md="100" class="md-whiteframe-z3" style="z-index:5; min-height: 93vh;">
+            <md-toolbar class="md-accent">
+                <div class="md-toolbar-tools">
+                    <h1>Historique des transactions</h1>
+                </div>
+            </md-toolbar>
+            <md-content layout-padding layout="column">
+                <md-list infinite-scroll="next()">
+                    <md-list-item class="md-3-line" ng-repeat="transaction in transactions.data">
+                        <div class="md-list-item-text" flex layout="row">
+                            <h4 flex="35">{{ transaction.date*1000 | date:"'Le' dd/MM 'à' HH'h'mm" }}</h4>
+                            <h4 flex="25">{{ transaction.beer ? transaction.beer.name : 'Compte crédité' }}</h4>
+                            <h4 flex="20">{{ transaction.amount }} €</h4>
+                            <h4 flex="20">{{ transaction.beer ? transaction.beer.volume + ' L' : '' }}</h4>
+                        </div>
+                        <md-button class="md-fab md-primary" aria-label="Supprimer la transaction"
+                                   ng-click="deleteConso(transaction)">
+                            <md-icon md-font-icon="fa-trash" class="fa md-headline"></md-icon>
+                        </md-button>
+                    </md-list-item>
+                </md-list>
+            </md-content>
+        </div>
+    </div>
+
+
+</section>

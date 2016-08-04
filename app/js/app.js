@@ -14,9 +14,106 @@ angular
     ])
     // Setup theme
     .config(function($mdThemingProvider) {
+        $mdThemingProvider.definePalette('mcgpalette0', {
+            '50': '#e4e7ea',
+            '100': '#b8c1c9',
+            '200': '#98a4b1',
+            '300': '#708092',
+            '400': '#627181',
+            '500': '#556270',
+            '600': '#48535f',
+            '700': '#3b444d',
+            '800': '#2d343c',
+            '900': '#20252a',
+            'A100': '#e4e7ea',
+            'A200': '#b8c1c9',
+            'A400': '#627181',
+            'A700': '#3b444d',
+            'contrastDefaultColor': 'light',
+            'contrastDarkColors': '50 100 200 A100 A200'
+        });
+
+        $mdThemingProvider.definePalette('mcgpalette1', {
+            '50': '#f4fcfb',
+            '100': '#b9ebe8',
+            '200': '#8ddfd9',
+            '300': '#55cfc6',
+            '400': '#3dc8be',
+            '500': '#33b4ab',
+            '600': '#2c9c94',
+            '700': '#25847e',
+            '800': '#1f6c67',
+            '900': '#185550',
+            'A100': '#f4fcfb',
+            'A200': '#b9ebe8',
+            'A400': '#3dc8be',
+            'A700': '#25847e',
+            'contrastDefaultColor': 'light',
+            'contrastDarkColors': '50 100 200 300 400 500 A100 A200 A400'
+        });
+
+        $mdThemingProvider.definePalette('mcgpalette2', {
+            '50': '#fefffb',
+            '100': '#e4f9b4',
+            '200': '#d1f580',
+            '300': '#b8f03e',
+            '400': '#aeee21',
+            '500': '#9fe011',
+            '600': '#8bc40f',
+            '700': '#77a70d',
+            '800': '#628b0b',
+            '900': '#4e6e08',
+            'A100': '#fefffb',
+            'A200': '#e4f9b4',
+            'A400': '#aeee21',
+            'A700': '#77a70d',
+            'contrastDefaultColor': 'light',
+            'contrastDarkColors': '50 100 200 300 400 500 600 700 A100 A200 A400 A700'
+        });
+
+        $mdThemingProvider.definePalette('mcgpalette3', {
+            '50': '#fff2f2',
+            '100': '#ffa6a6',
+            '200': '#ff6e6e',
+            '300': '#ff2626',
+            '400': '#ff0808',
+            '500': '#e80000',
+            '600': '#c90000',
+            '700': '#ab0000',
+            '800': '#8c0000',
+            '900': '#6e0000',
+            'A100': '#fff2f2',
+            'A200': '#ffa6a6',
+            'A400': '#ff0808',
+            'A700': '#ab0000',
+            'contrastDefaultColor': 'light',
+            'contrastDarkColors': '50 100 200 A100 A200'
+        });
+
+        $mdThemingProvider.definePalette('mcgpalette4', {
+            '50': '#faeff0',
+            '100': '#e6b5b9',
+            '200': '#d88b92',
+            '300': '#c6565f',
+            '400': '#be404a',
+            '500': '#a73841',
+            '600': '#903038',
+            '700': '#79292f',
+            '800': '#622126',
+            '900': '#4b191d',
+            'A100': '#faeff0',
+            'A200': '#e6b5b9',
+            'A400': '#be404a',
+            'A700': '#79292f',
+            'contrastDefaultColor': 'light',
+            'contrastDarkColors': '50 100 200 A100 A200'
+        });
+
         $mdThemingProvider.theme('default')
-            .primaryPalette('red')
-            .accentPalette('orange');
+            .primaryPalette('mcgpalette0')
+            .accentPalette('mcgpalette1', {
+                'default': '300'
+            });
     })
     // Setup routes
     .config(function($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, $locationProvider) {

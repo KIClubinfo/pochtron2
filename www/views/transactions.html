@@ -1,16 +1,11 @@
 <section>
-
-    <md-toolbar class="md-theme-light">
+    <md-toolbar class="md-accent">
         <div class="md-toolbar-tools">
-            <h1 class="md-toolbar-tools">Historique des transactions</h1>
-            <md-button class="md-fab md-mini" aria-label="Créditer un compte" ng-click="addBalance($event)">
-                <md-icon md-font-icon="fa-usd" class="fa md-headline"></md-icon>
-            </md-button>
+            <h1>Historique des transactions</h1>
         </div>
     </md-toolbar>
     <md-content layout-padding layout="column">
-        <!-- infinite-scroll="next()" infinite-scroll-distance="5" -->
-        <md-list>
+        <md-list infinite-scroll="next()">
             <md-list-item class="md-3-line" ng-repeat="transaction in transactions.data">
                 <img ng-src="{{ transaction.user.image_url | thumb | urlFile }}" class="md-avatar"
                      alt="Image de l'utilisateur"/>
@@ -24,13 +19,10 @@
                         Compte : {{ transaction.user.balance | number:2 }} €
                     </p>
                 </div>
-                <md-button class="md-fab" aria-label="Supprimer la transaction" ng-click="deleteConso(transaction)">
+                <md-button class="md-fab md-primary" aria-label="Supprimer la transaction" ng-click="deleteConso(transaction)">
                     <md-icon md-font-icon="fa-trash" class="fa md-headline"></md-icon>
                 </md-button>
             </md-list-item>
         </md-list>
-        <md-button class="md-raised" aria-label="Charger plus de transactions" ng-click="next()" flex>
-            Plus
-        </md-button>
     </md-content>
 </section>
