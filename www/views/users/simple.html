@@ -37,7 +37,7 @@
                 </div>
             </md-toolbar>
             <md-content layout-padding layout="column">
-                <md-list infinite-scroll="next()">
+                <md-list infinite-scroll="next()" infinite-scroll-distance="3">
                     <md-list-item class="md-3-line" ng-repeat="transaction in transactions.data">
                         <div class="md-list-item-text" flex layout="row">
                             <h4 flex="35">{{ transaction.date*1000 | date:"'Le' dd/MM 'à' HH'h'mm" }}</h4>

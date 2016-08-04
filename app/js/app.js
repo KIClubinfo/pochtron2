@@ -197,3 +197,5 @@ angular
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
     })
 ;
+
+angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 250);
