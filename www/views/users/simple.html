@@ -36,8 +36,8 @@
                     <h1>Historique des transactions</h1>
                 </div>
             </md-toolbar>
-            <md-content layout-padding layout="column">
-                <md-list infinite-scroll="next()" infinite-scroll-distance="3">
+            <md-content layout-padding layout="column" id="inf-wrapper">
+                <md-list infinite-scroll="next()" infinite-scroll-distance="3" infinite-scroll-container="'#inf-wrapper'">
                     <md-list-item class="md-3-line" ng-repeat="transaction in transactions.data">
                         <div class="md-list-item-text" flex layout="row">
                             <h4 flex="35">{{ transaction.date*1000 | date:"'Le' dd/MM 'à' HH'h'mm" }}</h4>

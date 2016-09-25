@@ -1,8 +1,8 @@
 <md-toolbar class="md-hue-1">
     <div class="md-toolbar-tools">
-        <h2 class="md-padding">
+        <h1 class="md-padding">
             <span>Crédit</span>
-        </h2>
+        </h1>
         <md-radio-group ng-model="sortBalance" layout="row" ng-change="reload()">
             <md-radio-button value="balance"> Croissant</md-radio-button>
             <md-radio-button value="-balance"> Décroissant</md-radio-button>
@@ -14,8 +14,10 @@
     </div>
 </md-toolbar>
 
-<md-content layout="column" infinite-scroll="next()" infinite-scroll-distance="3">
-    <div layout="row" layout-wrap flex>
+<md-content layout="column" id="inf-wrapper">
+    <div layout="row" layout-wrap flex
+         infinite-scroll="next()" infinite-scroll-distance="3" infinite-scroll-container="'#inf-wrapper'"
+    >
         <div flex-sm="100" flex-md="50" flex="33" ng-repeat="user in users.data">
             <md-card flex="100" class="md-padding">
                 <md-card-header>
