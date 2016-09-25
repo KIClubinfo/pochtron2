@@ -36,12 +36,13 @@ angular.module('foyer')
          */
         $scope.searchUser = function(query) {
             deferred = $q.defer();
-            var results = query ? $scope.users : $scope.users,
-            deferred;
+            var results = query ? $scope.users : $scope.users, deferred;
             $http
                 .post(apiPrefix + 'search', {search: 'User/' + query})
                 .success(function(data) {
-                    deferred.resolve(data.users);
+                    deferred.resolve(filterFilter(data.users, function(value, index, array){
+                        return value.promo == '017' || value.promo == '018' || value.promo == '019'
+                    }));
                 })
             ;
             return deferred.promise;
