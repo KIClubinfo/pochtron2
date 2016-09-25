@@ -53,19 +53,19 @@
             <div flex="30" flex-sm="100" class="users-list">
                 <form ng-submit="$event.preventDefault()">
                     <md-autocomplete
-                        md-search-text="searchText1"
-                        md-search-text-change="searchTextChange(searchText1)"
+                        md-search-text="userSearchText"
+                        md-search-text-change="searchTextChange(userSearchText)"
                         md-selected-item-change="selectedUserChange(user)"
-                        md-items="user in searchUser(searchText1)"
+                        md-items="user in searchUser(userSearchText)"
                         md-item-text="user.name"
                         md-min-length="3"
                         placeholder="Rechercher un élève..."
                         tabindex="1">
                         <md-item-template>
-                            <span md-highlight-text="searchText1" md-highlight-flags="^i">{{ user.name }} ({{ user.balance ? user.balance : 0 | number:2 }}€)</span>
+                            <span md-highlight-text="userSearchText" md-highlight-flags="^i">{{ user.name }} ({{ user.balance ? user.balance : 0 | number:2 }}€)</span>
                         </md-item-template>
                         <md-not-found>
-                            Pas d'élève trouvé pour "{{ searchText1 }}".
+                            Pas d'élève trouvé pour "{{ userSearchText }}".
                         </md-not-found>
                     </md-autocomplete>
                 </form>
@@ -73,19 +73,19 @@
             <div flex="70" flex-sm="100">
                 <form ng-submit="$event.preventDefault()">
                     <md-autocomplete
-                        md-search-text="searchText2"
-                        md-search-text-change="searchTextChange(searchText2)"
+                        md-search-text="beerSearchText"
+                        md-search-text-change="searchTextChange(beerSearchText)"
                         md-selected-item-change="selectedBeerChange(beer)"
-                        md-items="beer in searchBeer(searchText2)"
+                        md-items="beer in searchBeer(beerSearchText)"
                         md-item-text="beer.name"
                         md-min-length="1"
                         placeholder="Rechercher une bière..."
                         tabindex="2">
                         <md-item-template>
-                            <span md-highlight-text="searchText2" md-highlight-flags="^i">{{ beer.name }}</span>
+                            <span md-highlight-text="beerSearchText" md-highlight-flags="^i">{{ beer.name }}</span>
                         </md-item-template>
                         <md-not-found>
-                            Pas de bières trouvées pour "{{ searchText2 }}".
+                            Pas de bières trouvées pour "{{ beerSearchText }}".
                         </md-not-found>
                     </md-autocomplete>
                 </form>

@@ -15,15 +15,15 @@ String.prototype.hashCode = function() {
 var consosToSend = [];
 
 angular.module('foyer')
-    .controller('Basket_Ctrl', function($scope, $http, $timeout, $interval, $q, $mdDialog, Alert, beers, users, consos) {
+    .controller('Basket_Ctrl', function($scope, $http, $timeout, $interval, $q, $mdDialog, Alert, filterFilter, beers, users, consos) {
         'ngInject';
 
         $scope.users = users;
         $scope.beers = beers;
         $scope.consos = consos;
         $scope.basket = [];
-        $scope.searchText1 = '';
-        $scope.searchText2 = '';
+        $scope.userSearchText = '';
+        $scope.beerSearchText = '';
 
         /**
          * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
