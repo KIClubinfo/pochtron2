@@ -2,12 +2,36 @@ angular.module('foyer')
     .controller('Transactions_Ctrl', function($scope, $http, $q, $mdDialog, Alert, transactions, Paginate) {
         'ngInject';
 
-        $scope.transactions = transactions;
+        $scope.transactions = {
+          numLoaded: transactions.data.length,
+          numToLoad: transactions.data.length,
+          items: transactions,
 
-        $scope.next = function() {
-            Paginate.next($scope.transactions).then(function(data){
-                $scope.transactions = data;
-            });
+          getItemAtIndex: function(index) {
+            if (index > this.numLoaded) {
+              this.fetchMoreItems_(index);
+              return null;
+            }
+
+            return this.items.data[index];
+          },
+
+          // For infinite scroll behavior, we always return a slightly higher
+          // number than the previously loaded items.
+          getLength: function() {
+            return Math.min(this.numLoaded + 5, this.items.headers['total-count']);
+          },
+
+          fetchMoreItems_: function(index) {
+            if (this.numToLoad < index) {
+              this.numToLoad += 30;
+
+              Paginate.next(this.items).then(angular.bind(this, function(result){
+                  this.items = result;
+                  this.numLoaded = this.numToLoad;
+              }));
+            }
+          },
         };
 
          /**

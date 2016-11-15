@@ -2,19 +2,46 @@ angular.module('foyer')
     .controller('Debts_Ctrl', function($scope, $http, $mdDialog, Alert, Paginate, users) {
         'ngInject';
 
-        $scope.users = users;
         $scope.sortBalance = 'balance';
 
-        $scope.next = function() {
-            Paginate.next($scope.users).then(function(data){
-                $scope.users = data;
-            });
-        };
+        $scope.users = {
+          numLoaded: users.data.length,
+          numToLoad: users.data.length,
+          items: users,
 
-        $scope.reload = function() {
-            Paginate.get('users?sort=' + $scope.sortBalance + ',firstName,lastName', 30).then(function(data){
-                $scope.users = data;
-            });
+          getItemAtIndex: function(index) {
+            if (index > this.numLoaded) {
+              this.fetchMoreItems_(index);
+              return null;
+            }
+
+            return this.items.data[index];
+          },
+
+          // For infinite scroll behavior, we always return a slightly higher
+          // number than the previously loaded items.
+          getLength: function() {
+            return Math.min(this.numLoaded + 5, this.items.headers['total-count']);
+          },
+
+          fetchMoreItems_: function(index) {
+            if (this.numToLoad < index) {
+              this.numToLoad += 30;
+
+              Paginate.next(this.items).then(angular.bind(this, function(result){
+                  this.items = result;
+                  this.numLoaded = this.numToLoad;
+              }));
+            }
+          },
+
+          reload: function() {
+              Paginate.get('users?sort=' + $scope.sortBalance + ',firstName,lastName', 30).then(angular.bind(this, function(result){
+                  this.items = result;
+                  this.numLoaded = result.data.length;
+                  this.numToLoad =  result.data.length;
+              }));
+          }
         };
 
         $scope.exportDebts = function () {

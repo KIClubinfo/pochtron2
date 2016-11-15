@@ -3,7 +3,7 @@
         <h1 class="md-padding">
             <span>Crédit</span>
         </h1>
-        <md-radio-group ng-model="sortBalance" layout="row" ng-change="reload()">
+        <md-radio-group ng-model="sortBalance" layout="row" ng-change="users.reload()">
             <md-radio-button value="balance"> Croissant</md-radio-button>
             <md-radio-button value="-balance"> Décroissant</md-radio-button>
         </md-radio-group>
@@ -14,26 +14,21 @@
     </div>
 </md-toolbar>
 
-<md-content layout="column" id="inf-wrapper">
-    <div layout="row" layout-wrap flex
-         infinite-scroll="next()" infinite-scroll-distance="3" infinite-scroll-container="'#inf-wrapper'"
-    >
-        <div flex-sm="100" flex-md="50" flex="33" ng-repeat="user in users.data">
-            <md-card flex="100" class="md-padding">
-                <md-card-header>
-                    <md-card-avatar>
-                        <img ng-src="{{user.image_url | urlFile | thumb }}" class="md-user-avatar" alt="{{user.name}}"/>
-                    </md-card-avatar>
-                    <md-card-header-text>
-                        <span class="md-headline">{{ user.first_name }} {{ user.last_name }}</span>
-                        <span class="md-subhead">
-                            <span ng-class="{'md-bg-accent': user.balance < 10 && user.balance >=0, 'md-bg-warn':user.balance < 0}">
-                                Crédit {{ user.balance ? user.balance : 0 | number : 2 }}€
-                            </span>
-                        </span>
-                    </md-card-header-text>
-                </md-card-header>
-            </md-card>
-        </div>
-    </div>
-</md-content>
+<md-list layout-fill>
+    <md-virtual-repeat-container layout="row" class="full-height">
+        <md-list-item class="md-3-line" md-virtual-repeat="user in users" md-on-demand style="margin:8px;">
+            <img ng-src="{{ user.image_url | urlFile | thumb }}" class="md-avatar"
+                 alt="Image de l'utilisateur"/>
+            <div class="md-list-item-text" flex layout="row">
+                <h4 flex="25">{{ user.first_name }} {{ user.last_name }}</h4>
+                <p ng-if="user.username == 'externe-foyer'">&nbsp;</p>
+                <p ng-if="user.username != 'externe-foyer'">
+                  <span ng-class="{'md-bg-accent': user.balance < 10 && user.balance >=0, 'md-bg-warn':user.balance < 0}">
+                    <md-icon ng-if="user.balance < 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>
+                    Compte : {{ user.balance ? user.balance : 0 | number:2 }} €
+                  </span>
+                </p>
+            </div>
+        </md-list-item>
+    </md-virtual-repeat-container>
+</md-list>

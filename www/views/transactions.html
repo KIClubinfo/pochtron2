@@ -1,28 +1,27 @@
-<section>
-    <md-toolbar class="md-accent">
-        <div class="md-toolbar-tools">
-            <h1>Historique des transactions</h1>
-        </div>
-    </md-toolbar>
-    <md-content layout-padding layout="column" id="inf-wrapper">
-        <md-list infinite-scroll="next()" infinite-scroll-distance="3" infinite-scroll-container="'#inf-wrapper'">
-            <md-list-item class="md-3-line" ng-repeat="transaction in transactions.data">
-                <img ng-src="{{ transaction.user.image_url | thumb | urlFile }}" class="md-avatar"
-                     alt="Image de l'utilisateur"/>
-                <div class="md-list-item-text" flex layout="row">
-                    <h4 flex="25">{{ transaction.user.first_name }} {{ transaction.user.last_name }}</h4>
-                    <h4 flex="25">{{ transaction.beer ? transaction.beer.name : 'Compte crédité (' + transaction.amount + '€)' }}</h4>
-                    <h4 flex="25">{{ transaction.date*1000 | date:"'Le' dd/MM 'à' HH'h'mm" }}</h4>
-                    <p ng-if="transaction.user.username == 'externe-foyer'">&nbsp;</p>
-                    <p ng-if="transaction.user.username != 'externe-foyer'">
-                        <md-icon ng-if="transaction.user.balance < 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>
-                        Compte : {{ transaction.user.balance | number:2 }} €
-                    </p>
-                </div>
-                <md-button class="md-fab md-primary" aria-label="Supprimer la transaction" ng-click="deleteConso(transaction)">
-                    <md-icon md-font-icon="fa-trash" class="fa md-headline"></md-icon>
-                </md-button>
-            </md-list-item>
-        </md-list>
-    </md-content>
-</section>
+<md-toolbar class="md-accent">
+    <div class="md-toolbar-tools">
+        <h1>Historique des transactions</h1>
+    </div>
+</md-toolbar>
+
+<md-list layout-fill>
+    <md-virtual-repeat-container layout="row" class="full-height">
+        <md-list-item class="md-3-line" md-virtual-repeat="transaction in transactions" md-on-demand style="margin:8px;">
+            <img ng-src="{{ transaction.user.image_url | urlFile | thumb }}" class="md-avatar"
+                 alt="Image de l'utilisateur"/>
+            <div class="md-list-item-text" flex layout="row">
+                <h4 flex="25">{{ transaction.user.first_name }} {{ transaction.user.last_name }}</h4>
+                <h4 flex="25">{{ transaction.beer ? transaction.beer.name : 'Compte crédité (' + transaction.amount + '€)' }}</h4>
+                <h4 flex="25">{{ transaction.date*1000 | date:"'Le' dd/MM 'à' HH'h'mm" }}</h4>
+                <p ng-if="transaction.user.username == 'externe-foyer'">&nbsp;</p>
+                <p ng-if="transaction.user.username != 'externe-foyer'">
+                    <md-icon ng-if="transaction.user.balance < 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>
+                    Compte : {{ transaction.user.balance | number:2 }} €
+                </p>
+            </div>
+            <md-button class="md-fab md-primary" aria-label="Supprimer la transaction" ng-click="deleteConso(transaction)">
+                <md-icon md-font-icon="fa-trash" class="fa md-headline"></md-icon>
+            </md-button>
+        </md-list-item>
+    </md-virtual-repeat-container>
+</md-list>
