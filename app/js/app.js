@@ -11,8 +11,17 @@ angular
         'ngMessages',
         'ngResource',
         'ui.router',
+        'chart.js',
     ])
     // Setup theme
+    .config(function (ChartJsProvider) {
+        'ngInject';
+        // Configure all charts
+        ChartJsProvider.setOptions({
+          responsive: true,
+          maintainAspectRatio: true,
+        });
+    })
     .config(function($mdThemingProvider) {
         'ngInject';
 

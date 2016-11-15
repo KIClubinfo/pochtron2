@@ -1,7 +1,7 @@
 {
   "name": "pochtron",
   "version": "1.0.0",
-  "author": "Albéric Trancart",
+  "author": "KI Clubinfo",
   "dependencies": {
     "angular": "latest",
     "angular-animate": "latest",
@@ -11,7 +11,9 @@
     "angular-messages": "latest",
     "angular-resource": "latest",
     "font-awesome": "latest",
-    "ngInfiniteScroll" : "latest",
-    "ui-router": "latest"
+    "ngInfiniteScroll": "latest",
+    "ui-router": "latest",
+    "chart.js": "^2.4.0",
+    "angular-chart.js": "^1.0.3"
   }
 }

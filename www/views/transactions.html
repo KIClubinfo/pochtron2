@@ -4,7 +4,7 @@
     </div>
 </md-toolbar>
 
-<md-list layout-fill>
+<md-list style="height:calc(100% - 64px);">
     <md-virtual-repeat-container layout="row" class="full-height">
         <md-list-item class="md-3-line" md-virtual-repeat="transaction in transactions" md-on-demand style="margin:8px;">
             <img ng-src="{{ transaction.user.image_url | urlFile | thumb }}" class="md-avatar"

@@ -14,7 +14,7 @@
     </div>
 </md-toolbar>
 
-<md-list layout-fill>
+<md-list style="height:calc(100% - 64px);">
     <md-virtual-repeat-container layout="row" class="full-height">
         <md-list-item class="md-3-line" md-virtual-repeat="user in users" md-on-demand style="margin:8px;">
             <img ng-src="{{ user.image_url | urlFile | thumb }}" class="md-avatar"
@@ -23,8 +23,8 @@
                 <h4 flex="25">{{ user.first_name }} {{ user.last_name }}</h4>
                 <p ng-if="user.username == 'externe-foyer'">&nbsp;</p>
                 <p ng-if="user.username != 'externe-foyer'">
+                  <md-icon ng-if="user.balance < 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>
                   <span ng-class="{'md-bg-accent': user.balance < 10 && user.balance >=0, 'md-bg-warn':user.balance < 0}">
-                    <md-icon ng-if="user.balance < 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>
                     Compte : {{ user.balance ? user.balance : 0 | number:2 }} €
                   </span>
                 </p>

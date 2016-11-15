@@ -22,6 +22,13 @@
                             </md-button>
                         </md-menu-item>
                         <md-menu-item>
+                            <md-button aria-label="Profils utilisateurs" ng-click="go('root.users.list')">
+                                <md-icon md-menu-align-target md-font-icon="fa-users" class="fa"></md-icon>
+                                Profils utilisateurs
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-divider></md-menu-divider>
+                        <md-menu-item>
                             <md-button aria-label="Transactions" ng-click="go('root.transactions')">
                                 <md-icon md-menu-align-target md-font-icon="fa-usd" class="fa"></md-icon>
                                 Transactions
@@ -33,16 +40,8 @@
                                 Dettes
                             </md-button>
                         </md-menu-item>
-                        <md-menu-divider></md-menu-divider>
                         <md-menu-item>
-                            <md-button aria-label="Profils utilisateurs" ng-click="go('root.users.list')">
-                                <md-icon md-menu-align-target md-font-icon="fa-users" class="fa"></md-icon>
-                                Profils utilisateurs
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-divider></md-menu-divider>
-                        <md-menu-item>
-                            <md-button aria-label="Tableau de bord" disabled="disabled">
+                            <md-button aria-label="Tableau de bord" ng-click="go('root.dashboard')">
                                 <md-icon md-menu-align-target md-font-icon="fa-dashboard" class="fa"></md-icon>
                                 Tableau de bord
                             </md-button>
