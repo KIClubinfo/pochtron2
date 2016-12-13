@@ -121,10 +121,13 @@ angular
         });
 
         $mdThemingProvider.theme('default')
-            .primaryPalette('mcgpalette0')
-            .accentPalette('mcgpalette1', {
-                'default': '300'
-            });
+            .primaryPalette('red')
+            .accentPalette('red')
+            // .primaryPalette('mcgpalette0')
+            // .accentPalette('mcgpalette1', {
+            //     'default': '300'
+            // })
+        ;
     })
     // Setup routes
     .config(function($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
