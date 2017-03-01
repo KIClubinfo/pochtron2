@@ -23,9 +23,27 @@ angular.module('foyer').controller('Dashboard_Ctrl', function($scope, statistics
         }
     };
 
-    })
-    .config(function($stateProvider) {
-        'ngInject';
+    $scope.soldBeer = {
+        labels: statistics.soldBeers.labels,
+        series: ['Bières vendues'],
+        data: [statistics.soldBeers.data],
+        options: {
+            title: {
+                display: true,
+                text: 'Bières vendues',
+                fontSize: 16
+            },
+            scales: {
+                yAxes: [
+                    {
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }
+                ]
+            }
+        }
+    };
 
 }).config(function($stateProvider) {
     'ngInject';
