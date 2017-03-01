@@ -1,23 +1,23 @@
 angular.module('foyer')
     .controller('Login_Ctrl', function($scope, $rootScope, $state, $http, $mdToast, $animate, Permissions) {
         'ngInject';
-        
+
         $scope.login = function(username, password) {
             $http
                 .post(apiPrefix + 'login', {
                     username: username,
                     password: password
                 })
-                .success(function(data, status, headers, config) {
-                    Permissions.set(data);
-                })
-                .error(function(data, status, headers, config) {
+                .then(function(response) {
+                    Permissions.set(response.data);
+                },
+                function(response) {
                     // Supprime tout token en cas de mauvaise identification
                     Permissions.remove();
                     $mdToast.show(
                       $mdToast
                         .simple()
-                        .content(data.reason)
+                        .content(response.data.message)
                         .position('bottom right')
                         .hideDelay(3000)
                     );

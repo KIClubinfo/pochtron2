@@ -17,11 +17,11 @@ angular.module('foyer')
 
             $http
                 .post(apiPrefix + 'beers', params)
-                .success(function(){
+                .then(function(){
                     $http
                         .get(apiPrefix + 'beers')
-                        .success(function(data) {
-                            $scope.beers = data;
+                        .then(function(response) {
+                            $scope.beers = response.data;
                             Alert.toast('Bière correctement ajoutée !');
                         })
                     ;
@@ -59,11 +59,11 @@ angular.module('foyer')
 
                     $http
                         .patch(apiPrefix + 'beers/' + beer.slug, params)
-                        .success(function(){
+                        .then(function(){
                             $http
                                 .get(apiPrefix + 'beers')
-                                .success(function(data) {
-                                    $scope.beers = data;
+                                .then(function(response) {
+                                    $scope.beers = response.data;
                                     Alert.toast('Le changement, c\'est maintenant.');
                                 })
                             ;
@@ -90,7 +90,7 @@ angular.module('foyer')
                 .then(function() {
                     $http
                         .delete(apiPrefix + 'beers/' + beer.slug)
-                        .success(function(){
+                        .then(function(){
                             $scope.beers.splice($scope.beers.indexOf(beer), 1);
                             Alert.toast('BAM !');
                         })

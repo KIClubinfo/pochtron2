@@ -1,7 +1,7 @@
 angular.module('foyer')
     .factory('Permissions', function($rootScope, $http, Storage, jwtHelper, $state, Alert) {
         'ngInject';
-        
+
         remove = function() {
             $rootScope.isLogged = false;
             Storage.remove('token');
@@ -31,14 +31,14 @@ angular.module('foyer')
                 // Checking if user is member of Foyer at this point is not a security breach because all used API routes are protected
                 $http
                     .get(apiPrefix + 'users/' + username + '/clubs')
-                    .success(function(data){
+                    .then(function(response){
                         membreFoyer = false;
                         for (var i = 0; i < loginData.data.roles.length; i++) {
                             if (loginData.data.roles[i] == 'ROLE_ADMIN')
                                 membreFoyer = true;
                         }
-                        for (var i = 0; i < data.length; i++) {
-                            if (data[i].club.slug == 'foyer')
+                        for (var i = 0; i < response.data.length; i++) {
+                            if (response.data[i].club.slug == 'foyer')
                                 membreFoyer = true;
                         }
                         if (!membreFoyer) {
@@ -58,8 +58,8 @@ angular.module('foyer')
                 // On récupère les données utilisateur
                 $http
                     .get(apiPrefix + 'users/' + username)
-                    .success(function(data){
-                        $rootScope.me = data;
+                    .then(function(response){
+                        $rootScope.me = response.data;
                     })
                 ;
             },

@@ -39,8 +39,8 @@ angular.module('foyer')
             var results = query ? $scope.users : $scope.users, deferred;
             $http
                 .post(apiPrefix + 'search', {search: 'User/' + query})
-                .success(function(data) {
-                    deferred.resolve(filterFilter(data.users, function(value, index, array){
+                .then(function(response) {
+                    deferred.resolve(filterFilter(response.data.users, function(value, index, array){
                         return value.promo == '017' || value.promo == '018' || value.promo == '019'
                     }));
                 })
@@ -180,7 +180,7 @@ angular.module('foyer')
             }
 
             var conso = consosToSend.pop();
-            $http.post(apiPrefix + 'transactions', {user: conso.user, beer: conso.beer}).success(sendConsos);
+            $http.post(apiPrefix + 'transactions', {user: conso.user, beer: conso.beer}).then(sendConsos);
         };
 
         /**
@@ -266,7 +266,7 @@ angular.module('foyer')
             $scope.isLoading = true;
             $http
                 .delete(apiPrefix + 'transactions/' + conso.id)
-                .success(function(){
+                .then(function(){
                     $scope.consos.splice($scope.consos.indexOf(conso), 1);
                     Alert.toast('Conso supprimée !');
                     $scope.isLoading = false;
@@ -325,7 +325,7 @@ angular.module('foyer')
 
             $http
                 .post(apiPrefix + 'transactions', {user: $scope.selectedCredit.slug, credit: balance})
-                .success(function(){
+                .then(function(){
                     reloadConsos();
                     Alert.toast('Compte mis à jour.');
                     $mdDialog.hide();
@@ -373,8 +373,8 @@ angular.module('foyer')
         var reloadConsos = function() {
             $http
                 .get(apiPrefix + 'transactions?limit=50&sort=-date')
-                .success(function(data){
-                    $scope.consos = data;
+                .then(function(response){
+                    $scope.consos = response.data;
                 })
             ;
         };
@@ -385,14 +385,14 @@ angular.module('foyer')
         $interval(function() {
             $http
                 .get(apiPrefix + 'beers')
-                .success(function(data){
-                    $scope.beers = data;
+                .then(function(response){
+                    $scope.beers = response.data;
                 })
             ;
             $http
                 .get(apiPrefix + 'userbeers')
-                .success(function(data){
-                    $scope.users = data;
+                .then(function(response){
+                    $scope.users = response.data;
                 })
             ;
             reloadConsos();

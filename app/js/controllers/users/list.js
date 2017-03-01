@@ -1,7 +1,7 @@
 angular.module('foyer')
     .controller('Users_List_Ctrl', function($scope, $http, $q, $state) {
         'ngInject';
-        
+
         /**
          * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
          *                              SEARCH
@@ -17,8 +17,8 @@ angular.module('foyer')
                 deferred;
             $http
                 .post(apiPrefix + 'search', {search: 'User/' + query})
-                .success(function(data) {
-                    deferred.resolve(data.users);
+                .then(function(response) {
+                    deferred.resolve(response.data.users);
                 })
             ;
             return deferred.promise;

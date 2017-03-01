@@ -44,12 +44,12 @@ angular.module('foyer')
             $scope.isLoading = true;
             $http
                 .delete(apiPrefix + 'transactions/' + transaction.id)
-                .success(function(){
+                .then(function(){
                     $scope.transactions.data.splice($scope.transactions.data.indexOf(transaction), 1);
                     Alert.toast('Conso supprimée !');
                     $scope.isLoading = false;
-                })
-                .error(function(){
+                },
+                function(){
                     Alert.toast('Erreur !');
                     $scope.isLoading = false;
                 })

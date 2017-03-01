@@ -1,4 +1,4 @@
-var apiPrefix = 'https://upont.enpc.fr/api/';
+var apiPrefix = '/api/';
 
 angular
     .module('foyer', [
@@ -182,22 +182,24 @@ angular
             }
         };
     })
-    .config(function($httpProvider, jwtInterceptorProvider) {
+    .config(function($httpProvider, jwtOptionsProvider) {
         'ngInject';
 
-        jwtInterceptorProvider.tokenGetter = function(Permissions, Storage, config, jwtHelper, $rootScope, $q) {
-            'ngInject';
+        jwtOptionsProvider.config({
+            tokenGetter: function (Storage, options, jwtHelper, $q) {
+                'ngInject';
 
-            // On n'envoie pas le token pour les templates
-            if (config.url.substr(config.url.length - 5) == '.html')
-                return null;
+                // On n'envoie pas le token pour les templates
+                if (options.url.substr(options.url.length - 5) == '.html')
+                    return null;
 
-            if (Storage.get('token') && jwtHelper.isTokenExpired(Storage.get('token'))) {
-                Permissions.remove('token');
-                return $q.reject(config);
+                if (Storage.get('token') && jwtHelper.isTokenExpired(Storage.get('token'))) {
+                    Permissions.remove('token');
+                    return $q.reject(options);
+                }
+                return Storage.get('token');
             }
-            return Storage.get('token');
-        };
+        });
 
         $httpProvider.interceptors.push('jwtInterceptor');
         $httpProvider.interceptors.push('ErrorCodes_Interceptor');

@@ -46,7 +46,7 @@ angular.module('foyer')
 
         $scope.exportDebts = function () {
             $http.get(apiPrefix + 'foyer/debts')
-                .success(function(result){
+                .then(function(result){
                     fileData = new Blob([result], { type: 'text/csv' });
                     fileUrl = URL.createObjectURL(fileData);
 
