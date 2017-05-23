@@ -59,7 +59,41 @@ angular.module('foyer')
                     hiddenElement.click();
             });
         };
+
+        $scope.promos = ["019", "018", "017", "016"];
+        $scope.displayed = ["019", "018"];
+        $scope.toggle = function (item, list) {
+          var idx = list.indexOf(item);
+          if (idx > -1) {
+            list.splice(idx, 1);
+          }
+          else {
+            list.push(item);
+          }
+        };
+
+        $scope.exists = function (item, list) {
+          return list.indexOf(item) > -1;
+        };
+
+        $scope.isIndeterminate = function() {
+          return ($scope.displayed.length !== 0 &&
+              $scope.displayed.length !== $scope.promos.length);
+        };
+
+        $scope.areAllChecked = function() {
+          return $scope.displayed.length === $scope.promos.length;
+        };
+
+        $scope.toggleAll = function() {
+          if ($scope.displayed.length === $scope.promos.length) {
+            $scope.displayed = [];
+          } else if ($scope.displayed.length === 0 || $scope.displayed.length > 0) {
+            $scope.displayed = $scope.promos.slice(0);
+          }
+        };
     })
+
     .config(function ($stateProvider) {
         'ngInject';
 
