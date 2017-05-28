@@ -1,21 +1,5 @@
-<md-toolbar class="md-hue-1">
-    <div class="md-toolbar-tools">
-        <h1 class="md-padding">
-            <span>Crédit</span>
-        </h1>
-        <md-radio-group ng-model="sortBalance" layout="row" ng-change="users.reload()">
-            <md-radio-button value="balance"> Croissant</md-radio-button>
-            <md-radio-button value="-balance"> Décroissant</md-radio-button>
-        </md-radio-group>
-        <span flex></span>
-        <md-button class="md-raised" aria-label="Exporter les dettes" ng-click="exportDebts()">
-            Exporter les dettes
-        </md-button>
-    </div>
-</md-toolbar>
-
-<div layout="row" style="height:calc(100% - 64px);">
-    <md-list class="full-height" flex>
+<div layout="row" class="full-height">
+    <md-list class="full-height" flex="66">
         <md-virtual-repeat-container class="full-height">
             <md-list-item class="md-3-line" md-virtual-repeat="user in users" md-on-demand style="margin:8px;" ng-show="exists(user.promo, displayed)">
                 <img ng-src="{{ user.image_url | urlFile | thumb }}" class="md-avatar"
@@ -33,15 +17,18 @@
             </md-list-item>
         </md-virtual-repeat-container>
     </md-list>
-    <div layout="column" flex="nogrow" hide-xs>
-        <!--
-          In IE, we cannot apply flex directly to <fieldset>
-          @see https://github.com/philipwalton/flexbugs#9-some-html-elements-cant-be-flex-containers
-        -->
+    <div layout="column" hide-xs flex="33" layout-padding>
+        <md-radio-group ng-model="sortBalance" layout="row" ng-change="users.reload()">
+            <md-radio-button value="balance"> Croissant</md-radio-button>
+            <md-radio-button value="-balance"> Décroissant</md-radio-button>
+        </md-radio-group>
+        <md-button class="md-raised md-primary" aria-label="Exporter les dettes" ng-click="exportDebts()">
+            Exporter les dettes
+        </md-button>
         <fieldset style="border-style: solid; border-width: 1px;" >
             <legend>Filtrer par promotion </legend>
-            <div layout="row" layout-wrap flex>
-                <div flex-xs flex="50">
+            <div>
+                <div>
                     <md-checkbox aria-label="Tout sélectionner"
                                  ng-checked="areAllChecked()"
                                  md-indeterminate="isIndeterminate()"
@@ -49,7 +36,7 @@
                         Toutes les promos
                     </md-checkbox>
                 </div>
-            <div style="padding-left: 30px;" flex="100" ng-repeat="promo in promos">
+            <div style="padding-left: 30px;" ng-repeat="promo in promos">
                 <md-checkbox ng-checked="exists(promo, displayed)" ng-click="toggle(promo, displayed)">
                     {{ promo }}
                 </md-checkbox>
