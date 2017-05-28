@@ -117,9 +117,10 @@ angular.module('foyer').controller('Debts_Ctrl', function($scope, $http, $mdDial
         return result;
     };
 
-    $scope.checkAll = function() {
+    $scope.toggleAll = function() {
+        var value = !$scope.areAllChecked();
         for (var promo in $scope.promos) {
-            $scope.promos[promo] = true;
+            $scope.promos[promo] = value;
         }
     };
 }).config(function($stateProvider) {
