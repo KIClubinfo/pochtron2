@@ -1,34 +1,47 @@
-<md-toolbar class="md-hue-1">
-    <div class="md-toolbar-tools">
-        <h1 class="md-padding">
-            <span>Crédit</span>
-        </h1>
+<div layout="row" class="full-height">
+    <md-list class="full-height" flex="66">
+        <md-virtual-repeat-container class="full-height">
+            <md-list-item class="md-3-line" md-virtual-repeat="user in users" md-on-demand style="margin:8px;">
+                <img ng-src="{{ user.image_url | urlFile | thumb }}" class="md-avatar"
+                     alt="Image de l'utilisateur"/>
+                <div class="md-list-item-text" flex layout="row">
+                    <h4 flex="25">{{ user.first_name }} {{ user.last_name }}</h4>
+                    <p ng-if="user.username == 'externe-foyer'">&nbsp;</p>
+                    <p ng-if="user.username != 'externe-foyer'">
+                      <md-icon ng-if="user.balance < 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>
+                      <span ng-class="{'md-bg-accent': user.balance < 10 && user.balance >=0, 'md-bg-warn':user.balance < 0}">
+                        Compte : {{ user.balance ? user.balance : 0 | number:2 }} €
+                      </span>
+                    </p>
+                </div>
+            </md-list-item>
+        </md-virtual-repeat-container>
+    </md-list>
+    <div layout="column" hide-xs flex="33" layout-padding>
         <md-radio-group ng-model="sortBalance" layout="row" ng-change="users.reload()">
             <md-radio-button value="balance"> Croissant</md-radio-button>
             <md-radio-button value="-balance"> Décroissant</md-radio-button>
         </md-radio-group>
-        <span flex></span>
-        <md-button class="md-raised" aria-label="Exporter les dettes" ng-click="exportDebts()">
+        <md-button class="md-raised md-primary" aria-label="Exporter les dettes" ng-click="exportDebts()">
             Exporter les dettes
         </md-button>
-    </div>
-</md-toolbar>
-
-<md-list style="height:calc(100% - 64px);">
-    <md-virtual-repeat-container layout="row" class="full-height">
-        <md-list-item class="md-3-line" md-virtual-repeat="user in users" md-on-demand style="margin:8px;">
-            <img ng-src="{{ user.image_url | urlFile | thumb }}" class="md-avatar"
-                 alt="Image de l'utilisateur"/>
-            <div class="md-list-item-text" flex layout="row">
-                <h4 flex="25">{{ user.first_name }} {{ user.last_name }}</h4>
-                <p ng-if="user.username == 'externe-foyer'">&nbsp;</p>
-                <p ng-if="user.username != 'externe-foyer'">
-                  <md-icon ng-if="user.balance < 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>
-                  <span ng-class="{'md-bg-accent': user.balance < 10 && user.balance >=0, 'md-bg-warn':user.balance < 0}">
-                    Compte : {{ user.balance ? user.balance : 0 | number:2 }} €
-                  </span>
-                </p>
+        <fieldset style="border-style: solid; border-width: 1px;" >
+            <legend>Filtrer par promotion </legend>
+            <div>
+                <div>
+                    <md-checkbox aria-label="Tout sélectionner"
+                                 ng-checked="areAllChecked()"
+                                 md-indeterminate="isIndeterminate()"
+                                 ng-click="toggleAll()">
+                        Toutes les promos
+                    </md-checkbox>
+                </div>
+            <div style="padding-left: 30px;" ng-repeat="(promo, checked) in promos">
+                <md-checkbox ng-checked="checked" ng-click="toggle(promo)">
+                    {{ promo }}
+                </md-checkbox>
             </div>
-        </md-list-item>
-    </md-virtual-repeat-container>
-</md-list>
+            </div>
+        </fieldset>
+    </div>
+</div>
