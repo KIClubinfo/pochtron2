@@ -1,6 +1,6 @@
 <section>
     <div layout="row" layout-wrap>
-        <div flex="70" flex-md="100">
+        <div flex="50" flex-xs="100" flex-sm="100">
             <md-toolbar class="md-accent">
                 <div class="md-toolbar-tools">
                     <h1>Profil</h1>
@@ -30,14 +30,14 @@
                 </div>
             </md-toolbar>
         </div>
-        <div flex="30" flex-md="100" class="md-whiteframe-z3" style="z-index:5; min-height: 93vh;">
+        <div flex="50" flex-xs="100" flex-sm="100" class="md-whiteframe-z3" style="z-index:5; min-height: 93vh;">
             <md-toolbar class="md-accent">
                 <div class="md-toolbar-tools">
                     <h1>Historique des transactions</h1>
                 </div>
             </md-toolbar>
-            <md-content layout-padding layout="column">
-                <md-list>
+            <md-content layout="column" style="height:calc(100% - 64px);">
+                <md-list style="height: 100%;">
                     <md-virtual-repeat-container layout="row" class="full-height">
                         <md-list-item class="md-3-line" md-virtual-repeat="transaction in transactions" md-on-demand style="margin:8px;">
                             <div class="md-list-item-text" flex layout="row">
