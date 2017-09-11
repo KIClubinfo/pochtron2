@@ -50,7 +50,7 @@
         </md-content>
 
         <div layout="row" layout-wrap layout-padding>
-            <div flex="30" flex-sm="100" class="users-list">
+            <div flex="100" class="users-list">
                 <form ng-submit="$event.preventDefault()">
                     <md-autocomplete
                         md-search-text="userSearchText"
@@ -70,7 +70,7 @@
                     </md-autocomplete>
                 </form>
             </div>
-            <div flex="70" flex-sm="100">
+            <div flex="100">
                 <form ng-submit="$event.preventDefault()">
                     <md-autocomplete
                         md-search-text="beerSearchText"
@@ -92,7 +92,7 @@
             </div>
         </div>
         <div layout="row" layout-wrap>
-            <div flex="30" flex-sm="100" class="users-list">
+            <div flex="30" flex-xs="100" flex-sm="100" class="users-list">
                 <md-list>
                     <md-list-item class="md-3-line" ng-repeat="user in users" ng-click="selectUser(user)">
                         <img ng-src="{{ user.image_url | thumb | urlFile }}" class="md-avatar" alt="Image de l'utilisateur" />
@@ -107,7 +107,7 @@
                     </md-list-item>
                 </md-list>
             </div>
-            <div flex="70" flex-sm="100">
+            <div flex="70" flex-xs="100" flex-sm="100">
                 <div layout="row" layout-wrap layout-align="center center">
                     <md-card class="beer selectable" ng-repeat="beer in beers" flex="15" flex-md="33" flex-sm="100" ng-click="selectBeer(beer)">
                         <md-card-content layout="column" layout-align="center center">
@@ -121,7 +121,7 @@
         </div>
     </div>
 
-    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" md-is-locked-open="$mdMedia('gt-sm')">
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2" layout-padding md-component-id="right" md-is-locked-open="$mdMedia('gt-sm')">
         <md-toolbar class="md-accent">
             <div class="md-toolbar-tools" layout="row" layout-align="space-around center">
                 <h1>Historique des consos</h1>
