@@ -1,9 +1,6 @@
 <md-toolbar class="md-accent">
     <div class="md-toolbar-tools">
         <h1>Historique des transactions</h1>
-        <md-button class="md-fab md-primary md-mini" aria-label="Créditer un compte" ng-click="addBalance($event)" style="position: absolute; right: 64px;">
-            <md-icon md-font-icon="fa-usd" class="fa md-headline"></md-icon>
-        </md-button>
     </div>
 </md-toolbar>
 
@@ -12,12 +9,12 @@
         <md-list-item class="md-3-line" md-virtual-repeat="transaction in transactions" md-on-demand style="margin:8px;">
             <img ng-src="{{ transaction.user.image_url | urlFile | thumb }}" class="md-avatar"
                  alt="Image de l'utilisateur"/>
-            <div class="md-list-item-text" flex layout="row">
-                <h4 flex="25">{{ transaction.user.first_name }} {{ transaction.user.last_name }}</h4>
-                <h4 flex="25">{{ transaction.beer ? transaction.beer.name : 'Compte crédité (' + transaction.amount + '€)' }}</h4>
-                <h4 flex="25">{{ transaction.date*1000 | date:"'Le' dd/MM 'à' HH'h'mm" }}</h4>
-                <p ng-if="transaction.user.username == 'externe-foyer'">&nbsp;</p>
-                <p ng-if="transaction.user.username != 'externe-foyer'">
+            <div class="md-list-item-text" flex layout-wrap layout="row">
+                <h4 flex="25" flex-sm="50" flex-xs="100">{{ transaction.user.first_name }} {{ transaction.user.last_name }}</h4>
+                <h4 flex="25" flex-sm="50" flex-xs="100">{{ transaction.beer ? transaction.beer.name : 'Compte crédité (' + transaction.amount + '€)' }}</h4>
+                <h4 flex="25" flex-sm="50" flex-xs="100">{{ transaction.date*1000 | date:"'Le' dd/MM 'à' HH'h'mm" }}</h4>
+                <p flex="25" flex-sm="50" flex-xs="100" ng-if="transaction.user.username == 'externe-foyer'">&nbsp;</p>
+                <p flex="25" flex-sm="50" flex-xs="100" ng-if="transaction.user.username != 'externe-foyer'">
                     <md-icon ng-if="transaction.user.balance < 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>
                     Compte : {{ transaction.user.balance | number:2 }} €
                 </p>

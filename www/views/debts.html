@@ -1,13 +1,13 @@
-<div layout="row" class="full-height">
-    <md-list class="full-height" flex="66">
+<div layout-wrap layout="row" class="full-height">
+    <md-list class="full-height" flex="66" flex-xs="100" flex-order-xs="2">
         <md-virtual-repeat-container class="full-height">
             <md-list-item class="md-3-line" md-virtual-repeat="user in users" md-on-demand style="margin:8px;">
                 <img ng-src="{{ user.image_url | urlFile | thumb }}" class="md-avatar"
                      alt="Image de l'utilisateur"/>
-                <div class="md-list-item-text" flex layout="row">
-                    <h4 flex="25">{{ user.first_name }} {{ user.last_name }}</h4>
-                    <p ng-if="user.username == 'externe-foyer'">&nbsp;</p>
-                    <p ng-if="user.username != 'externe-foyer'">
+                <div class="md-list-item-text" flex layout-wrap layout="row">
+                    <h4 flex="60" flex-xs="100">{{ user.first_name }} {{ user.last_name }}</h4>
+                    <p flex="40" flex-xs="100" ng-if="user.username == 'externe-foyer'">&nbsp;</p>
+                    <p flex="40" flex-xs="100" ng-if="user.username != 'externe-foyer'">
                       <md-icon ng-if="user.balance < 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>
                       <span ng-class="{'md-bg-accent': user.balance < 10 && user.balance >=0, 'md-bg-warn':user.balance < 0}">
                         Compte : {{ user.balance ? user.balance : 0 | number:2 }} €
@@ -17,10 +17,10 @@
             </md-list-item>
         </md-virtual-repeat-container>
     </md-list>
-    <div layout="column" hide-xs flex="33" layout-padding>
-        <md-radio-group ng-model="sortBalance" layout="row" ng-change="users.reload()">
-            <md-radio-button value="balance"> Croissant</md-radio-button>
-            <md-radio-button value="-balance"> Décroissant</md-radio-button>
+    <div layout="column" flex="33" flex-xs="100" flex-order-xs="1" layout-padding>
+        <md-radio-group ng-model="sortBalance" layout-wrap layout="row" ng-change="users.reload()">
+            <md-radio-button layout-padding flex="45" flex-sm="100" flex-xs="100" value="balance"> Croissant</md-radio-button>
+            <md-radio-button layout-padding flex="45" flex-sm="100" flex-xs="100" value="-balance"> Décroissant</md-radio-button>
         </md-radio-group>
         <md-button class="md-raised md-primary" aria-label="Exporter les dettes" ng-click="exportDebts()">
             Exporter les dettes
