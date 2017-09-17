@@ -8,7 +8,7 @@
     </md-toolbar>
     <md-content layout-padding class="md-whiteframe-z3">
         <form name="beerForm" ng-submit="postBeer(name, price, alcohol, volume, image)">
-            <div layout layout-sm="column">
+            <div layout layout-xs="column">
                 <md-input-container flex>
                     <label>Nom</label>
                     <input required name="name" ng-model="name">
@@ -31,7 +31,7 @@
                     </div>
                 </md-input-container>
             </div>
-            <div layout layout-sm="column">
+            <div layout layout-xs="column">
                 <md-input-container flex>
                     <label>Volume (L)</label>
                     <input required type="number" step="0.01" name="volume" ng-model="volume">
@@ -50,7 +50,7 @@
     </md-content>
 
     <div layout="row" layout-wrap layout-align="center center">
-        <md-card class="beer" ng-repeat="beer in beers" flex="20" flex-md="30" flex-sm="100">
+        <md-card class="beer" ng-repeat="beer in beers" flex="20" flex-md="30" flex-sm="45" flex-xs="100">
             <md-card-content layout="row" layout-align="space-around center" class="md-body-1">
                 <img ng-if="beer.image_url"  class="md-card-image" alt="Image bière" ng-src="{{ beer.image_url | thumb | urlFile }}">
                 <img ng-if="!beer.image_url" class="md-card-image" alt="Image bière" src="imgs/interrogation.png">
