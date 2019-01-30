@@ -9,6 +9,7 @@ var uglify = require('gulp-uglify');
 var uglifycss = require('gulp-uglifycss');
 var webserver = require('gulp-webserver');
 var util = require('gulp-util');
+var rename = require('gulp-rename');
 var ngAnnotate = require('gulp-ng-annotate');
 
 var production = !!util.env.production;
@@ -73,8 +74,9 @@ gulp.task('lint-js', function() {
 
 gulp.task('copy-fonts', function () {
     return gulp
-        .src(mainBowerFiles())
-        .pipe(filter(['***.eot', '***.svg', '***.ttf', '***.woff', '***.woff2', '***.otf']))
+        .src('bower_components/**/fonts/**/*.{ttf,woff,woff2,eot,svg}')
+        // .pipe(filter(['***.eot', '***.svg', '***.ttf', '***.woff', '***.woff2', '***.otf']))
+        .pipe(rename({dirname: ''}))
         .pipe(gulp.dest('www/fonts/'))
     ;
 });

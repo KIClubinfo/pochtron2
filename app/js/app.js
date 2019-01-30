@@ -198,7 +198,8 @@ angular
                     return $q.reject(options);
                 }
                 return Storage.get('token');
-            }
+            },
+            whiteListedDomains: ['localhost', 'upont.enpc.fr', 'foyer.enpc.org'],
         });
 
         $httpProvider.interceptors.push('jwtInterceptor');
