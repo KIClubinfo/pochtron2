@@ -1,4 +1,4 @@
-var apiPrefix = '/api/';
+var apiPrefix = 'https://upont.enpc.fr/api/';
 
 angular
     .module('foyer', [
