@@ -19,7 +19,7 @@ angular.module('foyer')
           // For infinite scroll behavior, we always return a slightly higher
           // number than the previously loaded items.
           getLength: function() {
-            return Math.min(this.numLoaded + 5, this.items.headers['total-count']);
+            return Math.min(this.numLoaded + 5, this.items.pagination_infos.count);
           },
 
           fetchMoreItems_: function(index) {
@@ -68,7 +68,10 @@ angular.module('foyer')
                     transactions: function(Paginate) {
                         'ngInject';
 
-                        return Paginate.get('transactions?sort=-date', 30);
+                        return Paginate.get('transactions', {
+                            sort: '-date',
+                            limit: 30,
+                        });
                     }
                 },
                 data: {

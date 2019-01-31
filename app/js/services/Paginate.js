@@ -1,60 +1,69 @@
-angular.module('foyer').factory('Paginate', function($resource, $q, $rootScope) {
+angular.module('foyer').factory('Paginate', function($http, $q, $httpParamSerializer, $rootScope) {
     'ngInject';
     
-    loadData = function(load, url, append) {
+    loadData = function(paginationData, append) {
         // On indique qu'on est en train de charger de nouvelles données
         $rootScope.infiniteLoading = true;
-        var defered = $q.defer();
 
-        // S'il y a une page, on la charge
-        if (url) {
-            $resource(apiPrefix + url[1]).query(function(data, headers){
-                var result;
+        var url = paginationData.url;
+
+        return $http({
+            method: 'GET',
+            url: apiPrefix + url + '?' + $httpParamSerializer(paginationData.pagination_params)
+        }).then(
+            function(response) {
                 if (!append) {
-                    result = data;
+                    paginationData = response.data;
                 } else {
-                    result = load.data.concat(data);
+                    var merged = paginationData.data.concat(response.data.data);
+                    paginationData = response.data;
+                    paginationData.data = merged;
                 }
+                paginationData.url = url;
 
-                defered.resolve({data: result, headers: headers()});
                 $rootScope.infiniteLoading = false;
-            }, function(httpResponse){
-                 defered.reject(httpResponse);
-                 $rootScope.infiniteLoading = false;
-            });
 
-        } else {
-            defered.reject();
-            $rootScope.infiniteLoading = false;
-        }
-        return defered.promise;
+                return paginationData;
+            }, function() {
+                console.error('Failed to load more data');
+                $rootScope.infiniteLoading = false;
+            }
+        );
+
     };
 
     return {
-        get: function(url, limit) {
-            var suffix = '';
-            if (limit > 0) {
-                suffix = url.match(/\?/) === null ? '?' : '&';
-                suffix += 'limit=' + limit;
+        get: function(url, paginationParams) {
+            return $http({
+                method: 'GET',
+                url: apiPrefix + url + '?' + $httpParamSerializer(paginationParams)
+            }).then(
+                function(response) {
+                    var paginationData = response.data;
+                    paginationData.url = url;
+                    return paginationData;
+                },
+                function() {
+                    console.error('Failed to load initial data');
+                }
+            );
+        },
+
+        next: function(paginationData) {
+            if ('next_page' in paginationData.pagination_infos) {
+                paginationData.pagination_params.page = paginationData.pagination_infos.next_page;
+                return loadData(paginationData, true);
             }
-            var defered = $q.defer();
-
-            $resource(apiPrefix + url + suffix).query(function(data, headers){
-                defered.resolve({data: data, headers: headers()});
-            }, function(httpResponse){
-                defered.reject(httpResponse);
-            });
-            return defered.promise;
+            else {
+                return $q(function(resolve, reject) {
+                    reject();
+                });
+            }
         },
 
-        next: function(load) {
-            return loadData(load, load.headers.links.match(/self,<\/(.*?)>;rel=next/), true);
-        },
-
-        first: function(load) {
-            if(typeof load.headers.links == 'undefined')
-                load.headers.links = '';
-            return loadData(load, load.headers.links.match(/<\/(.*?)>;rel=first/));
+        first: function(paginationData) {
+            paginationData.pagination_params.page = paginationData.pagination_infos.first_page;
+            return loadData(paginationData);
         }
     };
 });

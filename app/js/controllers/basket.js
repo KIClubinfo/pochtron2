@@ -374,7 +374,7 @@ angular.module('foyer')
             $http
                 .get(apiPrefix + 'transactions?limit=50&sort=-date')
                 .then(function(response){
-                    $scope.consos = response.data;
+                    $scope.consos = response.data.data;
                 })
             ;
         };
@@ -419,11 +419,18 @@ angular.module('foyer')
 
                         return $resource(apiPrefix + 'userbeers').query().$promise;
                     },
-                    consos: function($resource) {
+                    consos: function($http) {
                         'ngInject';
 
-                        return $resource(apiPrefix + 'transactions?limit=50&sort=-date').query().$promise;
-                    }
+                        return $http.get(apiPrefix + 'transactions?limit=50&sort=-date').then(
+                            function(response) {
+                                return response.data.data;
+                            },
+                            function() {
+                                console.error('Failed to retrieve consos');
+                            }
+                        );
+                    },
                 },
                 data: {
                     title: 'Encaissement'

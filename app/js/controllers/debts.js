@@ -20,7 +20,7 @@ angular.module('foyer').controller('Debts_Ctrl', function($scope, $http, $mdDial
         // For infinite scroll behavior, we always return a slightly higher
         // number than the previously loaded items.
         getLength: function() {
-            return Math.min(this.numLoaded + 5, this.items.headers['total-count']);
+            return Math.min(this.numLoaded + 5, this.items.pagination_infos.count);
         },
 
         fetchMoreItems_: function(index) {
@@ -35,7 +35,10 @@ angular.module('foyer').controller('Debts_Ctrl', function($scope, $http, $mdDial
         },
 
         reload: function() {
-            var query = 'users?sort=' + $scope.sortBalance + ',firstName,lastName';
+            var params = {
+                sort: $scope.sortBalance + ',firstName,lastName',
+                limit: 30,
+            };
 
             if($scope.isAnyChecked()) {
                 var checkedPromos = [];
@@ -45,10 +48,10 @@ angular.module('foyer').controller('Debts_Ctrl', function($scope, $http, $mdDial
                     }
                 }
 
-                query += '&promo=' + checkedPromos.join();
+                params.promo = checkedPromos.join();
             }
 
-            Paginate.get(query, 30).then(angular.bind(this, function(result) {
+            Paginate.get('users', params).then(angular.bind(this, function(result) {
                 this.items = result;
                 this.numLoaded = result.data.length;
                 this.numToLoad = result.data.length;
@@ -139,8 +142,11 @@ angular.module('foyer').controller('Debts_Ctrl', function($scope, $http, $mdDial
             users: function(Paginate) {
                 'ngInject';
 
-                return Paginate.get('users?sort=balance,firstName,lastName', 30)
+                return Paginate.get('users', {
+                    sort: 'balance,firstName,lastName',
+                    limit: 30,
+                })
             }
         }
     });
-});;
+});

@@ -190,7 +190,7 @@ angular
                 'ngInject';
 
                 // On n'envoie pas le token pour les templates
-                if (options.url.substr(options.url.length - 5) == '.html')
+                if (options.url.substr(options.url.length - 5) === '.html')
                     return null;
 
                 if (Storage.get('token') && jwtHelper.isTokenExpired(Storage.get('token'))) {

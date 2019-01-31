@@ -38,7 +38,10 @@ angular.module('foyer')
                     transactions: function (Paginate, $stateParams) {
                         'ngInject';
 
-                        return Paginate.get('users/' + $stateParams.username + '/transactions?sort=-date', 30);
+                        return Paginate.get('users/' + $stateParams.username + '/transactions', {
+                            sort: '-date',
+                            limit: 30,
+                        });
                     }
                 },
                 data: {
