@@ -56,9 +56,9 @@ angular.module('foyer')
         };
 
         function createFilterFor(query) {
-            var lowercaseQuery = angular.lowercase(query);
+            var lowercaseQuery = query.toLowerCase();
             return function filterFn(state) {
-                return angular.lowercase(state.name).indexOf(lowercaseQuery) === 0;
+                return state.name.toLowerCase().indexOf(lowercaseQuery) === 0;
             };
         }
 
@@ -90,7 +90,7 @@ angular.module('foyer')
                 return;
             }
 
-            if ((user.slug !== undefined && user.slug == 'externe-foyer') || (user.username !== undefined && user.username == 'externe-foyer')) {
+            if ((user.slug !== undefined && user.slug === 'externe-foyer') || (user.username !== undefined && user.username === 'externe-foyer')) {
                 $scope.toValidate = user;
                 $mdDialog
                     .show({
@@ -115,7 +115,7 @@ angular.module('foyer')
         $scope.addUser = function(user) {
             // Add user only if not present
             for (var key in $scope.basket) {
-                if ($scope.basket[key].user == user) {
+                if ($scope.basket[key].user === user) {
                     return;
                 }
             }
