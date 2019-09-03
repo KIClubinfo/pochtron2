@@ -75,9 +75,10 @@ angular.module('foyer').controller('Debts_Ctrl', function($scope, $http, $mdDial
     };
 
     $scope.promos = {
+	"022": true,
         "021": true,
         "020": true,
-        "019": true,
+        "019": false,
         "018": false,
         "017": false,
         "016": false
