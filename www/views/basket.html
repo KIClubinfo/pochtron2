@@ -135,10 +135,10 @@
         </md-toolbar>
         <md-content layout-padding style="max-height: 160vh;">
             <md-list>
-                <md-list-item class="md-3-line" ng-repeat="conso in consos">
-                    <img ng-src="{{ conso.user.image_url | thumb | urlFile }}" class="md-avatar" alt="Image de l'utilisateur" />
+                <md-list-item class="md-3-line" ng-repeat="conso in consos | filter:{user:{username:'!!'}}">
+                    <img ng-src="{{ conso.user.image_url | thumb | urlFile }}" class="md-avatar" alt="Photo de profil" />
                     <div class="md-list-item-text">
-                        <h3>{{ conso.beer ? conso.beer.name : 'Compte crédité (' + conso.amount + '€)' }}</h3>
+                        <h3>{{ conso.beer ? conso.beer.name : 'Cédité (' + conso.amount + '€)' }}</h3>
                         <h4>{{ conso.user.first_name }} {{ conso.user.last_name }}</h4>
                         <h4>{{ conso.date*1000 | date:"'Le' dd/MM 'à' HH'h'mm" }}</h4>
                         <p ng-if="conso.user.username == 'externe-foyer'">&nbsp;</p>
