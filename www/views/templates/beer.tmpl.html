@@ -47,18 +47,9 @@
                         <div ng-message="required">Image</div>
                     </div>
                 </md-input-container>
-                <md-input-container flex>
-                    <label>Stock (consos)</label>
-                    <input required type="number" step="1" name="stock" ng-model="beer.stock">
-                    <div ng-messages="beerForm.stock.$error" ng-show="beerForm.stock.$dirty">
-                        <div ng-message="required">Champ obligatoire</div>
-                    </div>
-                </md-input-container>
-            </div>
-            <div flex layout="row" layout-align="center center">
-                <md-button class="md-raised md-default md-raised" type="submit">
-                    Envoyer
-                </md-button>
+                <div flex layout="row" layout-align="center center">
+                    <md-button class="md-raised md-default md-raised" type="submit">Envoyer</md-button>
+                </div>
             </div>
         </form>
     </md-dialog-content>

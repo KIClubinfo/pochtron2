@@ -8,7 +8,7 @@
     <md-virtual-repeat-container layout="row" class="full-height">
         <md-list-item class="md-3-line" md-virtual-repeat="transaction in transactions" md-on-demand style="margin:8px;">
             <img ng-src="{{ transaction.user.image_url | urlFile | thumb }}" class="md-avatar"
-                 alt="Image de l'utilisateur"/>
+                 alt="Photo de profil"/>
             <div class="md-list-item-text" flex layout-wrap layout="row">
                 <h4 flex="25" flex-sm="50" flex-xs="100">{{ transaction.user.first_name }} {{ transaction.user.last_name }}</h4>
                 <h4 flex="25" flex-sm="50" flex-xs="100">{{ transaction.beer ? transaction.beer.name : 'Compte crédité (' + transaction.amount + '€)' }}</h4>

@@ -47,16 +47,9 @@
                     <md-input-container flex>
                         <input aria-label="Image de la bière" type="file" name="image" ng-model="image" base-sixty-four-input>
                     </md-input-container>
-                    <md-input-container flex>
-                        <label>Stock (consos)</label>
-                        <input required type="number" step="1" name="stock" ng-model="stock">
-                        <div ng-messages="beerForm.stock.$error" ng-show="beerForm.stock.$dirty">
-                            <div ng-message="required">Champ obligatoire</div>
-                        </div>
-                    </md-input-container>
-                </div>
-                <div flex layout="row" layout-align="center center">
-                    <md-button class="md-raised md-primary" type="submit">Envoyer</md-button>
+                    <div flex layout="row" layout-align="center center">
+                        <md-button class="md-raised md-primary" type="submit">Envoyer</md-button>
+                    </div>
                 </div>
             </form>
         </md-content>

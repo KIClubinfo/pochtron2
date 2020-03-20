@@ -52,8 +52,7 @@ angular.module('foyer')
                         name: beer.name,
                         price: beer.price,
                         alcohol: beer.alcohol,
-                        volume: beer.volume,
-                        stock: beer.stock
+                        volume: beer.volume
                     };
                     if (beer.image) {
                         params.image = beer.image.base64;

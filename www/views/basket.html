@@ -21,7 +21,7 @@
             <div layout="row" layout-wrap flex="90" ng-if="!basket.length">
                 <md-card class="beer selectable" flex="30" flex-sm="50" flex-xs="60">
                     <md-card-content layout="column" layout-align="center center">
-                        <img src="imgs/interrogation.png" class="md-card-image" alt="Image utilisateur">
+                        <img src="imgs/interrogation.png" class="md-card-image" alt="Photo de profil">
                         <div class="details">Choisis des élèves</div>
                     </md-card-content>
                 </md-card>
@@ -30,7 +30,7 @@
                 <div layout="row" flex="90" flex-xs="80" layout-wrap layout-align="start start">
                     <md-card class="beer selectable" flex="30" flex-sm="50" flex-xs="60" ng-click="emptyUser(basketEntry)">
                         <md-card-content layout="column" layout-align="end center">
-                            <img ng-src="{{ basketEntry.user.image_url | thumb | urlFile }}" class="md-card-image" alt="Image utilisateur">
+                            <img ng-src="{{ basketEntry.user.image_url | thumb | urlFile }}" class="md-card-image" alt="Photo de profil">
                             <div class="details">{{ basketEntry.user.name ? basketEntry.user.name : basketEntry.user.first_name + ' ' + basketEntry.user.last_name }}</div>
                         </md-card-content>
                     </md-card>
@@ -98,7 +98,7 @@
             <div flex="30" flex-sm="40" flex-xs="100"class="users-list">
                 <md-list>
                     <md-list-item class="md-3-line" ng-repeat="user in users" ng-click="selectUser(user)">
-                        <img ng-src="{{ user.image_url | thumb | urlFile }}" class="md-avatar" alt="Image de l'utilisateur" />
+                        <img ng-src="{{ user.image_url | thumb | urlFile }}" class="md-avatar" alt="Photo de profil"/>
                         <div class="md-list-item-text">
                             <h3>{{ user.first_name }} {{ user.last_name }}</h3>
                             <p ng-if="user.username == 'externe-foyer'">&nbsp;</p>
@@ -138,7 +138,7 @@
                 <md-list-item class="md-3-line" ng-repeat="conso in consos | filter:{user:{username:'!!'}}">
                     <img ng-src="{{ conso.user.image_url | thumb | urlFile }}" class="md-avatar" alt="Photo de profil" />
                     <div class="md-list-item-text">
-                        <h3>{{ conso.beer ? conso.beer.name : 'Cédité (' + conso.amount + '€)' }}</h3>
+                        <h3>{{ conso.beer ? conso.beer.name : 'Crédité (' + conso.amount + '€)' }}</h3>
                         <h4>{{ conso.user.first_name }} {{ conso.user.last_name }}</h4>
                         <h4>{{ conso.date*1000 | date:"'Le' dd/MM 'à' HH'h'mm" }}</h4>
                         <p ng-if="conso.user.username == 'externe-foyer'">&nbsp;</p>
