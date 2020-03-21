@@ -72,6 +72,25 @@ angular.module('foyer')
             ;
         };
 
+        
+        /**
+         * Change le statut d'une bière
+         */
+        $scope.patchBeerActive = function(beer) {
+            if ($scope.isLoading) {
+                return;
+            }
+            $scope.isLoading = true;
+            $http
+                .patch(apiPrefix + 'beers/' + beer.slug + '/active')
+                .then(function(){
+                    Alert.toast('Bière mise à jour')
+                    $scope.isLoading = false;
+                    reloadBeers();
+                })
+            ;
+        };
+
         $scope.deleteBeer = function(ev, beer) {
             var confirm = $mdDialog
                 .confirm()
