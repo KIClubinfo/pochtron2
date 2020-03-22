@@ -9,7 +9,7 @@
         </div>
     </md-toolbar>
     <md-dialog-content>
-        <form name="deliveryForm" ng-submit="deliverStock(amount, number)">
+        <form name="deliveryForm" ng-submit="addDelivery(amount, quantity)">
             <div layout="column">
                 <md-autocomplete
                     md-search-text="searchText"
@@ -35,8 +35,8 @@
                 </md-input-container>
                 <md-input-container>
                     <label>Quantité (consos)</label>
-                    <input required type="integer" step="1" name="number" ng-model="number">
-                    <div ng-messages="deliveryForm.number.$error" ng-show="deliveryForm.number.$dirty">
+                    <input required type="integer" step="1" name="quantity" ng-model="quantity">
+                    <div ng-messages="deliveryForm.quantity.$error" ng-show="deliveryForm.quantity.$dirty">
                         <div ng-message="required">Champ obligatoire</div>
                     </div>
                 </md-input-container>

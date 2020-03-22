@@ -11,6 +11,7 @@ angular.module('foyer')
                 price: price,
                 alcohol: alcohol,
                 volume: volume,
+                active: true,
             };
             if (image) {
                 params.image = image.base64;
@@ -82,9 +83,9 @@ angular.module('foyer')
             }
             $scope.isLoading = true;
             $http
-                .patch(apiPrefix + 'beers/' + beer.slug + '/active')
+                .patch(apiPrefix + 'beers/' + beer.slug, {'active': !beer.active})
                 .then(function(){
-                    Alert.toast('Bière mise à jour')
+                    Alert.toast('Bière mise à jour');
                     $scope.isLoading = false;
                     reloadBeers();
                 })
@@ -134,7 +135,7 @@ angular.module('foyer')
         /**
          * Réceptionne une livraison
          */
-        $scope.addDelivery = function($event) {
+        $scope.openDeliveryDialog = function($event) {
             $scope.selectedDelivery = null;
             $mdDialog
                 .show({
@@ -157,13 +158,13 @@ angular.module('foyer')
         /**
          * Délivre une bière (action réelle)
          */
-        $scope.deliverStock = function(amount, number) {
+        $scope.addDelivery = function(amount, quantity) {
             if ($scope.selectedDelivery === null) {
                 return Alert.toast('Il faut séléctionner une bière !');
             }
             $scope.isLoading = true;
 
-            delivery = {beer: $scope.selectedDelivery, credit: amount, number: number};
+            var delivery = {beer: $scope.selectedDelivery.slug, credit: amount, quantity: quantity};
             $http
                 .post(apiPrefix + 'transactions', delivery)
                 .then(function(){

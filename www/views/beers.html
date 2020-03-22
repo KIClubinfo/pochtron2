@@ -6,7 +6,7 @@
                     Ajouter une bière
                 </h1>
                 <span flex></span>
-                <md-button hide-gt-sm class="md-fab md-primary md-mini" aria-label="Réceptionner des bières" ng-click="addDelivery($event)">
+                <md-button hide-gt-sm class="md-fab md-primary md-mini" aria-label="Réceptionner des bières" ng-click="openDeliveryDialog($event)">
                     <md-icon md-font-icon="fa-truck" class="fa md-headline"></md-icon>
                 </md-button>
             </div>
@@ -65,7 +65,7 @@
                         <strong>Prix :</strong> {{ beer.price }}€<br>
                         <strong>Alcool :</strong> {{ beer.alcohol }}%<br>
                         <strong>Volume :</strong> {{ beer.volume }}L<br>
-                        <strong>Stock :</strong> {{ beer.stock ? beer.stock : '?' }}
+                        <strong>Stock :</strong> {{ beer.stock }}
                     </p>
                 </md-card-content>
                 <div class="md-actions" layout="row" layout-wrap layout-padding layout-align="end center">
@@ -81,7 +81,7 @@
         <md-toolbar class="md-accent">
             <div class="md-toolbar-tools" layout="row" layout-align="space-around center">
                 <h1>Historique des bières</h1>
-                <md-button class="md-fab md-primary md-mini" aria-label="Réceptionner des bières" ng-click="addDelivery($event)">
+                <md-button class="md-fab md-primary md-mini" aria-label="Réceptionner des bières" ng-click="openDeliveryDialog($event)">
                     <md-icon md-font-icon="fa-truck" class="fa md-headline"></md-icon>
                 </md-button>
             </div>
@@ -91,12 +91,12 @@
                 <md-list-item class="md-3-line" ng-repeat="delivery in deliveries | filter:{beer:{name:'!!'}}">
                     <img ng-src="{{ delivery.user.image_url | thumb | urlFile }}" class="md-avatar" alt="Photo de bière" />
                     <div class="md-list-item-text">
-                        <h3>{{ delivery.amount > 0 ? '+' : '-' }} {{ delivery.number }} {{ delivery.beer.name }}</h3>
+                        <h3>{{ delivery.amount > 0 ? '+' : '-' }} {{ delivery.quantity }} {{ delivery.beer.name }}</h3>
                         <h4 ng-if="delivery.user.username">{{ delivery.user.first_name }} {{ delivery.user.last_name }}</h4>
                         <h4>{{ delivery.date*1000 | date:"'Le' dd/MM 'à' HH'h'mm" }}</h4>
                         <p>
-                            <md-icon ng-if="delivery.beer.stock =< 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>
-                            Stock : {{ delivery.beer.stock ? delivery.beer.stock : '?' }}
+                            <md-icon ng-if="delivery.beer.stock <= 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>
+                            Stock : {{ delivery.beer.stock }}
                         </p>
                     </div>
                     <md-button class="md-fab md-primary" aria-label="Supprimer la Livraison" ng-click="deleteDelivery(delivery)">
