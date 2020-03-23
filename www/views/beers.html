@@ -53,9 +53,10 @@
                 </div>
             </form>
         </md-content>
-
+        
+        <label>Montrer les bières cachées <input type="checkbox" ng-model="checked" ng-init="checked=false" /></label>
         <div layout="row" layout-wrap layout-align="center center">
-            <md-card class="beer" ng-repeat="beer in beers" flex="20" flex-md="30" flex-sm="45" flex-xs="100">
+            <md-card class="beer" ng-repeat="beer in beers | filter: {active : true}" flex="20" flex-md="30" flex-sm="45" flex-xs="100">
                 <md-card-content layout="row" layout-align="space-around center" class="md-body-1">
                     <img ng-if="beer.image_url"  class="md-card-image" alt="Image bière" ng-src="{{ beer.image_url | thumb | urlFile }}">
                     <img ng-if="!beer.image_url" class="md-card-image" alt="Image bière" src="imgs/interrogation.png">
@@ -70,8 +71,29 @@
                 </md-card-content>
                 <div class="md-actions" layout="row" layout-wrap layout-padding layout-align="end center">
                     <md-button flex class="md-raised" ng-click="patchBeer($event, beer)">Modifier</md-button>
-                    <md-button flex class="md-raised" ng-if="beer.active" ng-click="patchBeerActive(beer)">Masquer</md-button>
-                    <md-button flex class="md-raised" ng-if="!beer.active" ng-click="patchBeerActive(beer)">Afficher</md-button>
+                    <md-button flex class="md-raised" ng-if="beer.active" ng-click="patchBeerActive(beer)" style="background-color: rgb(255,82,82);">Masquer</md-button>
+                    <md-button flex class="md-raised" ng-if="!beer.active" ng-click="patchBeerActive(beer)" style="background-color: rgb(60,230,60);">Afficher</md-button>
+                </div>
+            </md-card>
+        </div>
+        <div layout="row" layout-wrap layout-align="center center">
+            <md-card class="beer" ng-repeat="beer in beers | filter: {active : false}" ng-if="checked" flex="20" flex-md="30" flex-sm="45" flex-xs="100">
+                <md-card-content layout="row" layout-align="space-around center" class="md-body-1">
+                    <img ng-if="beer.image_url"  class="md-card-image" alt="Image bière" ng-src="{{ beer.image_url | thumb | urlFile }}">
+                    <img ng-if="!beer.image_url" class="md-card-image" alt="Image bière" src="imgs/interrogation.png">
+
+                    <p>
+                        <span class="md-subhead"><strong>{{ beer.name }}</strong></span><br>
+                        <strong>Prix :</strong> {{ beer.price }}€<br>
+                        <strong>Alcool :</strong> {{ beer.alcohol }}%<br>
+                        <strong>Volume :</strong> {{ beer.volume }}L<br>
+                        <strong>Stock :</strong> {{ beer.stock }}
+                    </p>
+                </md-card-content>
+                <div class="md-actions" layout="row" layout-wrap layout-padding layout-align="end center">
+                    <md-button flex class="md-raised" ng-click="patchBeer($event, beer)">Modifier</md-button>
+                    <md-button flex class="md-raised" ng-if="beer.active" ng-click="patchBeerActive(beer)" style="background-color: rgb(255,82,82);">Masquer</md-button>
+                    <md-button flex class="md-raised" ng-if="!beer.active" ng-click="patchBeerActive(beer)" style="background-color: rgb(60,230,60);">Afficher</md-button>
                 </div>
             </md-card>
         </div>
