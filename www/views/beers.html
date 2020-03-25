@@ -1,70 +1,131 @@
-<div layout="column" layout-padding>
-    <md-toolbar class="md-accent">
-        <div class="md-toolbar-tools">
-            <h1>
-                Ajouter une bière
-            </h1>
-        </div>
-    </md-toolbar>
-    <md-content layout-padding class="md-whiteframe-z3">
-        <form name="beerForm" ng-submit="postBeer(name, price, alcohol, volume, image)">
-            <div layout layout-xs="column">
-                <md-input-container flex>
-                    <label>Nom</label>
-                    <input required name="name" ng-model="name">
-                    <div ng-messages="beerForm.name.$error" ng-show="beerForm.name.$dirty">
-                        <div ng-message="required">Champ obligatoire</div>
-                    </div>
-                </md-input-container>
-                <md-input-container flex>
-                    <label>Prix</label>
-                    <input required type="number" step="0.01" name="price" ng-model="price">
-                    <div ng-messages="beerForm.price.$error" ng-show="beerForm.price.$dirty">
-                        <div ng-message="required">Champ obligatoire</div>
-                    </div>
-                </md-input-container>
-                <md-input-container flex>
-                    <label>Alcool (%)</label>
-                    <input required type="number" step="0.01" name="alcohol" ng-model="alcohol">
-                    <div ng-messages="beerForm.alcohol.$error" ng-show="beerForm.alcohol.$dirty">
-                        <div ng-message="required">Champ obligatoire</div>
-                    </div>
-                </md-input-container>
+<section layout="row" flex>
+    <div layout="column" layout-padding flex>
+        <md-toolbar class="md-accent">
+            <div class="md-toolbar-tools">
+                <h1>
+                    Ajouter une bière
+                </h1>
+                <span flex></span>
+                <md-button hide-gt-sm class="md-fab md-primary md-mini" aria-label="Réceptionner des bières" ng-click="openDeliveryDialog($event)">
+                    <md-icon md-font-icon="fa-truck" class="fa md-headline"></md-icon>
+                </md-button>
             </div>
-            <div layout layout-xs="column">
-                <md-input-container flex>
-                    <label>Volume (L)</label>
-                    <input required type="number" step="0.01" name="volume" ng-model="volume">
-                    <div ng-messages="beerForm.volume.$error" ng-show="beerForm.volume.$dirty">
-                        <div ng-message="required">Champ obligatoire</div>
-                    </div>
-                </md-input-container>
-                <md-input-container flex>
-                    <input aria-label="Image de la bière" type="file" name="image" ng-model="image" base-sixty-four-input>
-                </md-input-container>
-                <div flex layout="row" layout-align="center center">
-                    <md-button class="md-raised md-primary" type="submit">Envoyer</md-button>
+        </md-toolbar>
+        <md-content layout-padding class="md-whiteframe-z3">
+            <form name="beerForm" ng-submit="postBeer(name, price, alcohol, volume, image)">
+                <div layout layout-xs="column">
+                    <md-input-container flex>
+                        <label>Nom</label>
+                        <input required name="name" ng-model="name">
+                        <div ng-messages="beerForm.name.$error" ng-show="beerForm.name.$dirty">
+                            <div ng-message="required">Champ obligatoire</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container flex>
+                        <label>Prix</label>
+                        <input required type="number" step="0.01" name="price" ng-model="price">
+                        <div ng-messages="beerForm.price.$error" ng-show="beerForm.price.$dirty">
+                            <div ng-message="required">Champ obligatoire</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container flex>
+                        <label>Alcool (%)</label>
+                        <input required type="number" step="0.1" name="alcohol" ng-model="alcohol">
+                        <div ng-messages="beerForm.alcohol.$error" ng-show="beerForm.alcohol.$dirty">
+                            <div ng-message="required">Champ obligatoire</div>
+                        </div>
+                    </md-input-container>
                 </div>
-            </div>
-        </form>
-    </md-content>
+                <div layout layout-xs="column">
+                    <md-input-container flex>
+                        <label>Volume (L)</label>
+                        <input required type="number" step="0.01" name="volume" ng-model="volume">
+                        <div ng-messages="beerForm.volume.$error" ng-show="beerForm.volume.$dirty">
+                            <div ng-message="required">Champ obligatoire</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container flex>
+                        <input aria-label="Image de la bière" type="file" name="image" ng-model="image" base-sixty-four-input>
+                    </md-input-container>
+                    <div flex layout="row" layout-align="center center">
+                        <md-button class="md-raised md-primary" type="submit">Envoyer</md-button>
+                    </div>
+                </div>
+            </form>
+        </md-content>
+        
+        <label>Montrer les bières cachées <input type="checkbox" ng-model="checked" ng-init="checked=false" /></label>
+        <div layout="row" layout-wrap layout-align="center center">
+            <md-card class="beer" ng-repeat="beer in beers | filter: {active : true}" flex="20" flex-md="30" flex-sm="45" flex-xs="100">
+                <md-card-content layout="row" layout-align="space-around center" class="md-body-1">
+                    <img ng-if="beer.image_url"  class="md-card-image" alt="Image bière" ng-src="{{ beer.image_url | thumb | urlFile }}">
+                    <img ng-if="!beer.image_url" class="md-card-image" alt="Image bière" src="imgs/interrogation.png">
 
-    <div layout="row" layout-wrap layout-align="center center">
-        <md-card class="beer" ng-repeat="beer in beers" flex="20" flex-md="30" flex-sm="45" flex-xs="100">
-            <md-card-content layout="row" layout-align="space-around center" class="md-body-1">
-                <img ng-if="beer.image_url"  class="md-card-image" alt="Image bière" ng-src="{{ beer.image_url | thumb | urlFile }}">
-                <img ng-if="!beer.image_url" class="md-card-image" alt="Image bière" src="imgs/interrogation.png">
+                    <p>
+                        <span class="md-subhead"><strong>{{ beer.name }}</strong></span><br>
+                        <strong>Prix :</strong> {{ beer.price }}€<br>
+                        <strong>Alcool :</strong> {{ beer.alcohol }}%<br>
+                        <strong>Volume :</strong> {{ beer.volume }}L<br>
+                        <strong>Stock :</strong> {{ beer.stock }}
+                    </p>
+                </md-card-content>
+                <div class="md-actions" layout="row" layout-wrap layout-padding layout-align="end center">
+                    <md-button flex class="md-raised" ng-click="patchBeer($event, beer)">Modifier</md-button>
+                    <md-button flex class="md-raised" ng-if="beer.active" ng-click="patchBeerActive(beer)" style="background-color: rgb(255,82,82);">Masquer</md-button>
+                    <md-button flex class="md-raised" ng-if="!beer.active" ng-click="patchBeerActive(beer)" style="background-color: rgb(60,230,60);">Afficher</md-button>
+                </div>
+            </md-card>
+        </div>
+        <div layout="row" layout-wrap layout-align="center center">
+            <md-card class="beer" ng-repeat="beer in beers | filter: {active : false}" ng-if="checked" flex="20" flex-md="30" flex-sm="45" flex-xs="100">
+                <md-card-content layout="row" layout-align="space-around center" class="md-body-1">
+                    <img ng-if="beer.image_url"  class="md-card-image" alt="Image bière" ng-src="{{ beer.image_url | thumb | urlFile }}">
+                    <img ng-if="!beer.image_url" class="md-card-image" alt="Image bière" src="imgs/interrogation.png">
 
-                <p>
-                    <span class="md-subhead"><strong>{{ beer.name }}</strong></span><br>
-                    <strong>Prix :</strong> {{ beer.price }}€<br>
-                    <strong>Alcool :</strong> {{ beer.alcohol }}%<br>
-                    <strong>Volume :</strong> {{ beer.volume }}L
-                </p>
-            </md-card-content>
-            <div class="md-actions" layout="row" layout-wrap layout-padding layout-align="end center">
-                <md-button flex class="md-raised" ng-click="patchBeer($event, beer)">Modifier</md-button>
-            </div>
-        </md-card>
+                    <p>
+                        <span class="md-subhead"><strong>{{ beer.name }}</strong></span><br>
+                        <strong>Prix :</strong> {{ beer.price }}€<br>
+                        <strong>Alcool :</strong> {{ beer.alcohol }}%<br>
+                        <strong>Volume :</strong> {{ beer.volume }}L<br>
+                        <strong>Stock :</strong> {{ beer.stock }}
+                    </p>
+                </md-card-content>
+                <div class="md-actions" layout="row" layout-wrap layout-padding layout-align="end center">
+                    <md-button flex class="md-raised" ng-click="patchBeer($event, beer)">Modifier</md-button>
+                    <md-button flex class="md-raised" ng-if="beer.active" ng-click="patchBeerActive(beer)" style="background-color: rgb(255,82,82);">Masquer</md-button>
+                    <md-button flex class="md-raised" ng-if="!beer.active" ng-click="patchBeerActive(beer)" style="background-color: rgb(60,230,60);">Afficher</md-button>
+                </div>
+            </md-card>
+        </div>
     </div>
-</div>
+
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2" layout-padding md-component-id="right" md-is-locked-open="$mdMedia('gt-sm')">
+        <md-toolbar class="md-accent">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-around center">
+                <h1>Historique des bières</h1>
+                <md-button class="md-fab md-primary md-mini" aria-label="Réceptionner des bières" ng-click="openDeliveryDialog($event)">
+                    <md-icon md-font-icon="fa-truck" class="fa md-headline"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-content layout-padding style="max-height: 160vh;">
+            <md-list>
+                <md-list-item class="md-3-line" ng-repeat="delivery in deliveries | filter:{beer:{name:'!!'}}">
+                    <img ng-src="{{ delivery.user.image_url | thumb | urlFile }}" class="md-avatar" alt="Photo de bière" />
+                    <div class="md-list-item-text">
+                        <h3>{{ delivery.amount > 0 ? '+' : '-' }} {{ delivery.quantity }} {{ delivery.beer.name }}</h3>
+                        <h4 ng-if="delivery.user.username">{{ delivery.user.first_name }} {{ delivery.user.last_name }}</h4>
+                        <h4>{{ delivery.date*1000 | date:"'Le' dd/MM 'à' HH'h'mm" }}</h4>
+                        <p>
+                            <md-icon ng-if="delivery.beer.stock <= 0" md-font-icon="fa-warning" class="fa md-title"></md-icon>
+                            Stock : {{ delivery.beer.stock }}
+                        </p>
+                    </div>
+                    <md-button class="md-fab md-primary" aria-label="Supprimer la Livraison" ng-click="deleteDelivery(delivery)">
+                        <md-icon md-font-icon="fa-trash" class="fa md-headline"></md-icon>
+                    </md-button>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </md-sidenav>
+</section>

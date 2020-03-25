@@ -1,8 +1,9 @@
 angular.module('foyer')
-    .controller('Beers_Ctrl', function($scope, $http, $mdDialog, Alert, beers) {
+    .controller('Beers_Ctrl', function($scope, $http, $mdDialog, Alert, beers, deliveries) {
         'ngInject';
 
         $scope.beers = beers;
+        $scope.deliveries = deliveries;
 
         $scope.postBeer = function(name, price, alcohol, volume, image) {
             var params = {
@@ -10,6 +11,7 @@ angular.module('foyer')
                 price: price,
                 alcohol: alcohol,
                 volume: volume,
+                active: true,
             };
             if (image) {
                 params.image = image.base64;
@@ -60,17 +62,32 @@ angular.module('foyer')
                     $http
                         .patch(apiPrefix + 'beers/' + beer.slug, params)
                         .then(function(){
-                            $http
-                                .get(apiPrefix + 'beers')
-                                .then(function(response) {
-                                    $scope.beers = response.data;
-                                    Alert.toast('Le changement, c\'est maintenant.');
-                                })
-                            ;
+                            Alert.toast('Le changement, c\'est maintenant.');
                         })
                     ;
+                    reloadDeliveries();
+                    reloadBeers();
                 }, function() {
                     Alert.toast('Tant pis...');
+                })
+            ;
+        };
+
+        
+        /**
+         * Change le statut d'une bière
+         */
+        $scope.patchBeerActive = function(beer) {
+            if ($scope.isLoading) {
+                return;
+            }
+            $scope.isLoading = true;
+            $http
+                .patch(apiPrefix + 'beers/' + beer.slug, {'active': !beer.active})
+                .then(function(){
+                    Alert.toast('Bière mise à jour');
+                    $scope.isLoading = false;
+                    reloadBeers();
                 })
             ;
         };
@@ -100,6 +117,108 @@ angular.module('foyer')
                 })
             ;
         };
+
+        /**
+         * Recherche d'une bière
+         */
+        $scope.searchBeer = function(query) {
+            return query ? $scope.beers.filter(createFilterFor(query)) : $scope.beers;
+        };
+
+        function createFilterFor(query) {
+            var lowercaseQuery = query.toLowerCase();
+            return function filterFn(state) {
+                return state.name.toLowerCase().indexOf(lowercaseQuery) === 0;
+            };
+        };
+
+        /**
+         * Réceptionne une livraison
+         */
+        $scope.openDeliveryDialog = function($event) {
+            $scope.selectedDelivery = null;
+            $mdDialog
+                .show({
+                    templateUrl: 'views/templates/delivery.tmpl.html',
+                    parent: angular.element(document.body),
+                    scope: $scope,
+                    preserveScope: true,
+                    targetEvent: $event,
+                })
+            ;
+        };
+
+        /**
+         * Choisis une bière pour la livraison
+         */
+        $scope.selectedDeliveryChange = function(beer) {
+            $scope.selectedDelivery = beer;
+        };
+
+        /**
+         * Délivre une bière (action réelle)
+         */
+        $scope.addDelivery = function(amount, quantity) {
+            if ($scope.selectedDelivery === null) {
+                return Alert.toast('Il faut séléctionner une bière !');
+            }
+            $scope.isLoading = true;
+
+            var delivery = {beer: $scope.selectedDelivery.slug, credit: amount, quantity: quantity};
+            $http
+                .post(apiPrefix + 'transactions', delivery)
+                .then(function(){
+                    $scope.isLoading = false;
+                    Alert.toast('Bières réceptionnées !');
+                    reloadDeliveries();
+                    reloadBeers();
+                })
+            ;
+        };
+
+        /**
+         * Supprime une livraison
+         */
+        $scope.deleteDelivery = function(delivery) {
+            if ($scope.isLoading) {
+                return;
+            }
+            $scope.isLoading = true;
+            $http
+                .delete(apiPrefix + 'transactions/' + delivery.id)
+                .then(function(){
+                    $scope.deliveries.splice($scope.deliveries.indexOf(delivery), 1);
+                    Alert.toast('Livraison supprimée !');
+                    $scope.isLoading = false;
+                    reloadDeliveries();
+                    reloadBeers();
+                })
+            ;
+        };
+
+        /**
+         * Recharge l'historique des livraisons
+         */
+        var reloadDeliveries = function() {
+            $http
+                .get(apiPrefix + 'transactions?limit=50&sort=-date')
+                .then(function(response){
+                    $scope.deliveries = response.data.data;
+                })
+            ;
+        };
+
+        /**
+         * Recharge les bières
+         */
+        var reloadBeers = function() {
+            $http
+                .get(apiPrefix + 'beers')
+                .then(function(response){
+                    $scope.beers = response.data;
+                })
+            ;
+        }
     })
     .config(function($stateProvider) {
         'ngInject';
@@ -114,7 +233,19 @@ angular.module('foyer')
                         'ngInject';
 
                         return $resource(apiPrefix + 'beers').query().$promise;
-                    }
+                    },
+                    deliveries: function($http) {
+                        'ngInject';
+
+                        return $http.get(apiPrefix + 'transactions?limit=50&sort=-date').then(
+                            function(response) {
+                                return response.data.data;
+                            },
+                            function() {
+                                console.error('Failed to retrieve deliveries');
+                            }
+                        );
+                    },
                 },
                 data: {
                     title: 'Bières'

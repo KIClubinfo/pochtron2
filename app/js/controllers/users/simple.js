@@ -36,6 +36,19 @@ angular.module('foyer')
           },
         };
 
-
+        $scope.deleteConso = function(conso) {
+            if ($scope.isLoading) {
+                return;
+            }
+            $scope.isLoading = true;
+            $http
+                .delete(apiPrefix + 'transactions/' + conso.id)
+                .then(function(){
+                    $scope.consos.splice($scope.consos.indexOf(conso), 1);
+                    Alert.toast('Conso supprimée !');
+                    $scope.isLoading = false;
+                })
+            ;
+        }
     })
 ;

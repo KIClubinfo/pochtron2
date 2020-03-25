@@ -1,6 +1,6 @@
 angular.module('foyer').factory('Paginate', function($http, $q, $httpParamSerializer, $rootScope) {
     'ngInject';
-    
+
     loadData = function(paginationData, append) {
         // On indique qu'on est en train de charger de nouvelles données
         $rootScope.infiniteLoading = true;

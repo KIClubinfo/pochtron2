@@ -7,7 +7,7 @@
                 </div>
             </md-toolbar>
             <md-content layout-padding layout="row">
-                <img ng-src="{{ user.image_url | thumb | urlFile }}" class="md-avatar" alt="Image de l'utilisateur"/>
+                <img ng-src="{{ user.image_url | thumb | urlFile }}" class="md-avatar" alt="Photo de profil"/>
                 <div>
                     <p>{{ user.first_name }} {{ user.last_name }}</p>
                     <p>Promo {{ user.promo }}</p>
@@ -56,6 +56,4 @@
             </md-content>
         </div>
     </div>
-
-
 </section>

@@ -1,7 +1,7 @@
 angular.module('foyer')
     .config(function ($stateProvider) {
         'ngInject';
-        
+
         $stateProvider
             .state('root.users', {
                 url: '/utilisateurs',

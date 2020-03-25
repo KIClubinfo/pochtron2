@@ -3,7 +3,7 @@
         <md-virtual-repeat-container class="full-height">
             <md-list-item class="md-3-line" md-virtual-repeat="user in users" md-on-demand style="margin:8px;">
                 <img ng-src="{{ user.image_url | urlFile | thumb }}" class="md-avatar"
-                     alt="Image de l'utilisateur"/>
+                     alt="Photo de profil"/>
                 <div class="md-list-item-text" flex layout-wrap layout="row">
                     <h4 flex="60" flex-xs="100">{{ user.first_name }} {{ user.last_name }}</h4>
                     <p flex="40" flex-xs="100" ng-if="user.username == 'externe-foyer'">&nbsp;</p>
