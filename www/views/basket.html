@@ -133,7 +133,7 @@
                 </md-button>
             </div>
         </md-toolbar>
-        <md-content layout-padding style="max-height: 160vh;">
+        <md-content layout-padding>
             <md-list>
                 <md-list-item class="md-3-line" ng-repeat="conso in consos | filter:{user:{username:'!!'}}">
                     <img ng-src="{{ conso.user.image_url | thumb | urlFile }}" class="md-avatar" alt="Photo de profil" />
