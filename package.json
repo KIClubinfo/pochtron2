@@ -24,7 +24,7 @@
     "main-bower-files": "^2.13.1"
   },
   "scripts": {
-    "postinstall": "bower install && gulp build",
+    "postinstall": "bower install --allow-root && gulp build",
     "start": "gulp start"
   },
   "devDependencies": {
