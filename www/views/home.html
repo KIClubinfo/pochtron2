@@ -4,7 +4,8 @@
         <md-toolbar class="md-whiteframe-z3">
             <div class="md-toolbar-tools">
                 <md-menu>
-                    <md-button aria-label="Menu" class="md-icon-button" ng-click="$mdOpenMenu()">
+                    <!-- Trigger element is a md-button with an icon -->
+                    <md-button ng-click="$mdMenu.open($event)" class="md-icon-button" aria-label="Menu">
                         <md-icon md-menu-origin md-font-icon="fa-bars" class="fa md-headline"></md-icon>
                     </md-button>
                     <md-menu-content width="4">
@@ -69,6 +70,7 @@
                             </md-button>
                         </md-menu-item>
                     </md-menu-content>
+
                 </md-menu>
             </div>
         </md-toolbar>
