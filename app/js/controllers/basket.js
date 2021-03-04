@@ -41,7 +41,7 @@ angular.module('foyer')
                 .post(apiPrefix + 'search', {search: 'User/' + query})
                 .then(function(response) {
                     deferred.resolve(filterFilter(response.data.users, function(value, index, array){
-                        return value.promo === '018' || value.promo === '019' || value.promo === '020' || value.promo === '021' || value.promo === '022'
+                        return value.promo === '021' || value.promo === '022' || value.promo === '023'
                     }));
                 })
             ;
@@ -320,7 +320,7 @@ angular.module('foyer')
                 return Alert.toast('Mauvais code PIN !');
             }
             if ($scope.selectedCredit === null) {
-                return Alert.toast('Il faut séléctionner quelqu\'un !');
+                return Alert.toast('Il faut sélectionner quelqu\'un !');
             }
 
             $http

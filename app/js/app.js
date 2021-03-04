@@ -1,4 +1,5 @@
-var apiPrefix = 'https://upont.enpc.fr/api/';
+var apiPrefix = 'http://localhost:8000/';
+
 
 angular
     .module('foyer', [
@@ -214,3 +215,4 @@ angular
 ;
 
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 250);
+
